@@ -23,7 +23,7 @@
 
 	<!--内容区-->
 	<div class="mymsg-content">
-		<form class="form">
+		<form class="form myform">
 			<div class="form-group">
 				<em>本方信息</em>
 			</div>
@@ -31,12 +31,12 @@
 			<div class="form-group">
 				<span>姓名</span>
 				<input type="text" placeholder="请输入姓名" class="fl name"/>
-				<a href="javascript:;" class="yzm-btn mydrive" data="1" onclick="uploadDriverId($(this))"></a>
+				<a href="javascript:;" class="yzm-btn mydrive"  data-parentsdom="myform" onclick="uploadDriverId1('.myform')"></a>
 			</div>
 
 			<div class="form-group">
 				<span>身份证号码</span>
-				<input type="text" placeholder="请输入身份证号码" class="sfzcode" maxlength="18"/>
+				<input type="text" placeholder="请输入身份证号码" class="idcard" maxlength="18"/>
 			</div>
 
 			<div class="form-group">
@@ -57,7 +57,7 @@
 
 		</form>
 		
-		<form class="form">
+		<form class="form otherform">
 			<div class="form-group">
 				<em>对方信息</em>
 			</div>
@@ -65,12 +65,12 @@
 			<div class="form-group">
 				<span>姓名</span>
 				<input type="text" placeholder="请输入姓名" class="fl name"/>
-				<a href="javascript:;" class="yzm-btn mydrive" data="2" onclick="uploadDriverId($(this))"></a>
+				<a href="javascript:;" class="yzm-btn mydrive" data-parentsdom="otherform"  onclick="uploadDriverId2('.otherform')"></a>
 			</div>
 
 			<div class="form-group">
 				<span>身份证号码</span>
-				<input type="text" placeholder="请输入身份证号码" class="sfzcode" maxlength="18"/>
+				<input type="text" placeholder="请输入身份证号码" class="idcard" maxlength="18"/>
 			</div>
 
 			<div class="form-group">
@@ -123,7 +123,7 @@
 			<span>拍摄自己的驾驶证,自动识别信息!</span>
 			<div class="msg-img">
 				<img id="picdrive" data='1' src="static/images/common/card_driver.png"/>
-				<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				<!--<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>-->
 				<div class="camera">
 					<input id="drivecards" type="file"/>
 				</div>
@@ -172,114 +172,19 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
-
-	
-	//上传当事人信息
-//	$('.mymsg-btn .box a').eq(1).click(function(){
-//		$('.msg-modal.total').show();
-//
-//		var name = $('#name').val();
-//		//验证身份证号码位数
-//		var cardNo = $('#sfzcode').val();
-//		var regsfzcode = /^[\d]{15}|[\d]{18}$/
-//		if(!regsfzcode.test(cardNo)){
-//			cardNo='您的身份号码有误!'
-//		}
-//		//验证手机号码位数
-//		var phone = $('#phone').val();
-//		var regphone = /^1\d{10}$/;
-//		if(!regphone.test(phone)){
-//			phone='您的手机号码有误!'
-//		}
-//		var carNo = $('#cpcode').val();
-//		var carType = $('#cartype').html();
-//		var carTypeId = $('#cartype').attr('data-cartypeId');
-//		var insurance =$('#Insurance').html();
-//		var insuranceId =$('#Insurance').attr('data-insuranceId');
-//		var firstpic = $('#picrun').attr('src');
-//		var secondpic = $('#picdrive').attr('src');
-//		var str = '<li>姓名：'+name+'</li>'
-//							+'<li>身份证号码：'+cardNo+'</li>'
-//							+'<li>手机号码：'+phone+'</li>'
-//							+'<li>号牌号码：'+carNo+'</li>'
-//							+'<li>号牌种类：'+carType+'</li>'
-//							+'<li>保险公司：'+insurance+'</li>'
-//							+'<li>请认证核实你的信息</li>'
-//		$('.msg-modal.total').children('.modal-content').children('ul').html('');
-//		$('.msg-modal.total').children('.modal-content').children('ul').append(str);
-//		$('.msg-modal.total').click(function(){
-//			$(this).css('display','none')
-//		});
-//
-//
-//
-//		$('.msg-modal.total .modal-btn').children('a').eq(1).click(function(){
-//			if(phone!='您的手机号码有误!'&&cardNo!='您的身份号码有误!'){
-//				$.ajax({
-//				type:"post",
-//				url:addAccidentUserUrl, //
-//				data:{
-//					token:localStorage.getItem('token'),
-//					accidentId:localStorage.getItem('accidentId'),
-//					name:name,
-//					cardNo:cardNo,
-//					phone:phone,
-//					carNo:carNo,
-//					carType: carType,
-//					insuranceId:insuranceId,
-//					firstpic:firstpic,
-//					secondpic:secondpic,
-//					type: '1'
-//				},
-//				success:function(data){
-//					console.log(data)
-//					if (data.status==2000) {
-//							$('.msg-modal.total').css('display','block');
-//							window.location.href='inputmsg.html'
-//						}
-//					}
-//				});
-//			}
-//		})
-//	})
-
-
-		
 	//上传证件(驾驶证)照片  1
-	$('.mydrive').each(function(){
-		$(this).click(function(){
-			var _This = $(this)
-			console.log(_This)
-			$('.msg-modal.drive').eq(0).show();
-			$('.msg-modal.drive .modal-btn a').click(function(){
-				$('.msg-modal.drive').hide();
-			})
-			
-			$('#drivecards').change(function(){
-				var that = $(this);
-				
-				uploadImg1(that,_This);
-				
-				$(this).parent().siblings('.loading-cover').show();
-			
-			});
-		
-		})
-		
-	});
-	
-	function uploadDriverId(obj){
+	function uploadDriverId1(dom){
 		$('.msg-modal.drive').eq(0).show();
 		$('.msg-modal.drive .modal-btn a').click(function(){
 			$('.msg-modal.drive').hide();
 		})
 		
-		console.log(obj.attr('data'))
+		
 		
 		$('#drivecards').change(function(){
 				var that = $(this);
 				
-				uploadImg1(that,obj);
+				ocrDriverId1(that,dom);
 				
 				$(this).parent().siblings('.loading-cover').show();
 			
@@ -287,23 +192,24 @@
 	}
 	
 	
-//	$('.mydrive').click(function(){
-//		
-//		var _This = $(this)
-//		console.log(_This.attr('data'))
-//		$('.msg-modal.drive').eq(0).show();
-//		$('.msg-modal.drive .modal-btn a').click(function(){
-//			$('.msg-modal.drive').hide();
-//		})
-//		$('#drivecards').click(function(){
-//			$(this).change(function(){
-//				var that = $(this);
-//				uploadImg1(that,_This);
-//				$(this).parent().siblings('.loading-cover').show();
-//			});
-//		})
-//		
-//	});
+	function uploadDriverId2(dom){
+		$('.msg-modal.drive').eq(0).show();
+		$('.msg-modal.drive .modal-btn a').click(function(){
+			$('.msg-modal.drive').hide();
+		})
+		
+		
+		
+		$('#drivecards').change(function(){
+				var that = $(this);
+				
+				ocrDriverId2(that,dom);
+				
+				$(this).parent().siblings('.loading-cover').show();
+			
+			});
+	}
+
 	//上传证件(行驶证)照片  2
 	$('.mycar').click(function(){
 		var _This = $(this);
@@ -325,17 +231,20 @@
 
 // 证件识别
 // 驾驶证识别
-	function uploadImg1(that,obj){
+	function ocrDriverId1(that,dom){
+		//console.log(obj.attr('data-parentsdom'))
    	var objUrl = getObjectURL(that[0].files[0]);
     var file = that[0].files[0]; 	
 		var image = new Image();
 		image.src = objUrl;
-		console.log(obj)
-		console.log(obj.attr('data'))
+		console.log(dom)
+		var img64 = '';
 		image.onload = function(){
-		 	var img64 = compress(image, 500, 400, 0.7);
-		  
-		  $.ajax({
+			img64 = compress(image, 500, 400, 0.7);
+			
+		
+			$('#picdrive').attr("src",img64);
+			$.ajax({
 				type:"post",
 				url:base64ImgUploadUrl,
 				data: {
@@ -344,27 +253,89 @@
 				},
 		    dataType: "json",
 				success: function(data){
-					
-					console.log(data);
 					if(data.status == 2000){
-						//console.log(_This.attr('data'))
-	        	$('#picdrive').attr("src",data.list[0]);
-						that.parent().css('background','none');
-						obj.siblings('input').val(data.obj.name);
-						obj.parent().next('.form-group').children('input').val(data.obj.id_card_number)
-				  	that.parent().siblings('.loading-cover').hide();
-					}else{
-						$('.upload-error').show();
-						setTimeout(function(){
-							$('.upload-error').hide();
-						},500)
-				  	that.parent().siblings('.loading-cover').hide();
+						console.log(data.obj)
+						
+						$('.myform').find('.name').val(data.obj.name);
+						$('.myform').find('.idcard').val(data.obj.id_card_number);
+						
 					}
 				}
-			});
-				
+			})
 		}
-	}
+	}	
+		
+	function ocrDriverId2(that,dom){
+		//console.log(obj.attr('data-parentsdom'))
+   	var objUrl = getObjectURL(that[0].files[0]);
+    var file = that[0].files[0]; 	
+		var image = new Image();
+		image.src = objUrl;
+		console.log(dom)
+		var img64 = '';
+		image.onload = function(){
+			img64 = compress(image, 500, 400, 0.7);
+			
+		
+			$('#picdrive').attr("src",img64);
+			$.ajax({
+				type:"post",
+				url:base64ImgUploadUrl,
+				data: {
+					imgfile: img64,
+					imgType: '1',
+				},
+		    dataType: "json",
+				success: function(data){
+					if(data.status == 2000){
+						console.log(data.obj)
+						
+						$('.otherform').find('.name').val(data.obj.name);
+						$('.otherform').find('.idcard').val(data.obj.id_card_number);
+						
+					}
+				}
+			})
+		}
+	}	
+
+//		image.onload = function(){
+//		 	//var img64 = compress(image, 500, 400, 0.7);
+//			$('#picdrive').attr("src",img64);
+//		  
+//		  $.ajax({
+//				type:"post",
+//				url:base64ImgUploadUrl,
+//				data: {
+//					imgfile: img64,
+//					imgType: '1',
+//				},
+//		    dataType: "json",
+//				success: function(data){
+//					
+//				
+//					if(data.status == 2000){
+//						
+//	        	console.log(obj)
+//						that.parent().css('background','none');
+//						console.log(obj.attr('data-parentsdom'))
+//						//obj.siblings('input').val(data.obj.name);
+//						//obj.parent().next('.form-group').children('input').val(data.obj.id_card_number)
+//						
+//				  	that.parent().siblings('.loading-cover').hide();
+//				  	
+//					}else{
+//						$('.upload-error').show();
+//						setTimeout(function(){
+//							$('.upload-error').hide();
+//						},500)
+//				  	that.parent().siblings('.loading-cover').hide();
+//					}
+//				}
+//			});
+//				
+//		}
+	//}
 	
 	// 行驶证
 	function uploadImg2(that,_This){
