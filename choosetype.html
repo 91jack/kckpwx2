@@ -56,6 +56,22 @@
 			<a href="index.html" class="active">确定</a>
 		</div>
 	</div>
+	
+	<div class="sure-ensurance-modal ensurance">
+		<div class="exit-cont">
+			<p>请确认事故双方当事人车辆已投保交强险？</p>
+			<a href="javascript:;">否</a>
+			<a href="javascript:;" class="active">是</a>
+		</div>
+	</div>
+	
+	<div class="sure-ensurance-modal callpolice">
+		<div class="exit-cont">
+			<p>拨打报警电话：110</p>
+			<a href="javascript:;">否</a>
+			<a href="tell:110" class="active">是</a>
+		</div>
+	</div>
 
 <script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
 <script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
@@ -64,22 +80,36 @@
 <script type="text/javascript">
 	// 
 	$('.choose-type-content>div').click(function(){
-		var handleType = $(this).children('div').children('a').children('span').attr('data');
-		localStorage.setItem('handleType',handleType)
-		$.ajax({
-			type:'POST',
-			url:choseHandleTypeUrl,
-			data:{
-				token:token,
-				accidentId:accidentId,
-				handleType:handleType
-			},
-			success:function(data){
-				console.log(data)
-				if (data.status==2000) {
-					window.location.href='entrymsg.html';
+		
+		$('.ensurance').show();
+		var that = $(this)
+		
+		$('.ensurance .exit-cont a').eq(0).click(function(){
+			$('.ensurance').hide();
+			$('.callpolice').show();
+			$('.callpolice .exit-cont a').click(function(){
+				$('.callpolice').hide();
+			})
+		});
+		
+		$('.ensurance .exit-cont a').eq(1).click(function(){
+			var handleType = that.children('div').children('a').children('span').attr('data');
+			localStorage.setItem('handleType',handleType)
+			$.ajax({
+				type:'POST',
+				url:choseHandleTypeUrl,
+				data:{
+					token:token,
+					accidentId:accidentId,
+					handleType:handleType
+				},
+				success:function(data){
+					console.log(data)
+					if (data.status==2000) {
+						window.location.href='mymsg.html';
+					}
 				}
-			}
+			})
 		})
 	})
 	

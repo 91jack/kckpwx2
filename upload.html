@@ -188,6 +188,8 @@
 				console.log(data)
 				if(data.status == 2000){
 						// 将结果渲染至页面
+						$('.btn').addClass('active');
+						
 						var uploadData = data.pagination;
 						if (uploadData.address!='') {
 							$('.addr').html(uploadData.address);
@@ -427,8 +429,7 @@ var imgArr = [];
 					imgArr.push(data.list[0])
 					console.log(imgArr)
 					if(imgArr.length >= 3){
-						console.log(9999)
-						
+						$('.btn').addClass('active')
 					}
 				}
 				}
@@ -449,65 +450,64 @@ var imgArr = [];
 	})
 	
 	$('.btn').click(function(){
-		if(){
-			
-		}
-		var address = localStorage.getItem('addr');
-		var fastRoad = $('.upload-content .msg li').eq(1).children('.choose-box.active').next('span').attr('data');
-		var accidentDate = $('.upload-content .msg li').eq(2).children('span').eq(1).html()+"  "+$('.upload-content .msg li').eq(2).children('span').eq(2).html()
-		var weather = $('#select-weather span').html();
-		var picOne = $('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src');
-		var picTwo = $('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src');
-		var picThree = $('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src');
-		var otherOne = '';
-		var otherTwo = '';
-		var otherThree = '';
-		if($('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
-			otherOne=''
-		}else{
-			otherOne=$('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src')
-		}
-		if($('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
-			otherTwo=''
-		}else{
-			otherTwo=$('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src')
-		}
-		if($('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
-			otherThree=''
-		}else{
-			otherThree=$('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src')
-		}
-		console.log(otherOne);
-		console.log(otherTwo);
-		console.log(otherThree);
-		$.ajax({
-			type:"post",
-			url:accidentImgUrl,
-			data: {
-				token:token,
-				accidentId:accidentId,
-				address:address,
-				address_xy: localStorage.getItem('address_xy'),
-				isExpressway:fastRoad,
-				datetime:accidentDate,
-				weather:weather,
-				mainPic1:picOne,
-				mainPic2:picTwo,
-				mainPic3:picThree,
-				otherPic1:otherOne,
-				otherPic2:otherTwo,
-				otherPic3:otherThree
-			},
-			success: function(data){
-				console.log(data);
-				if(data.status == 2000){
-					window.location.href='accidentstatus.html';
-				}else if(data.status == 2002){
-					window.location.href='accidentstatus.html';
-				}
+		var on = $('.btn').hasClass('active');
+		if(on){
+			var address = localStorage.getItem('addr');
+			var fastRoad = $('.upload-content .msg li').eq(1).children('.choose-box.active').next('span').attr('data');
+			var accidentDate = $('.upload-content .msg li').eq(2).children('span').eq(1).html()+"  "+$('.upload-content .msg li').eq(2).children('span').eq(2).html()
+			var weather = $('#select-weather span').html();
+			var picOne = $('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src');
+			var picTwo = $('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src');
+			var picThree = $('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src');
+			var otherOne = '';
+			var otherTwo = '';
+			var otherThree = '';
+			if($('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
+				otherOne=''
+			}else{
+				otherOne=$('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src')
 			}
-		});
-		
+			if($('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
+				otherTwo=''
+			}else{
+				otherTwo=$('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src')
+			}
+			if($('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
+				otherThree=''
+			}else{
+				otherThree=$('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src')
+			}
+			console.log(otherOne);
+			console.log(otherTwo);
+			console.log(otherThree);
+			$.ajax({
+				type:"post",
+				url:accidentImgUrl,
+				data: {
+					token:token,
+					accidentId:accidentId,
+					address:address,
+					address_xy: localStorage.getItem('address_xy'),
+					isExpressway:fastRoad,
+					datetime:accidentDate,
+					weather:weather,
+					mainPic1:picOne,
+					mainPic2:picTwo,
+					mainPic3:picThree,
+					otherPic1:otherOne,
+					otherPic2:otherTwo,
+					otherPic3:otherThree
+				},
+				success: function(data){
+					console.log(data);
+					if(data.status == 2000){
+						window.location.href='accidentstatus.html';
+					}else if(data.status == 2002){
+						window.location.href='accidentstatus.html';
+					}
+				}
+			});
+		}
 	})
 	
 	
