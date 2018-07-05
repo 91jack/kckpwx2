@@ -78,7 +78,7 @@
 	<div class="exit-modal">
 		<div class="exit-cont">
 			<div class="time">
-				<p>在线快处赔业务受理时间为7:00至19:00,当前时间为19:07,不能受理！</p>
+				<p>在线快处快赔业务受理时间为7:00至19:00,当前时间为19:07,不能受理！</p>
 			</div>
 			<a href="javascript:;" class="active">确定</a>
 		</div>
@@ -112,14 +112,21 @@ $(function(){
 					if(res.list.length >0){
 						window.location.href='undeal.html'
 					}else{
-						window.location.href='safetip.html'
+						window.location.href='readme.html'
 					}
 				}else{
-					window.location.href='safetip.html'
+					window.location.href='readme.html'
 				}
 			}
 		});
 	})
+	
+	// 打开页面判断时间
+	// 9:00-20:00
+	var startTime = '20:00:00';
+	var endTime = '21:00:00';
+	
+	
 })
 $('.exit-modal a.active').click(function(){
 	$('.exit-modal').hide()
