@@ -1,0 +1,161 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>我的机动车</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+	
+</head>
+<body class="bg-f4 card-driver-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" class="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">我的机动车</h2>
+	</div>
+	
+	<!--车辆信息列表-->
+	<div class="info-list"></div>
+
+	<!--按钮-->
+	<div class="blue-btn-default">
+		<a href="bind_car.html" id="bind-btn">添加机动车</a>
+	</div>
+	
+	<div class="modal">
+		<div class="modal-content">
+			<p>亲,您确定要删除该机动车?</p>
+			<div class="modal-btn">
+				<a href="javascript:;">取消</a>
+				<a class="active" href="javascript:;">确定</a>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+		
+		var token =localStorage.getItem('token');
+		loaddrive();
+		
+		var carLen;
+		
+		
+		
+		function loaddrive(){
+			$.ajax({
+			type:"post",
+			url:getBindingCarUrl,
+			data:{
+				token:token
+			},
+			success:function(data){
+				console.log(data);
+				var Len = data.list.length;
+				carLen = data.list.length;
+				var listData =data.list;
+				if(data.status==2000){
+					console.log(listData[0])
+					var str='';
+					for (var i=0;i<Len;i++) {
+						str+='<div class="info-item" data-carid="'+listData[i].carId+'">'
+									+'<div class="info-item-info clearfix">'
+										+'<div class="container">'
+											+'<span class="fl">'+listData[i].carNo+'</span>'
+											+'<span class="fr">'+listData[i].identityNum+'</span>'
+										+'</div>'
+									+'</div>'
+									+'<div class="item-action clearfix">'
+										+'<div class="container">'
+											+'<div class="fl">'
+												+'<a href="javascript:;" class="select"> <em data-carid="'+listData[i].carId+'" isdefault="'+listData[i].isdefault+'" class="icon-select"></em>设为默认</a>'
+											+'</div>'
+											+'<div class="fr">'
+												+'<a class="edit" data-carid="'+listData[i].carId+'"><em class="icon"></em>编辑</a>'
+												+'<a href="javascript:;" class="del" data-carid="'+listData[i].carId+'"><em class="icon"></em>删除</a>'
+											+'</div>'
+										+'</div>'
+									+'</div>'
+								+'</div>'	;
+						$('.info-list').html('');
+						$('.info-list').html(str);
+						}
+					
+					for (var i=0;i<10;i++) {
+						if ($('.icon-select').eq(i).attr('isdefault')=='1') {
+							$('.icon-select').eq(i).addClass('active');
+						}
+					}
+					$('.edit').on('click',function(){
+						localStorage.setItem('carId',$(this).attr('data-carid'))
+						window.location.href='edit_car.html';
+						})
+					}
+				//默认的判断
+				
+				
+				$('.info-list').on('click','.icon-select',function(){
+					$.ajax({
+						type:"post",
+						url:editBindingCarUrl,
+						data:{
+							token:token,
+							carId:$(this).attr('data-carid'),
+							isdefault:$(this).attr('isdefault')
+						},
+						success:function(res){
+							console.log(res);
+						}
+					});
+					$('.icon-select').removeClass('active');
+					$(this).addClass('active');
+				})
+			}
+		});
+	}
+		
+		$('.info-list').on('click','.del',function(){
+			$('.modal').show();
+			$('.modal').click(function(){
+				$(this).hide();
+			})
+			var carId = $(this).attr('data-carid');
+			$('.modal-btn a.active').click(function(){
+				console.log(carId);
+				$.ajax({
+					type:"post",
+					url:removeBindingCarUrl,
+					data:{
+						token:token,
+						carId:carId
+					},
+					success:function(data){
+						console.log(data);
+						if (data.status==2000) {
+							if (carLen==1) {
+								window.location.href='user.html'
+							} else{
+								window.location.href="my_carinfo.html"
+							}
+						}
+					}
+				});
+			})
+		})
+</script>
+
+</body>
+</html>

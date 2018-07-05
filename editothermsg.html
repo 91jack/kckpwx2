@@ -1,0 +1,448 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>对方信息</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="mymsg-page bg-f4 edit-msg">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" class="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">对方信息</h2>
+	</div>
+
+
+	<!--内容区-->
+	<div class="mymsg-content">
+		<form class="form">
+			<div class="form-group">
+				<em>对方信息</em>
+			</div>
+
+			<div class="form-group">
+				<span>姓名</span>
+				<input type="text" placeholder="请输入姓名" class="fl" id="name"/>
+				<a href="javascript:;" class="yzm-btn"></a>
+			</div>
+
+			<div class="form-group">
+				<span>身份证号码</span>
+				<input type="text" placeholder="请输入身份证号码" id="sfzcode" maxlength="18"/>
+			</div>
+
+			<div class="form-group">
+				<span>手机号码</span>
+				<input type="text" placeholder="请输入手机号码" id="phone" maxlength="11"/>
+			</div>
+
+			<div class="form-group">
+				<span>号牌号码</span>
+				<input type="text" placeholder="车牌号(渝A**666)" class="fl" id="cpcode"/>
+				<a href="javascript:;" class="yzm-btn"></a>
+			</div>
+			<div class="form-group">
+				<span>号牌种类</span>
+				<span id="cartype" class="fr" data-cartypeId='1'>小型汽车</span>
+				<em class="fr"></em>
+			</div>
+
+			<div class="form-group">
+				<span>保险公司</span>
+				<span id="Insurance" class="fr" data-insuranceId=''>请选择(非必选)</span>
+				<em class="fr"></em>
+			</div>
+
+		</form>
+	</div>
+
+	<div class="mymsg-btn">
+		<div class="box">
+			<a href="javascript:;">
+				删除
+			</a>
+		</div>
+		<div class="box">
+			<a href="javascript:;">
+				完成
+			</a>
+		</div>
+	</div>
+	<!--确认信息模态框-->
+	<div class="msg-modal total">
+		<div class="modal-content">
+			<p>本方信息确认</p>
+			<ul>
+			</ul>
+			<div class="modal-btn clearfix">
+				<a href="javascript:;">
+					取消
+				</a>
+				<a href="javascript:;">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!--绑定驾驶证模态框-->
+	<div class="msg-modal drive">
+		<div class="modal-content">
+			<p>拍摄本方的驾驶证</p>
+			<span>拍摄自己的驾驶证,自动识别信息!</span>
+			<div class="msg-img">
+				<img id="picrun" data='1' src="static/images/common/card_driver.png"/>
+				<div class="loading-cover"><div class="cover-cont"></div><p>证件识别中</p></div>
+				<div class="camera">
+					<input id="drivecards" type="file"/>
+				</div>
+			</div>
+			<div class="modal-btn clearfix">
+				<a href="javascript:;">
+					取消
+				</a>
+				<a href="javascript:;">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!--绑定行驶证-->
+	<div class="msg-modal drive">
+		<div class="modal-content">
+			<p>拍摄本方的行驶证</p>
+			<span>拍摄自己的行驶证,自动识别信息!</span>
+			<div class="msg-img">
+				<img id="picdrive" data='2' src="static/images/common/card_xingshizheng.png"/>
+				<div class="loading-cover"><div class="cover-cont"></div><p>证件识别中</p></div>
+				<div class="camera">
+					<input id="carcards" type="file"/>
+				</div>
+			</div>
+			<div class="modal-btn clearfix">
+				<a href="javascript:;">
+					取消
+				</a>
+				<a href="javascript:;">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="upload-error">图片识别失败</div>
+	
+	<div class="exit-modal">
+		<div class="exit-cont">
+			<p>亲，你是否要删除信息！</p>
+			<a href="javascript:;">取消</a>
+			<a href="javascript:;" class="active">确定</a>
+		</div>
+	</div>
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/picker.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+	$(function(){
+		// 号牌种类
+		$.ajax({
+			type:"get",
+			url: getCarTypeUrl,
+			success: function(res){
+				console.log(res)
+				var carType = [];
+				for(var i=0;i<res.list.length;i++){
+					carType.push({'value': res.list[i].code,'text':res.list[i].name})
+				}
+				var cartypePicker = new Picker({
+					data: [carType],
+					selectedIndex: [1],// 
+					title:''
+				});
+				
+				cartypePicker.on('picker.select', function (selectedVal, selectedIndex) {
+					console.log(selectedVal)
+					console.log(selectedIndex)
+					var selectcarType = carType[selectedIndex].text;
+					$('#cartype').text(selectcarType)
+					$('#cartype').attr('data-cartypeId',selectedVal)
+				})
+				
+				$('#cartype').on('click',function(){
+					cartypePicker.show();
+				})
+			}
+		});
+		//获取对方信息
+		$(function(){
+			$.ajax({
+				type:"post",
+				url:getAccidentUserUrl,
+				data:{
+					token:token,
+					id:localStorage.getItem('accidentpersonId2')
+				},
+				success:function(data){
+					console.log(data);
+					var dataList = data.pagination;
+					$('#name').val(dataList.name);
+					$('#sfzcode').val(dataList.id_card);
+					$('#phone').val(dataList.phone);
+					$('#cpcode').val(dataList.car_no);
+					$('#cartype').html(dataList.car_type);
+					$('#Insurance').html(dataList.insuranceName)
+				}
+			});
+		})
+	
+		// 保险公司
+		$.ajax({
+			type:"get",
+			url: getInsuranceUrl,
+			success: function(res){
+				console.log(res)
+				var Insurance = [];
+				for(var i=0;i<res.list.length;i++){
+					Insurance.push({'value': res.list[i].code,'text':res.list[i].name})
+				}
+				var InsurancePicker = new Picker({
+					data: [Insurance],
+					selectedIndex: [1],// 
+					title:''
+				});
+				
+				InsurancePicker.on('picker.select', function (selectedVal, selectedIndex) {
+					console.log(selectedVal)
+					console.log(selectedIndex)
+					var selectInsurance = Insurance[selectedIndex].text;
+					$('#Insurance').text(selectInsurance)
+					$('#Insurance').attr('data-insuranceId',selectedVal);
+				})
+				
+				$('#Insurance').on('click',function(){
+					InsurancePicker.show();
+				})
+			}
+		});
+		
+	})
+	
+	//修改对方信息
+	$('.mymsg-btn .box a').eq(1).click(function(){
+		$('.msg-modal.total').show();
+
+		var name = $('#name').val();
+		//验证身份证号码位数
+		var cardNo = $('#sfzcode').val();
+		var regsfzcode = /^[\d]{16}|[\d]{18}$/
+		if(!regsfzcode.test(cardNo)){
+			cardNo='您的身份号码有误!'
+		}
+		//验证手机号位数
+		var phone = $('#phone').val();
+		var regphone = /^1\d{10}$/;
+		if(!regphone.test(phone)){
+			phone='您的手机号码有误!'
+		}
+		var carNo = $('#cpcode').val();
+		var carType = $('#cartype').html();
+		var carTypeId = $('#cartype').attr('data-cartypeId');
+		var insurance =$('#Insurance').html();
+		var insuranceId =$('#Insurance').attr('data-insuranceId');
+		var firstpic = $('#picrun').attr('src');
+		var secondpic = $('#picdrive').attr('src');
+		var str = '<li>姓名：'+name+'</li>'
+							+'<li>身份证号码：'+cardNo+'</li>'
+							+'<li>手机号码：'+phone+'</li>'
+							+'<li>号牌号码：'+carNo+'</li>'
+							+'<li>号牌种类：'+carType+'</li>'
+							+'<li>保险公司：'+insurance+'</li>'
+							+'<li>请认证核实你的信息</li>'
+		$('.msg-modal.total').children('.modal-content').children('ul').html('');
+		$('.msg-modal.total').children('.modal-content').children('ul').append(str);
+		$('.msg-modal.total').click(function(){
+			$(this).css('display','none')
+		});
+
+
+
+		$('.msg-modal.total .modal-btn').children('a').eq(1).click(function(){
+			
+			if(phone!='您的手机号码有误!'&&cardNo!='您的身份号码有误!'){
+				$.ajax({
+					type:"post",
+					url:addAccidentUserUrl, //
+					data:{
+						token:localStorage.getItem('token'),
+						accidentId:localStorage.getItem('accidentId'),
+						name:name,
+						cardNo:cardNo,
+						phone:phone,
+						carNo:carNo,
+						carType: carType,
+						insuranceId:insuranceId,
+						firstpic:firstpic,
+						secondpic:secondpic,
+						type: '2'
+					},
+					success:function(data){
+						console.log(data)
+						if (data.status==2000) {
+								$('.msg-modal.total').css('display','block');
+								window.location.href='inputmsg.html'
+							}
+						}
+					});
+				}
+			})
+
+	})
+
+	//删除对方信息
+	$('.mymsg-btn .box').eq(0).children('a').eq(0).click(function(){
+		$('.exit-modal').show();
+		$('.exit-modal a').eq(0).click(function(){
+			$('.exit-modal').hide();
+		})
+		$('.exit-modal a').eq(1).click(function(){
+			$.ajax({
+				type:"post",
+				url:removeAccidentUserUrl,
+				data:{
+					token:token,
+					id:localStorage.getItem('accidentpersonId2')
+				},
+				success:function(res){
+					console.log(res);
+					if(res.status==2000){
+						window.location.href = 'inputmsg.html';
+					}
+				}
+			});
+		})
+	})
+	
+	
+	
+	//上传证件(驾驶证)照片  1
+	$('.form-group .yzm-btn').eq(0).click(function(){
+		$('.msg-modal.drive').eq(0).show();
+		$('.msg-modal.drive .modal-btn a').click(function(){
+			$('.msg-modal.drive').hide();
+		})
+		$('#drivecards').click(function(){
+			$(this).change(function(){
+				$(this).parent().siblings('.loading-cover').show();
+				var that = $(this);
+				uploadImg1(that);
+			});
+		})
+	})
+	//上传证件(行驶证)照片  2
+	$('.form-group .yzm-btn').eq(1).click(function(){
+		$('.msg-modal.drive').eq(1).show();
+		$('.msg-modal.drive .modal-btn a').click(function(){
+			$('.msg-modal.drive').hide();
+		})
+		$('#carcards').click(function(){
+			$(this).change(function(){
+				$(this).parent().siblings('.loading-cover').show();
+				var that = $(this);
+				uploadImg2(that);
+			});
+		})
+	})
+
+
+
+	// 证件识别
+	function uploadImg1(that){
+		var objUrl = getObjectURL(that[0].files[0]);
+    var file = that[0].files[0]; 	
+		var image = new Image();
+		image.src = objUrl;
+			      
+		image.onload = function(){
+		 	var img64 = compress(image, 500, 400, 0.7);
+		  
+		  $.ajax({
+				type:"post",
+				url:base64ImgUploadUrl,
+				data: {
+					imgfile: img64,
+					imgType: '1',
+					accidentId: accidentId,
+				},
+		    dataType: "json",
+				success: function(data){
+					if(data.status == 2000){
+	        	$('#picrun').attr("src",data.list[0]);
+						that.parent().css('background','none');
+						$('#name').val(data.obj.name);
+						$('#sfzcode').val(data.obj.id_card_number)
+						that.parent().siblings('.loading-cover').hide();
+					}else{
+						$('.upload-error').show();
+						setTimeout(function(){
+							$('.upload-error').hide();
+						},500)
+				  	that.parent().siblings('.loading-cover').hide();
+					}
+				}
+			});
+		}
+	}
+	
+	function uploadImg2(that){
+		var objUrl = getObjectURL(that[0].files[0]);
+    var file = that[0].files[0]; 	
+		var image = new Image();
+		image.src = objUrl;
+			      
+		image.onload = function(){
+		 	var img64 = compress(image, 500, 400, 0.7);
+		  
+		  $.ajax({
+				type:"post",
+				url:base64ImgUploadUrl,
+				data: {
+					imgfile: img64,
+					accidentId: accidentId,
+					imgType: '2',
+				},
+		    dataType: "json",
+				success: function(data){
+					if(data.status == 2000){
+						that.parent().css('background','none');
+	        	$('#picdrive').attr("src",data.list[0]);
+						$('#cpcode').val(data.obj.plate_no);
+						$('#cartype').html(data.obj.vehicle_type)
+						that.parent().siblings('.loading-cover').hide();
+					}else{
+						$('.upload-error').show();
+						setTimeout(function(){
+							$('.upload-error').hide();
+						},500)
+				  	that.parent().siblings('.loading-cover').hide();
+					}
+				}
+			});
+		}
+
+	}
+</script>
+
+</body>
+</html>

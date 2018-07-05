@@ -1,0 +1,512 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>上传事故照片</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="upload-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" id="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">上传事故照片</h2>
+	</div>
+	
+	<!--顶部警察提示-->
+	<div class="police">
+		<img class="fl" src="static/images/common/police2.png"/>
+		<div class="police-content">
+			<span>温馨提示</span>
+			<p>请您在保证自身安全的情况下操作，请选择事故类型！</p>
+		</div>
+	</div>
+	
+	<div class="upload-content">
+		<!--获取地址天气等信息-->
+		<ul class="msg">
+			<li>
+				<a href="map.html">
+					<span>事故地址</span>
+					<span class="addr"></span>
+					<em class="fr"></em>
+				</a>
+			</li>
+			<li class="isexpressway">
+				<span>高速/高架</span>
+				
+				<span class="choose-box active"></span>
+				<span data='0'>是</span>
+				<span class="choose-box"></span>
+				<span data='1'>否</span>
+				
+			</li>
+			<li>
+				<span>事故时间</span>
+				
+				<span class="date">2018-01-26</span>
+				<span class="time">11:08</span>
+				
+			</li>
+			<li>
+				<span>地点天气</span>
+				
+				<div id="select-weather" class="fr select-weather">
+					<span>雨</span>
+					<em class="fr"></em>
+				</div>
+				
+			</li>
+		</ul>
+		<!--上传事故照片-->
+		<ul class="uploadpicture clearfix">
+			<li>
+				<div class="box">
+					<img src=""  onerror="this.src='static/images/main/carfront.png'"/>
+					<em></em>
+					<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				</div>
+				<div class="upload-msg">
+					<input type="file"/>
+				</div>
+				<p>侧前方</p>
+			</li>
+			<li>
+				<div class="box">
+					<img src="" onerror="this.src='static/images/main/carside.png'"/>
+					<em></em>
+					<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				</div>
+				<div class="upload-msg">
+					<input type="file"/>
+				</div>
+				<p>侧后方</p>
+			</li>
+		</ul>
+		<ul class="uploadpicture sec clearfix">
+			<li>
+				<div class="box">
+					<img class="bigpic" src="" onerror="this.src='static/images/main/acpart.png'"/>
+					<em></em>
+					<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				</div>
+				<div class="upload-msg">
+					<input type="file"/>
+				</div>
+				<p>侧前方</p>
+			</li>
+			<li>
+				<div class="box">
+					<img src="" onerror="this.src='static/images/main/whitebg.png'"/>
+					<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				</div>
+				<div class="upload-msg active">
+					<input type="file"/>
+				</div>
+				<p>补充照片</p>
+			</li>
+		</ul>
+		<ul class="uploadpicture clearfix">
+			<li>
+				<div class="box">
+					<img src="" onerror="this.src='static/images/main/whitebg.png'"/>
+					<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				</div>
+				<div class="upload-msg active">
+					<input type="file"/>
+				</div>
+				<p>补充照片</p>
+			</li>
+			<li>
+				<div class="box">
+					<img src="" onerror="this.src='static/images/main/whitebg.png'"/>
+					<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				</div>
+				<div class="upload-msg active">
+					<input type="file"/>
+				</div>
+				<p>补充照片</p>
+			</li>
+		</ul>
+	</div>
+	<div class="btn">
+		<a href="javascript:;">
+			提交照片
+		</a>
+	</div>
+	
+	<div class="footer-cover"></div>
+	
+	<div class="exit-modal">
+		<div class="exit-cont">
+			<p>亲，你是否要暂时退出进程！</p>
+			<a href="javascript:;">取消</a>
+			<a href="index.html" class="active">确定</a>
+		</div>
+	</div>
+	
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/picker.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+
+
+<!--当前页面交互-->
+<script type="text/javascript">
+	// 获取事故信息
+	$(function(){
+		$.ajax({
+			type:"post",
+			url:getAccidentInfoUrl,
+			data: {
+				token: token,
+				accidentId : accidentId
+			},
+			success: function(data){
+				console.log(data)
+				if(data.status == 2000){
+						// 将结果渲染至页面
+						var uploadData = data.pagination;
+						if (uploadData.address!='') {
+							$('.addr').html(uploadData.address);
+						};
+						if (uploadData.isexpressway==0) {
+							$('.isexpressway span[data="1"]').addClass('active')
+							$('.isexpressway span[data="0"]').removeClass('active')
+						}else{
+							$('.isexpressway span[data="0"]').addClass('active')
+							$('.isexpressway span[data="1"]').removeClass('active')
+						};
+						if (uploadData.datetime!=null) {
+							var time1 = uploadData.datetime.split(' ')[0];
+							var time2 = uploadData.datetime.split(' ')[1].substring(0,5)
+							$('.date').html(time1);
+							$('.time').html(time2);
+						};
+						if (uploadData.weather!='') {
+							$('#select-weather span').html(uploadData.weather);
+						};
+						if (uploadData.main_pic1!='') {
+							$('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src',uploadData.main_pic1).css({
+									'width':'100%',
+									'height':'8.333333rem',
+									'margin-top':'0'
+								});
+						};
+						if(uploadData.main_pic2!=''){
+							$('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src',uploadData.main_pic2).css({
+								'width':'100%',
+								'height':'8.333333rem',
+								'margin-top':'0'
+							});
+						};
+						if (uploadData.main_pic3!='') {
+							$('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src',uploadData.main_pic3).css({
+								'width':'100%',
+								'height':'8.333333rem',
+								'margin-top':'0'
+							});
+						};
+						if (uploadData.other_pic1!='') {
+							$('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src',uploadData.other_pic1).css({
+								'width':'100%',
+								'height':'8.333333rem',
+								'margin-top':'0'
+							});
+						};
+						if (uploadData.other_pic2!='') {
+							$('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src',uploadData.other_pic2).css({
+								'width':'100%',
+								'height':'8.333333rem',
+								'margin-top':'0'
+							});
+						};
+						if (uploadData.other_pic3!='') {
+							$('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src',uploadData.other_pic3).css({
+								'width':'100%',
+								'height':'8.333333rem',
+								'margin-top':'0'
+							});
+						};
+						// 判断图片审核状态
+						if (uploadData.main_pic1) {
+							if(uploadData.mainStatus1==1){
+								$('.upload-content .uploadpicture li').eq(0).children('.box').children('em').css('background-image','url(static/images/main/pass.png)');
+							}else{
+								$('.upload-content .uploadpicture li').eq(0).children('.box').children('em').css('background-image','url(static/images/main/repic.png)');
+							};
+						}else{
+							$('.upload-content .uploadpicture li').eq(0).children('.box').children('em').css('background-image','url(static/images/main/must.png)')
+						};
+						
+						if (uploadData.main_pic2) {
+							if(uploadData.mainStatus2==1){
+								$('.upload-content .uploadpicture li').eq(1).children('.box').children('em').css('background-image','url(static/images/main/pass.png)');
+							}else{
+								$('.upload-content .uploadpicture li').eq(1).children('.box').children('em').css('background-image','url(static/images/main/repic.png)');
+							};
+						}else{
+							$('.upload-content .uploadpicture li').eq(1).children('.box').children('em').css('background-image','url(static/images/main/must.png)')
+						};
+						
+						if (uploadData.main_pic3) {
+							if(uploadData.mainStatus3==0){
+								$('.upload-content .uploadpicture li').eq(2).children('.box').children('em').css('background-image','url(static/images/main/repic.png)');
+							}else{
+								$('.upload-content .uploadpicture li').eq(2).children('.box').children('em').css('background-image','url(static/images/main/pass.png)');
+							};
+						}else{
+							$('.upload-content .uploadpicture li').eq(2).children('.box').children('em').css('background-image','url(static/images/main/must.png)')
+						}
+				}
+			}
+		});
+		
+		
+		
+		// 地址
+		var addr = localStorage.getItem('addr');
+		//获取事故地址
+		$('.addr').text(addr)
+		// 选择是否为高速/高架
+		$('.upload-content .msg li .choose-box').click(function(){
+			if (!$(this).hasClass('active')) {
+				$(this).addClass('active');
+				$(this).siblings().removeClass('active');
+			} else if($(this).hasClass('active')){
+				$(this).siblings('active').addClass('active');
+				$(this).removeClass('jctive');
+			}
+		})
+		
+		// 事故默认时间
+		$('.date').text(accidentTime);
+		$('.time').text(nowTime)
+		
+	})
+
+	
+
+
+	
+// 事故时间
+var hours = []
+for(var i=0;i<24;i++){
+	var text = i<10 ? '0'+i : String(i)
+	hours.push({value:i,text:text})
+}
+var min = []
+for(var i=0;i<60;i++){
+	var text = i<10 ? '0'+i : String(i)
+	min.push({value:i,text:text})
+}
+var timePicker = new Picker({
+		data: [hours,min],
+		selectedIndex: [h,minutes],// 定位到当前时间
+		title:''
+});
+timePicker.on('picker.select', function (selectedVal, selectedIndex) {
+	console.log(selectedVal)
+	console.log(selectedIndex)
+	var selectHour = hours[selectedIndex[0]].text;
+	var selectMin = min[selectedIndex[1]].text;
+	var time = selectHour + ':' +selectMin;
+	$('.time').text(time)
+})
+
+$('.time').on('click', function(){
+	timePicker.show();
+})
+
+// 地点天气
+var weather = [
+	{
+		value: "1",
+		text: "晴"
+	},
+	{
+		value: "2",
+		text: "阴"
+	},
+	{
+		value: "3",
+		text: "雨"
+	},
+	{
+		value: "4",
+		text: "雪"
+	},
+	{
+		value: "5",
+		text: "雾"
+	},
+	{
+		value: "6",
+		text: "大风"
+	},
+	{
+		value: "7",
+		text: "沙尘"
+	},
+	{
+		value: "8",
+		text: "冰雹"
+	},
+	{
+		value: "9",
+		text: "其它"
+	}
+];
+var weatherPicker = new Picker({
+			data: [weather],
+			selectedIndex: [0],
+			title:''
+	});
+weatherPicker.on('picker.select', function (selectedVal, selectedIndex) {
+	console.log(selectedVal)
+		$('.select-weather span').text(weather[selectedIndex].text)
+})
+
+$('.select-weather').on('click', function(){
+	weatherPicker.show();
+})
+    
+    
+	
+//	上传图片
+	function uploadImg(that){
+
+		var objUrl = getObjectURL(that[0].files[0]);// 临时地址
+
+
+    var file = that[0].files[0]; 	
+		var image = new Image();
+		image.src = objUrl;
+		      
+		image.onload = function(){
+		  var img64 = compress(image, 500, 400, 0.7);
+		  //console.log(img64)
+		  
+		  $.ajax({
+				type:"post",
+				url:base64ImgUploadUrl,
+				data: {
+					imgfile: img64,
+					accidentId: accidentId
+				},
+		    dataType: "json",
+				success: function(data){
+					if(data.status == 2000){
+					console.log(data.list[0])
+					that.parent('div').siblings('div').children('img').attr("src",data.list[0]).css({
+						'width':'100%',
+						'height':'8.333333rem',
+						'margin-top':'0'
+					});
+				}
+				}
+			});
+		}
+	
+	
+//		$.ajax({
+//			type:"post",
+//			url:uploadImgUrl,
+//			data: formData,
+//			processData: false,
+//	        contentType: false,
+//	        dataType: "json",
+//			success: function(data){
+//				if(data.status == 2000){
+//					console.log(data.list[0])
+//					that.parent('div').siblings('div').children('img').attr("src",data.list[0]).css({
+//						'width':'100%',
+//						'height':'8.333333rem',
+//						'margin-top':'0'
+//					});
+//				}
+//			}
+//		});
+		
+		
+		
+		that.closest('div').css('background','none');
+		that.parent().siblings('.box').children('loading-cover').hide();
+	}
+	
+	$('.uploadpicture .upload-msg input[type="file"]').click(function(){
+		$(this).parent().siblings('.box').children('loading-cover').show();
+		$(this).change(function(){
+			var that = $(this);
+			uploadImg(that);
+		});
+	})
+	
+	$('.btn').click(function(){
+		var address = localStorage.getItem('addr');
+		var fastRoad = $('.upload-content .msg li').eq(1).children('.choose-box.active').next('span').attr('data');
+		var accidentDate = $('.upload-content .msg li').eq(2).children('span').eq(1).html()+"  "+$('.upload-content .msg li').eq(2).children('span').eq(2).html()
+		var weather = $('#select-weather span').html();
+		var picOne = $('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src');
+		var picTwo = $('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src');
+		var picThree = $('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src');
+		var otherOne = '';
+		var otherTwo = '';
+		var otherThree = '';
+		if($('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
+			otherOne=''
+		}else{
+			otherOne=$('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src')
+		}
+		if($('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
+			otherTwo=''
+		}else{
+			otherTwo=$('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src')
+		}
+		if($('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
+			otherThree=''
+		}else{
+			otherThree=$('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src')
+		}
+		console.log(otherOne);
+		console.log(otherTwo);
+		console.log(otherThree);
+		$.ajax({
+			type:"post",
+			url:accidentImgUrl,
+			data: {
+				token:token,
+				accidentId:accidentId,
+				address:address,
+				address_xy: localStorage.getItem('address_xy'),
+				isExpressway:fastRoad,
+				datetime:accidentDate,
+				weather:weather,
+				mainPic1:picOne,
+				mainPic2:picTwo,
+				mainPic3:picThree,
+				otherPic1:otherOne,
+				otherPic2:otherTwo,
+				otherPic3:otherThree
+			},
+			success: function(data){
+				console.log(data);
+				if(data.status == 2000){
+					window.location.href='accidentstatus.html';
+				}else if(data.status == 2002){
+					window.location.href='accidentstatus.html';
+				}
+			}
+		});
+	})
+</script>
+
+</body>
+</html>

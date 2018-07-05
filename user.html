@@ -1,0 +1,160 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>用户信息</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ <link rel="stylesheet" href="static/css/app.css" />
+	
+</head>
+<body class="bg-f4 user-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="index.html" class="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">用户信息</h2>
+	</div>
+	
+	<!---->
+	<div class="user-info">
+		<div class="user-avatar">
+			<img src="" onerror="this.src='static/images/user_avatar.png'"/>
+		</div>
+		<p class="nickname">MOON</p>
+		<div class="user-info-footer">
+			<p>您当前已经绑定<span class="carcount">0</span>辆车</p>
+		</div>
+	</div>
+	
+	<!---->
+	<div class="user-list">
+		<ul>
+			<li>
+				<div class="container">
+					<div class="fl">
+						<span>我的驾驶证</span>
+						<span class="drivecards"></span>
+					</div>
+					<div class="fr">
+						<a href="bind_drivercard.html" class="select" id="drivecard">	<em class="drivecards-status">未绑定</em><i></i></a>
+					</div>
+				</div>
+			</li>
+			
+			<li>
+				<div class="container">
+					<div class="fl">
+						<span>我的机动车</span>
+						<span class="mycar"></span>
+					</div>
+					<div class="fr">
+						<a href="bind_car.html" class="select" id="mycar">	<em class="mycar-status">未绑定</em><i></i></a>
+					</div>
+				</div>
+			</li>
+			
+			<li>
+				<div class="container">
+					<div class="fl">
+						<span>我的手机号</span>
+						<span class="phone"></span>
+					</div>
+					<div class="fr">
+						<a href="javascript:;" class="select" id="phone">	<em class="phone-status">未绑定</em><i></i></a>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+	
+	<div class="user-list">
+		<ul>
+			<li>
+				<div class="container">
+					<div class="fl">
+						<span>用户反馈</span>
+					</div>
+					<div class="fr">
+						<a href="opinion.html" class="select">	<i></i></a>
+					</div>
+				</div>
+			</li>
+			
+			<li>
+				<div class="container">
+					<div class="fl">
+						<span>关于我们</span>
+					</div>
+					<div class="fr">
+						<a href="about_us.html" class="select"><i></i></a>
+					</div>
+				</div>
+			</li>
+			
+			
+		</ul>
+	</div>
+	
+	
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type:'post',
+		url:getUserInfoUrl,
+		data: {
+			token:token
+		},
+		success: function(res){
+			console.log(res)
+			if(res.status == 2000){
+				var data = res.pagination;
+				console.log(data)
+				$('.user-avatar img').attr('src',data.headimg );
+				$('.nickname').html(data.name)
+				if(data.phone){
+					$('.phone').show().text(data.phone);
+					$('.phone-status').text('修改').css('color','#ccc')
+					$('#phone').attr('href','editphone.html')   
+				}
+				if (data.driverCard) {
+					$('.drivecards').show().text(data.driverCard);
+					$('.drivecards-status').text('修改').css('color','#ccc')
+					$('#drivecard').attr('href','my_drivercard.html')
+				}
+				if (data.carNo) {
+					$('.mycar').show().text(data.carNo);
+					$('.mycar-status').text('修改').css('color','#ccc')
+					$('#mycar').attr('href','my_carinfo.html')
+				}
+				if(data.carCount){
+					$('.carcount').text(data.carCount)
+				}
+			}
+		}
+	})
+})
+
+//修改头像
+$('.user-avatar').click(function(){
+	$.ajax({
+		type:"post",
+		url:modifyHeadUrl,
+		async:true
+	});
+})
+</script>
+
+</body>
+</html>

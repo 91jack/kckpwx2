@@ -1,0 +1,119 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>快处快赔</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+	<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+</head>
+<body class="index-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" class="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">快处快赔</h2>
+		<div class="fr">
+			<a href="user.html">
+				<em class="icon-user"></em>
+			</a>
+		</div>
+	</div>
+	
+	<!--天气时间信息-->
+	<div class="content-weather clearfix">
+		<div class="date fl">
+			<span>10</span>
+			<em>℃</em>
+			<p class="indextime">1月24日 星期三</p>
+		</div>
+		<div class="weather fr">
+			<img src="static/images/index/weather.png"/>
+			<span>多云</span>
+			<p>空气质量差</p>
+		</div>
+	</div>
+	
+	<!--客服查询使用说明-->
+	<div class="content-info">
+		<ul>
+			<li>
+				<a href="tel:123456789">
+					<img src="static/images/index/kfserver.png"/>
+				</a>
+			</li>
+			<li>
+				<a href="accidentsearch.html">
+					<img src="static/images/index/copy.png"/>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;" id="clear">
+					<img src="static/images/index/useintro.png"/>
+				</a>
+			</li>
+		</ul>
+	</div>
+	
+	<!--快速处理事件-->
+	<div class="content-deal">
+		<div class="deal-accident">
+			<a href="javascript:;">
+			 	<img src="static/images/index/accident.png"/>
+			 	<p>快速事故处理</p>
+			</a>
+		</div>
+		<div class="deal-intro">
+			<img src="static/images/index/jtaccident.png"/>
+			<span>如何快速判断事故责任</span>
+		</div>
+	</div>
+	
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+$(function(){
+	$('.indextime').html(indexTime)
+
+	localStorage.removeItem('signatureMine1');
+	localStorage.removeItem('signatureMine2');
+	localStorage.removeItem('code1');
+	localStorage.removeItem('code2');
+
+	$('.deal-accident').click(function(){
+		$.ajax({
+			type:"post",
+			url:accidentsDealInfoUrl,
+			data:{
+				pageSize:30,
+				pageNo:1,
+				state:2,
+				token:token
+			},
+			success:function(res){
+				if (res.status==2000) {
+					if(res.list.length >0){
+						window.location.href='undeal.html'
+					}else{
+						window.location.href='safetip.html'
+					}
+				}else{
+					window.location.href='safetip.html'
+				}
+			}
+		});
+	})
+})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>交警在线审核</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="audit-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" id="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">交警在线审核</h2>
+	</div>
+	
+	<!--事故审核结果-->
+	<div class="audit-content accident-status">
+		<div class="audit-no">
+			<p>审核中</p>
+		</div>
+		<span></span>
+	</div>
+	<p>请您耐心等待</p>
+	<p class="pla">交警正在为您远程定责！</p>
+	
+	<div class="exit-modal">
+		<div class="exit-cont">
+			<p>亲，你是否要暂时退出进程！</p>
+			<a href="javascript:;">取消</a>
+			<a href="index.html" class="active">确定</a>
+		</div>
+	</div>
+	
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+// 交警在线定责
+	setInterval(function(){
+		$.ajax({
+	    type: "POST",
+	    url:  accidentAuthStatusUrl,//获取事故认证状态
+	  	data:{
+				token: token,
+				accidentId: accidentId
+			},
+	    success: function(data){
+	   		console.log(data)
+				if(data.status == 2000){
+					if(data.obj == 0 ){
+						// 审核失败
+						window.location.href = 'police_audit_unpass.html';
+					}else if(data.obj == 1){
+						// 审核成功
+						window.location.href = 'police_audit_pass.html';
+					}
+					
+				}
+	  	}
+		})	
+	},3000)
+
+
+
+</script>
+
+</body>
+</html>

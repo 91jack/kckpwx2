@@ -1,0 +1,134 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>事故信息及当事人列表</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="basic-msg-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" id="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">事故信息及当事人列表</h2>
+	</div>
+	
+	<!--tab切换-->
+	<div class="tab-btn">
+		<a href="accimsg_list.html" class="fl">当事人信息</a>
+		<a href="basic_msg.html" class="fr active">基本信息</a>
+	</div>
+	
+	<!--中间内容区-->
+	<div class="basic-msg-content">
+		<form class="form">
+			<div class="form-group">
+				<span>受案编号</span>
+				<em class="fr">64252511255414111</em>
+			</div>
+			
+			<div class="form-group">
+				<span>事故时间</span>
+				<em class="fr">2018-02-11 17:00</em>
+			</div>
+			
+			<div class="form-group">
+				<span>事故地点</span>
+				<em class="fr">重庆渝北区爱琴海</em>
+			</div>
+			
+			<div class="form-group">
+				<span>事故照片（3张）</span>
+			</div>
+		</form>
+		<div class="accident-img">
+			<img src="static/images/accident-item.png"/>
+		</div>
+		<div class="accident-img">
+			<img src="static/images/accident-item.png"/>
+		</div>
+		<div class="accident-img">
+			<img src="static/images/accident-item.png"/>
+		</div>
+	</div>
+	
+	<div class="basic-msg-btn">
+		<a href="protocol.html">
+			<span>自行协商协议书</span>
+		</a>
+		<a href="javascript:;">
+			<span>完成</span>
+		</a>
+	</div>
+	
+	
+	<div class="modal">
+		<div class="modal-content">
+			<p>亲，感谢您的使用！</p>
+			<div class="modal-btn">
+				<a href="javascript:;">取消</a>
+				<a class="active" href="javascript:;">确定</a>
+			</div>
+		</div>
+	</div>
+	<div class="footer-cover"></div>
+	
+	
+	<div class="exit-modal">
+		<div class="exit-cont">
+			<p>亲，感谢您的使用！</p>
+			<a href="javascript:;">取消</a>
+			<a href="index.html" class="active">确定</a>
+		</div>
+	</div>
+	
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+	// 
+	if (localStorage.getItem('serachId')) {
+		accidentId=localStorage.getItem('serachId');
+	};
+	$.ajax({
+		type:"post",
+		url:AccidentsInfoDetailUrl,
+		async:true,
+		data:{
+			id:accidentId,
+			token:token
+		},
+		success:function(data){
+			console.log(data);
+			var dataList = data.obj;
+			if (data.status==2000) {
+				$('.form .form-group').eq(0).children('em').html(dataList.id);
+				$('.form .form-group').eq(1).children('em').html(dataList.datetime);
+				$('.form .form-group').eq(2).children('em').html(dataList.address);
+				$('.accident-img img').eq(0).attr('src',dataList.main_pic1);
+				$('.accident-img img').eq(1).attr('src',dataList.main_pic2);
+				$('.accident-img img').eq(2).attr('src',dataList.main_pic3);
+			}
+		}
+	});
+	$('.basic-msg-btn a').eq(1).click(function(){
+		$('.modal').show();
+				$('.modal-btn a').eq(1).click(function(){
+					window.location.href = 'index.html';
+				})
+				$('.modal-btn a').click(function(){
+					$('.modal').hide();
+				})
+	})
+</script>
+
+</body>
+</html>

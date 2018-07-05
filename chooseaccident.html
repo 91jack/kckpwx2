@@ -1,0 +1,150 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>选择事故</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="chooseaccident-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" id="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">选择事故</h2>
+	</div>
+	
+	
+	<!--内容区图片区-->
+	<div class="chooseaccident-content">
+		<ul>
+		</ul>
+	</div>
+	
+	<!--选择事故模态框-->
+	<div class="chooseaccident-modal">
+		<div class="modal-content">
+			<div class="title">
+				确认事故方
+			</div>
+			<div class="choose">
+				<span>
+					请确认本人在本次事故中属于A方还是B方!
+				</span>
+			</div>
+			<img src="static/images/accident-item.png"/>
+			<div class="modal-btn">
+				<a href="javascript:;" class="fl" data-select = 'A'>A方</a>
+				<a href="javascript:;" class="fl" data-select = 'B'>B方</a>
+			</div>
+		</div>
+	</div>
+	<div class="btn" >
+		<a href="javascript:;">
+			下一步
+		</a>
+	</div>
+	
+	<div class="footer-cover"></div>
+	
+	<div class="exit-modal">
+		<div class="exit-cont">
+			<p>亲，你是否要暂时退出进程！</p>
+			<a href="javascript:;">取消</a>
+			<a href="index.html" class="active">确定</a>
+		</div>
+	</div>
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+	// 获取事故情形
+	var allAccidentType = []
+	$.ajax({
+		type:"post",
+		url:getAccidentTypeUrl,
+		success:function(data){
+			console.log(data)
+			allAccidentType = data.list;
+			
+			var Len = data.list.length;
+			var str='';
+			for(var i=0;i<Len;i++){
+				str+='<li data-code="'+data.list[i].code +'">'
+							+'<img class="fl" src="'+data.list[i].url+'"/>'
+							+'<span class="fl">'+data.list[i].name+'</span>'
+							+'<em class="fr" data="'+data.list[i].code+'" bigurl="'+data.list[i].bigurl+'"></em>'
+						+'</li>'
+			}
+			$('.chooseaccident-content ul').html('');
+			$('.chooseaccident-content ul').html(str);
+		}
+	});
+	
+	
+	// 选择事故情形
+	$('.chooseaccident-content ul').on('click','li',function(){
+		$(this).siblings().children('em').removeClass('active');
+		$(this).children('em').addClass('active');
+		
+		$('.chooseaccident-modal').css('display','block');
+		$('.chooseaccident-modal .modal-content img').attr('src',$(this).children('em.active').attr('bigurl'))
+		$('.chooseaccident-modal').click(function(){
+			$(this).css('display','none');
+		})
+		var duty = '';
+		$('.chooseaccident-modal .modal-content .modal-btn a').bind('click',function(){
+			// 责任方
+			console.log($(this).attr('data-select'))
+			duty = $(this).attr('data-select');
+		})
+		
+		// 事故情形code
+		var accidentType = $(this).attr('data-code');
+		
+		// 本地存儲當前事故情形
+		var accidentTypeInfo = $(this).children('span').html();
+//		console.log(accidentTypeInfo);
+		localStorage.setItem('accidentType',accidentType);
+		localStorage.setItem('accidentTypeInfo',accidentTypeInfo);
+		
+		console.log(duty)
+		// 下一步
+		$('.btn').on('click', function(){
+			$.ajax({
+				type:"post",
+				url: choseAccidentTypeUrl,
+				data: {
+					token: token,
+					accidentId: accidentId,
+					accidentType : accidentType,
+					duty: duty
+				},
+				success:function(res){
+					console.log(res)
+					if(res.status == 2000){
+						var handleType = localStorage.getItem('handleType')
+						console.log(handleType)
+						if(handleType == 1){
+							window.location.href = 'fix-duty.html'
+						}else{
+							window.location.href = 'msg_certification.html'
+						}
+						
+					}
+				}
+			});
+		});
+	})
+
+</script>
+
+</body>
+</html>

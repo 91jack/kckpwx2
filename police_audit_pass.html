@@ -1,0 +1,76 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>交警在线审核</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+	
+</head>
+<body class="audit-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" id="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">交警在线审核</h2>
+	</div>
+	
+	<!--事故审核结果-->
+	<div class="audit-content">
+		<div class="audit-no">
+			<img src="static/images/main/right.png"/>
+			<p>审核通过</p>
+		</div>
+		<span></span>
+	</div>
+	<p>事故交警已远程定责</p>
+	<p class="pla">何洁全责，张三无责</p>
+	
+	<div class="exit-modal">
+		<div class="exit-cont">
+			<p>亲，你是否要暂时退出进程！</p>
+			<a href="javascript:;">取消</a>
+			<a href="index.html" class="active">确定</a>
+		</div>
+	</div>
+	
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+	// 
+//	var token = localStorage.getItem('token');
+//	var accidentId = localStorage.getItem('accidentId');
+	var str = '';
+	$(function(){
+		$.ajax({
+			type:"post",
+			url:getAccidentUserInfoUrl,
+			data:{
+				token:token,
+				accidentId:accidentId
+			},
+			success:function(data){
+				console.log(data);
+				if (data.status==2000) {
+					str+=data.list[1].name+data.list[1].dutyname+','+data.list[0].name+data.list[0].dutyname;
+					$('.pla').html(str)
+					setTimeout(function(){
+						window.location.href = 'accimsg_list.html'
+					}, 2000)
+				}
+			}
+		});
+	})
+</script>
+
+</body>
+</html>

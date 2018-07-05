@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>选择处理方式</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="choose-type-page bg-f4">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" id="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">选择处理方式</h2>
+	</div>
+	
+	<!--顶部警察提示-->
+	<div class="police">
+		<img class="fl" src="static/images/common/police2.png"/>
+		<div class="police-content">
+			<span>温馨提示</span>
+			<p>请您在保证自身安全的情况下操作，请选择事故类型！</p>
+		</div>
+	</div>
+	
+	<!--图片内容区-->
+	<div class="choose-type-content">
+		<div class="choose-self">
+			<div class="self-content fr">
+				<p>自行协商</p>
+				<a href="javascript:;">
+					<span data='1'>当事人双方定责</span>
+				</a>
+			</div>
+		</div>
+		<div class="choose-online">
+			<div class="online-content fl">
+				<p>在线定责</p>
+				<a href="javascript:;">
+					<span data='2'>快处中心事故认责认定</span>
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="exit-modal">
+		<div class="exit-cont">
+			<p>亲，你是否要暂时退出进程！</p>
+			<a href="javascript:;">取消</a>
+			<a href="index.html" class="active">确定</a>
+		</div>
+	</div>
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+	// 
+	$('.choose-type-content>div').click(function(){
+		var handleType = $(this).children('div').children('a').children('span').attr('data');
+		localStorage.setItem('handleType',handleType)
+		$.ajax({
+			type:'POST',
+			url:choseHandleTypeUrl,
+			data:{
+				token:token,
+				accidentId:accidentId,
+				handleType:handleType
+			},
+			success:function(data){
+				console.log(data)
+				if (data.status==2000) {
+					window.location.href='entrymsg.html';
+				}
+			}
+		})
+	})
+	
+</script>
+
+</body>
+</html>

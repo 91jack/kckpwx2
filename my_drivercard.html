@@ -1,0 +1,169 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>我的驾驶证</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ <link rel="stylesheet" href="static/css/app.css" />
+	
+</head>
+<body class="bg-f4 card-driver-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" class="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">我的驾驶证</h2>
+	</div>
+	
+	<!--车辆信息列表-->
+	<div class="info-list"></div>
+
+	<!--按钮-->
+	<div class="blue-btn-default">
+		<a href="bind_drivercard.html" id="bind-btn">添加驾驶证</a>
+	</div>
+	
+	<div class="modal">
+		<div class="modal-content">
+			<p>亲,您确定要删除该驾驶证?</p>
+			<div class="modal-btn">
+				<a href="javascript:;">取消</a>
+				<a class="active" href="javascript:;">确定</a>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+	var token =localStorage.getItem('token');
+	loadcard();
+	var driveLen = ''
+	
+	$('.info-list').on('click','.icon-select',function(){
+		$('.icon-select').css({
+			'background':'url(static/images/common/right.png) no-repeat',
+			'backgroundSize':'100% 100%'
+		})
+		$(this).css({
+			'background':'url(static/images/common/bigo.png) no-repeat',
+			'backgroundSize':'100% 100%'
+		});
+	})
+	
+	
+	
+	function loadcard(){
+		$.ajax({
+		type:"post",
+		url:getBindingDriverUrl,
+		data:{
+			token:token
+		},
+		success:function(data){
+			console.log(data)
+			var Len = data.list.length;
+			driveLen = data.list.length;
+			var listData =data.list;
+			if(data.status==2000){
+				var str='';
+				for (var i=0;i<Len;i++) {
+					str+='<div class="info-item" data-id="'+listData[i].id+'">'
+								+'<div class="info-item-info clearfix">'
+									+'<div class="container">'
+										+'<span class="fl">'+listData[i].name+'</span>'
+										+'<span class="fr">'+listData[i].card+'</span>'
+									+'</div>'
+								+'</div>'
+								+'<div class="item-action clearfix">'
+									+'<div class="container">'
+										+'<div class="fl">'
+											+'<a href="javascript:;" class="select"> <em class="icon-select" isdefault="'+listData[i].isdefault+'" data-driverId="'+listData[i].id+'"></em>设为默认</a>'
+										+'</div>'
+										+'<div class="fr">'
+											+'<a data="'+listData[i].id+'" class="edit"><em class="icon"></em>编辑</a>'
+											+'<a href="javascript:;" class="del" data-id="'+listData[i].id+'"><em class="icon"></em>删除</a>'
+										+'</div>'
+									+'</div>'
+								+'</div>'
+							+'</div>'	;
+					$('.info-list').html('');
+					$('.info-list').html(str);
+					}
+				
+				for (var i=0;i<10;i++) {
+					if ($('.icon-select').eq(i).attr('isdefault')=='1') {
+						$('.icon-select').eq(i).addClass('active');
+					}
+				}
+				
+				$('.edit').on('click',function(){
+					localStorage.setItem('cardId',$(this).attr('data'));
+					window.location.href='edit_drivercard.html';
+				})
+				
+				//默认的判断
+				$('.info-list').on('click','.icon-select',function(){
+					$.ajax({
+						type:"post",
+						url:editBindingDriverUrl,
+						data:{
+							token:token,
+							driverId:$(this).attr('data-driverId'),
+							isdefault:$(this).attr('isdefault')
+						},
+						success:function(res){
+							console.log(res)
+						}
+					});
+					$('.icon-select').removeClass('active');
+					$(this).addClass('active');
+					})
+				}
+			}
+		});
+	}
+	
+	$('.info-list').on('click','.del',function(){
+		$('.modal').show();
+		$('.modal').click(function(){
+			$(this).hide();
+		})
+		var driverId =$(this).attr('data-id');
+		$('.modal-btn a.active').click(function(){
+			console.log(driverId);
+			$.ajax({
+				type:"post",
+				url:removeBindingDriverUrl,
+				data:{
+					token:token,
+					driverId:driverId
+				},
+				success:function(data){
+					console.log(data);
+					if (data.status==2000) {
+						if (driveLen==1) {
+							window.location.href='user.html'
+						} else{
+							window.location.href='my_drivercard.html'
+						}
+					}
+				}
+			});
+		})
+	})
+</script>
+
+</body>
+</html>
