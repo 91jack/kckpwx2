@@ -699,6 +699,39 @@
 	border-radius:0.833333rem ;
 	line-height: 1.666666rem;
 }
+.choose-type-page .sure-ensurance-modal .exit-cont{
+	box-sizing: border-box;
+	padding-top: 2.083333rem;
+}
+.choose-type-page .sure-ensurance-modal .exit-cont p{
+	line-height: 1.666666rem;
+	height: 3.333333rem;
+	width: 17.083333rem;
+	margin: auto;
+	padding-bottom: 1.625rem;
+	border-bottom: none;
+	position: relative;
+}
+.choose-type-page .sure-ensurance-modal .exit-cont p:after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: -2.708333rem;
+	height: 1px;
+	width: 22.5rem;
+	background: #f4f4f4;
+}
+.choose-type-page .sure-ensurance-modal.callpolice .exit-cont{
+	height: 10.416666rem;
+	padding-top: 3.25rem;
+}
+.choose-type-page .sure-ensurance-modal.ensurance .exit-cont p{
+	text-align: left;
+}
+.choose-type-page .sure-ensurance-modal.callpolice .exit-cont p{
+	padding-bottom: 2.458333rem;
+	height: 1.333333rem;
+}
 
 
 /*输入证件信息entrymsg.html*/
@@ -928,11 +961,15 @@
 	opacity: 0;
 }
 .upload-page .btn{
+	background: #CCCCCC;
 	position: fixed;
 	bottom: 2.291666rem;
 	left: 50%;
 	margin-left: -8.333333rem;
 	z-index: 5;
+}
+.upload-page .btn.active{
+	background: #38ADFF;
 }
 .upload-page .exit-modal-info{
 	height: 100%;
@@ -1015,17 +1052,23 @@
 }
 
 /*本方信息mymsg.html*/
-.mymsg-page{
+/*.mymsg-page{
 	overflow: hidden;
-}
+}*/
 .mymsg-content .form{
 	padding: 0;
 	background: #fff;
 	padding-left: 1.666666rem;
 }
-.mymsg-content .form:first-child{
+.mymsg-content .form{
 	padding-left: 0;
 	min-height: 5rem;
+}
+.mymsg-content .form:first-child{
+	margin-bottom: 0.416666rem;
+}
+.mymsg-content .form:last-child{
+	margin-bottom: 7.5rem;
 }
 .mymsg-content .form-type .form-type-group{
 	background: #fff;
@@ -1158,30 +1201,15 @@
 	text-align: right;
 	margin-left: 8%;
 }
-.mymsg-btn{
-	width: 100%;
-	height: 3.75rem;
-	margin-top: 10.291666rem;
+.mymsg-page .btn{
+	width: 16.666666rem;
+	position: fixed;
+	left: 50%;
+	margin-left: -8.333333rem;
+	bottom: 2.291666rem;
 }
-.mymsg-btn .box{
-	float: left;
-	width: 50%;
-	height: 100%;
-	text-align: center;
-}
-.mymsg-btn .box a{
-	display:inline-block;
-	height: 100%;
-	width: 11.666666rem;
-	border-radius: 1.875rem;
-	color: #fff;
-	line-height: 3.75rem;
-	font-size: 1.25rem;
-	background: #F56954;
-}
-.mymsg-btn .box:last-child a{
-	background: #38ADFF;
-}
+
+
 
 /*输入证件信息inputmsg.html*/
 .input-msg-content .form{
@@ -1315,11 +1343,57 @@
 	margin-top: 5.5rem;
 }
 
+
+
 /*选择事故chooseaccident.html*/
 .chooseaccident-content{
 	margin-bottom: 4.166666rem;
 }
-.chooseaccident-content ul li{
+.chooseaccident-content>ul>li{
+	width: 100%;
+} 
+.chooseaccident-content>ul>li .box{
+	width: 100%;
+	height: 3.75rem;
+}
+.chooseaccident-content>ul>li .box span{
+	font-size: 1.25rem;
+	margin-left: 1.666666rem;
+	color: #333;
+	margin-top: 1.25rem;
+}
+.chooseaccident-content>ul>li .box em{
+	width: 0.708333rem;
+	height: 1.25rem;
+	background: url('../images/common/next.png');
+	background-size: 100% 100%;
+	margin-right: 1.666666rem;
+	margin-top: 1.25rem;
+}
+.chooseaccident-content>ul>li> .detail-info>li{
+	height: 8.333333rem;
+	width: 31.25rem;
+	background: #fff;
+	line-height: 8.333333rem;
+}
+.chooseaccident-content>ul>li> .detail-info>li img{
+	width: 7.5rem;
+	height: 6.666666rem;
+	margin-left: 1.625rem;
+	margin-top: 0.833333rem;
+}
+.chooseaccident-content>ul>li> .detail-info>li span{
+	margin-left: 1rem;
+	font-size: 1rem;
+	color: #333;
+}
+.chooseaccident-content>ul>li> .detail-info>li strong{
+	width: 1.333333rem;
+	height: 1.333333rem;
+	background: url('../images/common/right.png');
+	background-size: 100% 100%;
+}
+/*.chooseaccident-content ul li{
 	box-sizing: border-box;
 	width: 100%;
 	padding: 0.833333rem 1.875rem 0.833333rem 1.125rem;
@@ -1352,7 +1426,7 @@
 	background: url('../images/common/bigo.png');
 	background-size: 100% 100%;
 	margin-top: 2.666666rem;
-}
+}*/
 .chooseaccident-modal{
 	width: 100%;
 	height: 100%;
