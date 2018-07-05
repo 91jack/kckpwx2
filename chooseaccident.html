@@ -24,24 +24,60 @@
 	<!--内容区图片区-->
 	<div class="chooseaccident-content">
 		<ul>
-			<li>
+			<li class="box">
 				<div class="box bg-f4">
 					<span class="fl">倒车</span>
 					<em class="fr"></em>
 				</div>
-				<ul class="detail-info">
-					<li class="clearfix">
-						<img src="static/images/accident-item.png"/>
-						<span>不按规矩倒车</span>
-						<strong class="fr"></strong>
-					</li>
-				</ul>
+				<ul class="detail-info"></ul>
+			</li>
+			<li class="box">
+				<div class="box bg-f4">
+					<span class="fl">让行</span>
+					<em class="fr"></em>
+				</div>
+				<ul class="detail-info"></ul>
+			</li>
+			<li class="box">
+				<div class="box bg-f4">
+					<span class="fl">追尾</span>
+					<em class="fr"></em>
+				</div>
+				<ul class="detail-info"></ul>
+			</li>
+			<li class="box">
+				<div class="box bg-f4">
+					<span class="fl">违反标志标线</span>
+					<em class="fr"></em>
+				</div>
+				<ul class="detail-info"></ul>
+			</li>
+			<li class="box">
+				<div class="box bg-f4">
+					<span class="fl">违反信号灯</span>
+					<em class="fr"></em>
+				</div>
+				<ul class="detail-info"></ul>
+			</li>
+			<li class="box">
+				<div class="box bg-f4">
+					<span class="fl">超车</span>
+					<em class="fr"></em>
+				</div>
+				<ul class="detail-info"></ul>
+			</li>
+			<li class="box">
+				<div class="box bg-f4">
+					<span class="fl">逆行等其他情形</span>
+					<em class="fr"></em>
+				</div>
+				<ul class="detail-info"></ul>
 			</li>
 		</ul>
 	</div>
 	
 	<!--选择事故模态框-->
-	<!--<div class="chooseaccident-modal">
+	<div class="chooseaccident-modal">
 		<div class="modal-content">
 			<div class="title">
 				确认事故方
@@ -72,34 +108,52 @@
 			<a href="javascript:;">取消</a>
 			<a href="index.html" class="active">确定</a>
 		</div>
-	</div>-->
+	</div>
 <script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
 <script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
-	// 获取事故情形
+// 获取事故情形
 //	var allAccidentType = []
-//	$.ajax({
-//		type:"post",
-//		url:getAccidentTypeUrl,
-//		success:function(data){
-//			console.log(data)
-//			allAccidentType = data.list;
-//			
-//			var Len = data.list.length;
-//			var str='';
-//			for(var i=0;i<Len;i++){
-//				str+='<li data-code="'+data.list[i].code +'">'
-//							+'<img class="fl" src="'+data.list[i].url+'"/>'
-//							+'<span class="fl">'+data.list[i].name+'</span>'
-//							+'<em class="fr" data="'+data.list[i].code+'" bigurl="'+data.list[i].bigurl+'"></em>'
-//						+'</li>'
-//			}
-//			$('.chooseaccident-content ul').html('');
-//			$('.chooseaccident-content ul').html(str);
-//		}
-//	});
+	$.ajax({
+		type:"post",
+		url:getAccidentTypeUrl,
+		success:function(data){
+			console.log(data)
+			allAccidentType = data.list;
+			var Len = data.list.length;
+			for(var i=0;i<Len;i++){
+				var str='';
+				for (var j=0;j<data.list[i].seconde.length;j++) {
+					str+='<li class="clearfix">'
+								+'<img src="'+data.list[i].seconde[j].url+'"/>'
+								+'<span>'+data.list[i].seconde[j].name+'</span>'
+								+'<strong class="fr"></strong>'
+							+'</li>'
+				}
+				$('.box').eq(i).children('.detail-info').html('');
+				$('.box').eq(i).children('.detail-info').html(str);
+			}
+		}
+	});
+	
+	
+	var on = true;
+	
+	if (on) {
+		$('.box').click(function(){
+			$(this).children('.detail-info').show();
+			on = !on;
+		})
+	}else{
+		$('.box').click(function(){
+			$(this).children('.detail-info').hide();
+			on = !on;
+		})
+	}
+
+	
 //	
 //	
 //	// 选择事故情形

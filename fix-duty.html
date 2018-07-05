@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>事故定责</title>
+  <title>输入协议书信息</title>
   <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
  	<link rel="stylesheet" href="static/css/app.css" />
 <!-- 	<link rel="stylesheet" type="text/css" href="static/css/app1.css"/>-->
@@ -18,7 +18,7 @@
 				<span class="goback-text">返回</span>
 			</a>
 		</div>
-		<h2 class="header-top-title">事故定责</h2>
+		<h2 class="header-top-title">输入协议书信息</h2>
 	</div>
 	
 	
@@ -29,7 +29,6 @@
 				<div class="form-type-group clearfix">
 					<em>事故情形</em>
 					<p class="accidentInfo">在同车道行驶中，不按规定与前车保持必要的安全距离的（追尾）</p>
-					<!--<a href="chooseaccident.html"></a>-->
 				</div>
 			</form>
 			
@@ -61,6 +60,15 @@
 				<div class="form-group">
 					<span>事故责任</span>
 					<em class="fr">全责</em>
+				</div>
+				<div class="form-group">
+					<span>保险公司</span>
+					<span class="fr Insurance" data-insuranceId=''>请选择(非必选)</span>
+					<em class="fr"></em>
+				</div>
+				<div class="form-group">
+					<span>保险单号</span>
+					<input id="" placeholder="请输入保险单号（可空）" />
 				</div>
 				
 			</form>
@@ -94,7 +102,15 @@
 					<span>事故责任</span>
 					<em class="fr active">无责</em>
 				</div>
-				
+				<div class="form-group">
+					<span>保险公司</span>
+					<span class="fr Insurance" data-insuranceId=''>请选择(非必选)</span>
+					<em class="fr"></em>
+				</div>
+				<div class="form-group">
+					<span>保险单号</span>
+					<input id="" placeholder="请输入保险单号（可空）" />
+				</div>
 			</form>
 		</div>
 	</div>
@@ -113,6 +129,50 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
+	
+	// 保险公司
+		$.ajax({
+			type:"get",
+			url: getInsuranceUrl,
+			success: function(res){
+				console.log(res)
+				var Insurance = [];
+				for(var i=0;i<res.list.length;i++){
+					Insurance.push({'value': res.list[i].code,'text':res.list[i].name})
+				}
+				var InsurancePicker1 = new Picker({
+					data: [Insurance],
+					selectedIndex: [1],// 
+					title:''
+				});
+				var InsurancePicker2 = new Picker({
+					data: [Insurance],
+					selectedIndex: [1],// 
+					title:''
+				});
+				
+				
+				$('.Insurance').eq(0).on('click',function(){
+					InsurancePicker1.show();
+					InsurancePicker1.on('picker.select', function (selectedVal, selectedIndex) {
+					var selectInsurance = Insurance[selectedIndex].text;
+					$('.Insurance').eq(0).text(selectInsurance)
+					$('.Insurance').eq(0).attr('data-insuranceId',selectedVal);
+				})
+					
+				$('.Insurance').eq(1).on('click',function(){
+					InsurancePicker2.show();
+					InsurancePicker2.on('picker.select', function (selectedVal, selectedIndex) {
+					var selectInsurance = Insurance[selectedIndex].text;
+					$('.Insurance').eq(1).text(selectInsurance)
+					$('.Insurance').eq(1).attr('data-insuranceId',selectedVal);
+					})
+				})
+			});
+		}
+	})
+		
+	
 	$(function(){
 		// 车损部位选择
 		$.ajax({
@@ -241,8 +301,8 @@
 	});
 	
 	//获取事故情形
-	var dataInfo = localStorage.getItem('accidentTypeInfo');
-	$('.accidentInfo').html(dataInfo);
+//	var dataInfo = localStorage.getItem('accidentTypeInfo');
+//	$('.accidentInfo').html(dataInfo);
 	
 	
 </script>

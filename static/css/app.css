@@ -626,8 +626,11 @@
 	color: #666;
 }
 .audit-page>p.pla{
-	color: #999;
+	color: #666;
 	margin-top: 1rem;
+}
+.audit-page>.btn{
+	margin-top: 9.666666rem;
 }
 .audit-page .audit-btn .btn{
 	background: #F56954;
@@ -1370,6 +1373,9 @@
 	margin-right: 1.666666rem;
 	margin-top: 1.25rem;
 }
+.chooseaccident-content>ul>li> .detail-info{
+	display: none;
+}
 .chooseaccident-content>ul>li> .detail-info>li{
 	height: 8.333333rem;
 	width: 31.25rem;
@@ -1383,6 +1389,9 @@
 	margin-top: 0.833333rem;
 }
 .chooseaccident-content>ul>li> .detail-info>li span{
+	display: inline-block;
+	width: 16.75rem;
+	line-height: 1.208333rem;
 	margin-left: 1rem;
 	font-size: 1rem;
 	color: #333;
@@ -1392,6 +1401,16 @@
 	height: 1.333333rem;
 	background: url('../images/common/right.png');
 	background-size: 100% 100%;
+	margin-top: 3.5rem;
+	margin-right: 1.375rem;
+}
+.chooseaccident-content>ul>li> .detail-info>li strong.active{
+	width: 1.333333rem;
+	height: 1.333333rem;
+	background: url('../images/common/bigo.png');
+	background-size: 100% 100%;
+	margin-top: 3.5rem;
+	margin-right: 1.375rem;
 }
 /*.chooseaccident-content ul li{
 	box-sizing: border-box;
@@ -1503,9 +1522,13 @@
 	margin-left: -8.333333rem;
 	z-index: 5;
 }
+
+
+
 /*事故定责fix-duty.html*/
 .fix-duty-content .mymsg-content .form{
 	margin-bottom: 0.833333rem;
+	padding-left: 1.666666rem;
 }
 .fix-duty-content .mymsg-content .form .form-group em{
 	margin-right: 1rem;
@@ -1520,7 +1543,7 @@
 	margin-top: 1.458333rem;
 	margin-right: 1rem;
 }
-.fix-duty-content .mymsg-content .form .form-group:last-child em{
+.fix-duty-content .mymsg-content .form .form-group:nth-child(6) em{
 	width: 6.666666rem;
 	height: 2.5rem;
 	border-radius: 0.333333rem;
@@ -1533,8 +1556,16 @@
 	margin-top: 0.958333rem;
 	margin-right: 1rem;
 }
-.fix-duty-content .mymsg-content .form .form-group:last-child em.active{
+.fix-duty-content .mymsg-content .form .form-group:nth-child(6) em.active{
 	background: #38ADFF;
+}
+.fix-duty-content .mymsg-content .form .form-group:nth-child(7) em{
+	width: 0.708333rem;
+	height: 1.25rem;
+}
+.fix-duty-content .mymsg-content .form .form-group:nth-child(7) span{
+	margin-left: 0;
+	width: 13.75rem;
 }
 .fix-duty-content .mymsg-content .form:first-child{
 	position: relative;
@@ -1570,6 +1601,8 @@
 .fix-duty-content .mymsg-content .form:last-child{
 	margin-bottom: 6.25rem;
 }
+
+
 
 /*短信认证msg_certificati.html*/
 .msg-certificati-page .police-msg{
@@ -1894,7 +1927,7 @@
 #select-weather em{
 	margin-right: 0;
 }
-#Insurance{
+.Insurance{
 	margin-left: 0.625rem;
 	width: 15.875rem;
 	text-align: right;
