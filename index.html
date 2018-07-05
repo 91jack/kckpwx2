@@ -75,6 +75,14 @@
 		</div>
 	</div>
 	
+	<div class="exit-modal">
+		<div class="exit-cont">
+			<div class="time">
+				<p>在线快处赔业务受理时间为7:00至19:00,当前时间为19:07,不能受理！</p>
+			</div>
+			<a href="javascript:;" class="active">确定</a>
+		</div>
+	</div>
 
 <script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
 <script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
@@ -112,6 +120,9 @@ $(function(){
 			}
 		});
 	})
+})
+$('.exit-modal a.active').click(function(){
+	$('.exit-modal').hide()
 })
 </script>
 

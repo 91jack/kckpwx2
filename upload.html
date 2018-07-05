@@ -152,6 +152,16 @@
 		</div>
 	</div>
 	
+	<div class="exit-modal-info">
+		<div class="exit-cont">
+			<div class="picinfo">
+				<p class="col-red">请在拍照前开启危险报警闪光灯，设置三角警示牌，拍照时注意交通安全。</p>
+				<p>点击图例相机可以进行现场拍照，也可以从手机相册中提取已拍摄的现场照片，至少3张，最多6张</p>
+			</div>
+			<a href="javascript:;" class="active">确定</a>
+		</div>
+	</div>
+	
 <script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
 <script src="static/js/picker.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
@@ -160,6 +170,11 @@
 
 <!--当前页面交互-->
 <script type="text/javascript">
+	
+	
+		$('.exit-modal-info a').click(function(){
+			$('.exit-modal-info').hide();
+		})
 	// 获取事故信息
 	$(function(){
 		$.ajax({
@@ -506,6 +521,9 @@ $('.select-weather').on('click', function(){
 			}
 		});
 	})
+	
+	
+
 </script>
 
 </body>
