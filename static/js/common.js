@@ -100,3 +100,53 @@ function compress(img, width, height, ratio) {
    return img64;
 }
 
+<<<<<<< HEAD
+=======
+// 号牌种类
+
+$.ajax({
+	type:"get",
+	url: getCarTypeUrl,
+	success: function(res){
+		console.log(res)
+		var carType = [];
+		for(var i=0;i<res.list.length;i++){
+			carType.push({'value': res.list[i].code,'text':res.list[i].name})
+		}
+		var cartypePicker1 = new Picker({
+			data: [carType],
+			selectedIndex: [1],// 
+			title:''
+		});
+		
+		var cartypePicker2 = new Picker({
+			data: [carType],
+			selectedIndex: [1],// 
+			title:''
+		});
+		
+		$('.cartype1').on('click',function(){
+			var that = $(this)
+			cartypePicker1.show();
+			cartypePicker1.on('picker.select', function (selectedVal, selectedIndex) {
+				console.log(selectedVal)
+				console.log(selectedIndex)
+				var selectcarType = carType[selectedIndex].text;
+				that.text(selectcarType)
+				that.attr('data-cartypeId',selectedVal)
+			})
+		})
+		$('.cartype2').on('click',function(){
+			var that = $(this)
+			cartypePicker2.show();
+			cartypePicker2.on('picker.select', function (selectedVal, selectedIndex) {
+				console.log(selectedVal)
+				console.log(selectedIndex)
+				var selectcarType = carType[selectedIndex].text;
+				that.text(selectcarType)
+				that.attr('data-cartypeId',selectedVal)
+			})
+		})
+	}
+});
+>>>>>>> f39799750ea72aa1e1734ce9adf34434ca0d3449
