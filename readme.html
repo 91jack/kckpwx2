@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>业务须知</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="readme-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" class="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">业务须知</h2>
+	</div>
+
+
+	<!--内容区-->
+	<div class="readme-content">
+		<div class="inner-content">
+			<p>一、处置措施。请立即开启危险报警闪光灯，并设置三角警示牌。</p>
+			<div class="sec">
+				<span>二、快处条件。请立即开启危险报警闪光灯，并设置三角警示牌。</span>
+				<span class="col-red">机动车与机动车发生财产损失的交通事故，各方均投保机动车交通事故责任事故保险，且当事人能够自行移动车辆的</span>
+				<span>，可以在线快速处理交通事故。有下列情况之一的，当事人应当保护现场并立即报警:</span>
+			</div>
+			<ul>
+				<li>（一）机动车无号牌、无检验标志的;</li>
+				<li>（二）载运爆炸物品、易燃易爆滑雪物品以及毒害性、放射性、腐蚀性、传染病病原体等危险物品车辆的;</li>
+				<li>（三）碰撞建筑物、公共设施以及其他设施的;</li>
+				<li>（四）驾驶人无有效机动车驾驶证的;</li>
+				<li>（五）驾驶人有饮酒、服用国家管制的精神药品或麻醉药品嫌疑的;</li>
+			</ul>
+			<p class="col-red">本软件由一方当事人操作，另一方驾驶人需要通过向操作人提供本软件发送的短信验证码认可操作内容和过程。</p>
+		</div>
+	</div>
+	
+	<div class="btn">
+		<a href="javascript:;">
+			同意并阅读
+			<span class="dextime">(05)</span>
+			<span>s</span>
+		</a>
+	</div>
+
+<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+<script src="static/js/picker.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+<!--当前页面交互-->
+<script type="text/javascript">
+//	var tex = $('.dextime').html();
+	var num = 5 
+	var timer = setInterval(function(){
+		num--;
+		$('.dextime').html('(0'+num+')');
+		if (num==0) {
+			$('.btn').addClass('active');
+			clearInterval(timer);
+		}
+	},1000);
+	
+	if ($('.btn').hasClass('active')) {
+		$(this).on('click',function(){
+		window.location.href='upload.html';
+	})
+	}
+</script>
+
+</body>
+</html>

@@ -1902,3 +1902,32 @@ canvas {
 .movecar-btn{
 	margin-top: 8.083333rem;
 }
+
+/*业务须知 readme.html*/
+.readme-page .inner-content{
+	width: 28.208333rem;
+	font-size: 1.166666rem;
+	color: #333;
+	margin: auto;
+	margin-top: 1.583333rem;
+}
+.readme-page .inner-content p:first-child{
+	margin-bottom: 1.75rem;
+}
+.readme-page .inner-content .sec{
+	margin-bottom: 1.75rem;
+}
+.readme-page .inner-content ul li{
+	margin-bottom: 1.75rem;
+}
+.readme-page .btn{
+	margin-top: 2.208333rem;
+	background: #D0D0D0;
+}
+.readme-page .btn.active{
+	/*margin-top: 2.208333rem;*/
+	background: #38ADFF;
+}
+.readme-page .btn.active a span{
+	display: none;
+}
