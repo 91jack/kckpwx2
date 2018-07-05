@@ -120,17 +120,21 @@
 		type:"post",
 		url:getAccidentTypeUrl,
 		success:function(data){
+			
 			console.log(data)
-			allAccidentType = data.list;
+			
 			var Len = data.list.length;
+			
 			for(var i=0;i<Len;i++){
+				
 				var str='';
+				
 				for (var j=0;j<data.list[i].seconde.length;j++) {
-					str+='<li class="clearfix">'
-								+'<img src="'+data.list[i].seconde[j].url+'"/>'
-								+'<span>'+data.list[i].seconde[j].name+'</span>'
-								+'<strong class="fr"></strong>'
-							+'</li>'
+					str +='<li class="clearfix">'
+									+'<img src="'+data.list[i].seconde[j].url+'"/>'
+									+'<span>'+data.list[i].seconde[j].name+'</span>'
+									+'<strong class="fr"></strong>'
+								+'</li>'
 				}
 				$('.box').eq(i).children('.detail-info').html('');
 				$('.box').eq(i).children('.detail-info').html(str);
