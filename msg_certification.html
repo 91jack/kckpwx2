@@ -12,7 +12,7 @@
 	<!--顶部标题栏-->
 	<div class="header-top">
 		<div class="fl">
-			<a href="javascript:;"  id="goprev">
+			<a href="javascript:;"  class="goback">
 				<em class="icon-goback"></em>
 				<span class="goback-text">返回</span>
 			</a>
@@ -120,7 +120,7 @@
 		</form>
 	</div>
 	
-	<div class="btn">
+	<div class="btn active">
 		<a href="javascript:;">
 			完成
 		</a>
@@ -146,6 +146,8 @@
 
 <!--当前页面交互-->
 <script type="text/javascript">
+
+	
 	$('#goprev').on('click', function(){
 	var handleType = localStorage.getItem('handleType');
 	if(handleType == 2){
@@ -188,7 +190,7 @@ $(function(){
     	var data = res.pagination;
     	
 			if(res.status == 2000){
-				$('.police-content ul li').eq(0).html('事故时间：' + data.create_time);
+				$('.police-content ul li').eq(0).html('事故时间：' + data.datetime);
 				$('.police-content ul li').eq(1).children('p').html(data.address);
 				$('.police-content ul li').eq(2).html('事故天气：' + data.weather);
 				$('.police-content ul li').eq(3).children('p').html(data.viewname);
@@ -245,53 +247,59 @@ $(function(){
 	
 	
 	// 点击完成
-	$('.msg-certificati-page .btn').click(function(){
-		var user = [
-			{'uid':$('.form').eq(0).attr('data'),'yzcode': $('.yzmcode1').val(),'phone': $('.phone1').html(),'pic': $('.sinate1 img').attr('src')},
-			{'uid':$('.form').eq(1).attr('data'),'yzcode': $('.yzmcode2').val(),'phone': $('.phone2').html(),'pic': $('.sinate2 img').attr('src')}
-		]
-		user = JSON.stringify(user)
-		$.ajax({
-	    type: "POST",
-	    url: accidentAuthUrl,
-	  	data:{
-				token: token,
-				accidentId: accidentId,
-				user: user
-			},
-	    success: function(data){
-				if(data.status == 2000){
-					console.log(data)
-					
-					var handleType = localStorage.getItem('handleType')
-					console.log(handleType)
-					if(handleType == 1){// 自行协商
-						window.location.href = 'accimsg_list.html'
-					}else{// 在线定责
-						window.location.href='police_audit_status.html'
-					
-					}
-					//localStorage.clear('signatureMine1');
-					//localStorage.clear('signatureMine2');
-					localStorage.removeItem('signatureMine1');
-					localStorage.removeItem('signatureMine2');
-					localStorage.removeItem('code1');
-					localStorage.removeItem('code2');
-				}else{
-					
-					$('.exit-modal').show();
-					$('.exit-cont p').html('亲，您的验证码有误，请重新获取！');
-					$('.exit-modal a').eq(0).on('click',function(){
-						$('.exit-modal').hide();
-					})
-					$('.exit-modal a').eq(1).on('click',function(){
-						localStorage.removeItem('code1');
-						localStorage.removeItem('code2');
-					})
-				}
-	    }
-		})
+	$('.getcode2').click(function(){
+		$('.btn').removeClass('active');
+		var on = $('.btn').hasClass('active')
+		if (!on) {
+			$('.msg-certificati-page .btn').click(function(){
+				var user = [
+					{'uid':$('.form').eq(0).attr('data'),'yzcode': $('.yzmcode1').val(),'phone': $('.phone1').html(),'pic': $('.sinate1 img').attr('src')},
+					{'uid':$('.form').eq(1).attr('data'),'yzcode': $('.yzmcode2').val(),'phone': $('.phone2').html(),'pic': $('.sinate2 img').attr('src')}
+				]
+				user = JSON.stringify(user)
+				$.ajax({
+			    type: "POST",
+			    url: accidentAuthUrl,
+			  	data:{
+						token: token,
+						accidentId: accidentId,
+						user: user
+					},
+			    success: function(data){
+						if(data.status == 2000){
+							console.log(data)
+							
+							var handleType = localStorage.getItem('type')
+							console.log(handleType)
+							if(handleType == 1){// 自行协商
+								window.location.href ='accimsg_list.html'
+							}else{// 在线定责
+								window.location.href='police_audit_status.html'
+							
+							}
+							localStorage.removeItem('signatureMine1');
+							localStorage.removeItem('signatureMine2');
+							localStorage.removeItem('code1');
+							localStorage.removeItem('code2');
+						}else{
+							
+							$('.exit-modal').show();
+							$('.exit-cont p').html('亲，您的验证码有误，请重新获取！');
+							$('.exit-modal a').eq(0).on('click',function(){
+								$('.exit-modal').hide();
+							})
+							$('.exit-modal a').eq(1).on('click',function(){
+								localStorage.removeItem('code1');
+								localStorage.removeItem('code2');
+							})
+						}
+			    }
+				})
+			})
+		}
 	})
+	
+	
 	
 	
 	

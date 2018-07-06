@@ -63,7 +63,7 @@
 				</div>
 				<div class="form-group">
 					<span>保险公司</span>
-					<span class="fr Insurance" data-insuranceId=''>请选择(非必选)</span>
+					<span class="fr Insurance" id="ensu1" data-insuranceId=''>请选择(非必选)</span>
 					<em class="fr"></em>
 				</div>
 				<div class="form-group">
@@ -104,7 +104,7 @@
 				</div>
 				<div class="form-group">
 					<span>保险公司</span>
-					<span class="fr Insurance" data-insuranceId=''>请选择(非必选)</span>
+					<span class="fr Insurance" id="ensu2" data-insuranceId=''>请选择(非必选)</span>
 					<em class="fr"></em>
 				</div>
 				<div class="form-group">
@@ -273,8 +273,8 @@
 				
 				$('.chooseaccident-page .btn').click(function(){
 					var user = [
-						{'id': data.list[1].id,'damagecode': '01','dutycode': data.list[1].dutycode},
-						{'id': data.list[0].id,'damagecode': '02','dutycode': data.list[0].dutycode}
+						{'id': data.list[1].id,'damagecode': '01','dutycode': data.list[1].dutycode,'insurerId':$('#ensu1').attr('data-insuranceId')},
+						{'id': data.list[0].id,'damagecode': '02','dutycode': data.list[0].dutycode,'insurerId':$('#ensu2').attr('data-insuranceId')}
 					]
 					user = JSON.stringify(user)
 					console.log(user)
@@ -288,10 +288,9 @@
 						},
 						dataType: "json",
 						success: function(res){
+							console.log(res)
 							if(res.status == 2000){
 								window.location.href = 'msg_certification.html'
-							}else{
-								//window.location.href = 'index.html'
 							}
 						}
 					});
@@ -301,8 +300,8 @@
 	});
 	
 	//获取事故情形
-//	var dataInfo = localStorage.getItem('accidentTypeInfo');
-//	$('.accidentInfo').html(dataInfo);
+	var dataInfo = localStorage.getItem('detailinfo');
+	$('.accidentInfo').html(dataInfo);
 	
 	
 </script>

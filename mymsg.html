@@ -31,7 +31,7 @@
 			<div class="form-group">
 				<span>姓名</span>
 				<input type="text" placeholder="请输入姓名" class="fl name"/>
-				<a href="javascript:;" class="yzm-btn mydrive"  data-parentsdom="myform" onclick="uploadDriverId1('.myform')"></a>
+				<a href="javascript:;" class="yzm-btn mydrive"></a>
 			</div>
 
 			<div class="form-group">
@@ -64,23 +64,23 @@
 
 			<div class="form-group">
 				<span>姓名</span>
-				<input type="text" placeholder="请输入姓名" class="fl name"/>
-				<a href="javascript:;" class="yzm-btn mydrive" data-parentsdom="otherform"  onclick="uploadDriverId2('.otherform')"></a>
+				<input type="text" placeholder="请输入姓名" class="fl name1"/>
+				<a href="javascript:;" class="yzm-btn mydrive"></a>
 			</div>
 
 			<div class="form-group">
 				<span>身份证号码</span>
-				<input type="text" placeholder="请输入身份证号码" class="idcard" maxlength="18"/>
+				<input type="text" placeholder="请输入身份证号码" class="idcard1" maxlength="18"/>
 			</div>
 
 			<div class="form-group">
 				<span>手机号码</span>
-				<input type="text" placeholder="请输入手机号码" class="phone" maxlength="11"/>
+				<input type="text" placeholder="请输入手机号码" class="phone1" maxlength="11"/>
 			</div>
 
 			<div class="form-group">
 				<span>车牌号码</span>
-				<input type="text" placeholder="车牌号(渝A**666)" class="fl cpcode"/>
+				<input type="text" placeholder="车牌号(渝A**666)" class="fl cpcode1"/>
 				<a href="javascript:;" class="yzm-btn mycar" data="22"></a>
 			</div>
 			<div class="form-group">
@@ -94,7 +94,7 @@
 
 
 	<!--下一步-->
-	<div class="btn">
+	<div class="btn active">
 		<a href="javascript:;">
 			下一步
 		</a>
@@ -117,13 +117,13 @@
 	</div>
 
 	<!--绑定驾驶证模态框-->
-	<div class="msg-modal drive">
+	<div class="msg-modal drive" id="bind-drive1">
 		<div class="modal-content">
 			<p>拍摄本方的驾驶证</p>
 			<span>拍摄自己的驾驶证,自动识别信息!</span>
 			<div class="msg-img">
 				<img id="picdrive" data='1' src="static/images/common/card_driver.png"/>
-				<!--<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>-->
+				<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
 				<div class="camera">
 					<input id="drivecards" type="file"/>
 				</div>
@@ -138,9 +138,31 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="msg-modal drive" id="bind-drive2">
+		<div class="modal-content">
+			<p>拍摄本方的驾驶证</p>
+			<span>拍摄自己的驾驶证,自动识别信息!</span>
+			<div class="msg-img">
+				<img id="picdrive1" data='1' src="static/images/common/card_driver.png"/>
+				<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				<div class="camera">
+					<input id="drivecards1" type="file"/>
+				</div>
+			</div>
+			<div class="modal-btn clearfix">
+				<a href="javascript:;">
+					取消
+				</a>
+				<a href="javascript:;">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
 
 	<!--绑定行驶证-->
-	<div class="msg-modal drive">
+	<div class="msg-modal drive" id="bind-car1">
 		<div class="modal-content">
 			<p>拍摄本方的行驶证</p>
 			<span>拍摄自己的行驶证,自动识别信息!</span>
@@ -162,6 +184,27 @@
 		</div>
 	</div>
 	
+	<div class="msg-modal drive" id="bind-car2">
+		<div class="modal-content">
+			<p>拍摄本方的行驶证</p>
+			<span>拍摄自己的行驶证,自动识别信息!</span>
+			<div class="msg-img">
+				<img id="picrun1" data='2' src="static/images/common/card_xingshizheng.png"/>
+				<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
+				<div class="camera">
+					<input id="carcards1" type="file"/>
+				</div>
+			</div>
+			<div class="modal-btn clearfix">
+				<a href="javascript:;">
+					取消
+				</a>
+				<a href="javascript:;">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
 	
 	<div class="upload-error">图片识别失败</div>
 	
@@ -172,6 +215,30 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
+
+	if (localStorage.getItem('mine')||localStorage.getItem('yours')) {
+		var mineData = JSON.parse(localStorage.getItem('mine'))
+		var yoursData = JSON.parse(localStorage.getItem('yours'))
+		$('.name').val(mineData.name);
+		$('.idcard').val(mineData.cardNo);
+		$('.phone').val(mineData.phone);
+		$('.cpcode').val(mineData.carNo);
+		$('.cartype1').attr('data-cartypeId',mineData.cartype);
+		$('.cartype1').html(localStorage.getItem('cartype1'));
+		$('#picdrive').attr('src',mineData.firstpic);
+		$('#picrun').attr('src',mineData.secondpic);
+		$('.name1').val(yoursData.name);
+		$('.idcard1').val(yoursData.cardNo);
+		$('.phone1').val(yoursData.phone);
+		$('.cpcode1').val(yoursData.carNo);
+		$('.cartype2').attr('data-cartypeId',yoursData.cartype);
+		$('.cartype2').html(localStorage.getItem('cartype2'));
+		$('#picdrive1').attr('src',yoursData.firstpic);
+		$('#picrun1').attr('src',yoursData.secondpic);
+	}
+
+
+
 
 	// 号牌种类
 
@@ -222,7 +289,88 @@
 			}
 		});
 	})
+	
+	
 	//上传当事人信息
+//	if($('.cpcode1')..change()){
+			$('.phone1').change(function(){
+				$('.btn').removeClass('active');
+				var on = $('.btn').hasClass('active');
+				if (!on) {
+					$('.btn').click(function(){
+						var mine = {
+							name:$('.name').val(),
+							cardNo:$('.idcard').val(),
+							phone:$('.phone').val(),
+							carNo:$('.cpcode').val(),
+							carType:$('.cartype1').attr('data-cartypeId'),
+							firstpic:$('#picdrive').attr('src'),
+							secondpic:$('#picrun').attr('src')
+						}
+						var yours = {
+							name:$('.name1').val(),
+							cardNo:$('.idcard1').val(),
+							phone:$('.phone1').val(),
+							carNo:$('.cpcode1').val(),
+							carType:$('.cartype2').attr('data-cartypeId'),
+							firstpic:$('#picdrive1').attr('src'),
+							secondpic:$('#picrun1').attr('src')
+						}
+						localStorage.setItem('mine',JSON.stringify(mine));
+						localStorage.setItem('yours',JSON.stringify(yours));
+						localStorage.setItem('cartype1',$('.cartype1').html());
+						localStorage.setItem('cartype2',$('.cartype2').html());
+						window.location.href="inputmsg.html"
+					})
+				}
+			})
+//		}
+	
+	
+//	$(function(){
+//			if($('.name1').val()!=''&&$('.cpcode1').val()!=''&&$('.idcard1').val()!=''&&$('.phone1').val()!=''&&$('.name2').val()!=''&&$('.cpcode2').val()!=''&&$('.idcard2').val()!=''&&$('.phone2').val()!=''){
+//			$('.btn').removeClass('active');
+//			var on = $('.btn').hasClass('active');
+//			if (!on) {
+//				$('.btn').click(function(){
+//					var mine = "{'name':'"+$('.name').val()+"','cardNo':'"+$('.idcard').val()+"','phone':'"+$('.phone').val()+"','carNo':'"+$('.cpcode').val()+"','carType':'"+$('.cartype1').attr('data-cartypeId')+"','firstpic':'"+$('#picdrive').attr('src')+"','secondpic':'"+$('#picrun').attr('src')+"'}";
+//					var yours = "{'name':'"+$('.name1').val()+"','cardNo':'"+$('.idcard1').val()+"','phone':'"+$('.phone1').val()+"','carNo':'"+$('.cpcode2').val()+"','carType':'"+$('.cartype2').attr('data-cartypeId')+"','firstpic':'"+$('#picdrive1').attr('src')+"','secondpic':'"+$('#picrun1').attr('src')+"'}";
+//					localStorage.setItem('mine',mine);
+//					localStorage.setItem('yours',yours);
+//					window.location.href="inputmsg.html"
+//				})
+//			}
+//		}
+//	})
+	
+	
+//	$('.btn').click(function(){
+//		$.ajax({
+//			type:"post",
+//			url:createAccidentAllUserUrl,
+//			data:{
+//				token:token,
+//				accidentId:accidentId,
+//				mine:"{'name':'"+$('.name').val()+"','cardNo':'"+$('.idcard').val()+"','phone':'+$('.phone').val()+','carNo':'"+$('.cpcode').val()+"','carType':'"+$('.cartype1').attr('data-cartypeId')+"','firstpic':'"+$('#picdrive').attr('src')+"','secondpic':'"+$('#picrun').attr('src')+"'}",
+//				yours:"{'name':'"+$('.name1').val()+"','cardNo':'"+$('.idcard1').val()+"','phone':'+$('.phone1').val()+','carNo':'"+$('.cpcode2').val()+"','carType':'"+$('.cartype2').attr('data-cartypeId')+"','firstpic':'"+$('#picdrive1').attr('src')+"','secondpic':'"+$('#picrun1').attr('src')+"'}",
+//				{
+//					'name':$('.name1').val(),
+//					'cardNo':$('.idcard1').val(),
+//					'phone':$('.phone1').val(),
+//					'carNo':$('.cpcode2').val(),
+//					'carType':$('.cartype2').attr('data-cartypeId'),
+//					'firstpic':$('#picdrive1').attr('src'),
+//					'secondpic':$('#picrun1').attr('src')
+//				}
+//			},
+//			success:function(res){
+//				console.log(res)
+//			}
+//		});
+//	})
+	
+	
+	
 //	$('.mymsg-btn .box a').eq(1).click(function(){
 //		$('.msg-modal.total').show();
 //
@@ -293,49 +441,44 @@
 
 
 		
+		
+		
+		
 	//上传证件(驾驶证)照片  1
-	function uploadDriverId1(dom){
-		$('.msg-modal.drive').eq(0).show();
+	
+	$('.mydrive').eq(0).click(function(){
+		$('#bind-drive1').show();
 		$('.msg-modal.drive .modal-btn a').click(function(){
 			$('.msg-modal.drive').hide();
 		})
 		
-		
-		
-		$('#drivecards').change(function(){
+		$('#drivecards').click(function(){
+			$(this).change(function(){
 				var that = $(this);
-				
-				ocrDriverId1(that,dom);
-				
+				uploadImg1(that);
 				$(this).parent().siblings('.loading-cover').show();
-			
 			});
-	}
+		})
+	})
 	
-	
-	function uploadDriverId2(dom){
-		$('.msg-modal.drive').eq(0).show();
+	$('.mydrive').eq(1).click(function(){
+		$('#bind-drive2').show();
 		$('.msg-modal.drive .modal-btn a').click(function(){
 			$('.msg-modal.drive').hide();
 		})
 		
-		
-		
-		$('#drivecards').change(function(){
+		$('#drivecards1').click(function(){
+			$(this).change(function(){
 				var that = $(this);
-				
-				ocrDriverId2(that,dom);
-				
+				uploadImg11(that);
 				$(this).parent().siblings('.loading-cover').show();
-			
 			});
-	}
+		})
+	})
 
 	//上传证件(行驶证)照片  2
-	$('.mycar').click(function(){
-		var _This = $(this);
-		console.log(_This.attr('data'))
-		$('.msg-modal.drive').eq(1).show();
+	$('.mycar').eq(0).click(function(){
+		$('#bind-car1').show();
 		$('.msg-modal.drive .modal-btn a').click(function(){
 			$('.msg-modal.drive').hide();
 		})
@@ -343,123 +486,30 @@
 		$('#carcards').click(function(){
 			$(this).change(function(){
 				var that = $(this);
-				uploadImg2(that,_This);
+				uploadImg2(that);
 				$(this).parent().siblings('.loading-cover').show();
 			});
 		})
 	})
 
-
+	$('.mycar').eq(1).click(function(){
+		$('#bind-car2').show();
+		$('.msg-modal.drive .modal-btn a').click(function(){
+			$('.msg-modal.drive').hide();
+		})
+		
+		$('#carcards1').click(function(){
+			$(this).change(function(){
+				var that = $(this);
+				uploadImg22(that);
+				$(this).parent().siblings('.loading-cover').show();
+			});
+		})
+	})
 // 证件识别
 // 驾驶证识别
-	function ocrDriverId1(that,dom){
-		//console.log(obj.attr('data-parentsdom'))
-   	var objUrl = getObjectURL(that[0].files[0]);
-    var file = that[0].files[0]; 	
-		var image = new Image();
-		image.src = objUrl;
-		console.log(dom)
-		var img64 = '';
-		image.onload = function(){
-			img64 = compress(image, 500, 400, 0.7);
-			
-		
-			$('#picdrive').attr("src",img64);
-			$.ajax({
-				type:"post",
-				url:base64ImgUploadUrl,
-				data: {
-					imgfile: img64,
-					imgType: '1',
-				},
-		    dataType: "json",
-				success: function(data){
-					if(data.status == 2000){
-						console.log(data.obj)
-						
-						$('.myform').find('.name').val(data.obj.name);
-						$('.myform').find('.idcard').val(data.obj.id_card_number);
-						
-					}
-				}
-			})
-		}
-	}	
-		
-	function ocrDriverId2(that,dom){
-		//console.log(obj.attr('data-parentsdom'))
-   	var objUrl = getObjectURL(that[0].files[0]);
-    var file = that[0].files[0]; 	
-		var image = new Image();
-		image.src = objUrl;
-		console.log(dom)
-		var img64 = '';
-		image.onload = function(){
-			img64 = compress(image, 500, 400, 0.7);
-			
-		
-			$('#picdrive').attr("src",img64);
-			$.ajax({
-				type:"post",
-				url:base64ImgUploadUrl,
-				data: {
-					imgfile: img64,
-					imgType: '1',
-				},
-		    dataType: "json",
-				success: function(data){
-					if(data.status == 2000){
-						console.log(data.obj)
-						
-						$('.otherform').find('.name').val(data.obj.name);
-						$('.otherform').find('.idcard').val(data.obj.id_card_number);
-						
-					}
-				}
-			})
-		}
-	}	
-
-//		image.onload = function(){
-//		 	//var img64 = compress(image, 500, 400, 0.7);
-//			$('#picdrive').attr("src",img64);
-//		  
-//		  $.ajax({
-//				type:"post",
-//				url:base64ImgUploadUrl,
-//				data: {
-//					imgfile: img64,
-//					imgType: '1',
-//				},
-//		    dataType: "json",
-//				success: function(data){
-//					
-//				
-//					if(data.status == 2000){
-//						
-//	        	console.log(obj)
-//						that.parent().css('background','none');
-//						console.log(obj.attr('data-parentsdom'))
-//						//obj.siblings('input').val(data.obj.name);
-//						//obj.parent().next('.form-group').children('input').val(data.obj.id_card_number)
-//						
-//				  	that.parent().siblings('.loading-cover').hide();
-//				  	
-//					}else{
-//						$('.upload-error').show();
-//						setTimeout(function(){
-//							$('.upload-error').hide();
-//						},500)
-//				  	that.parent().siblings('.loading-cover').hide();
-//					}
-//				}
-//			});
-//				
-//		}
-	//}
-	
-	// 行驶证
-	function uploadImg2(that,_This){
+	// 证件识别
+	function uploadImg1(that){
 		var objUrl = getObjectURL(that[0].files[0]);
     var file = that[0].files[0]; 	
 		var image = new Image();
@@ -473,18 +523,128 @@
 				url:base64ImgUploadUrl,
 				data: {
 					imgfile: img64,
+					imgType: '1',
+					accidentId: accidentId,
+				},
+		    dataType: "json",
+				success: function(data){
+					if(data.status == 2000){
+	        	$('#picdrive').attr("src",data.list[0]);
+						that.parent().css('background','none');
+						$('.name').val(data.obj.name);
+						$('.idcard').val(data.obj.id_card_number)
+						that.parent().siblings('.loading-cover').hide();
+					}else{
+						$('.upload-error').show();
+						setTimeout(function(){
+							$('.upload-error').hide();
+						},500)
+				  	that.parent().siblings('.loading-cover').hide();
+					}
+				}
+			});
+		}
+	}
+	
+	function uploadImg11(that){
+		var objUrl = getObjectURL(that[0].files[0]);
+    var file = that[0].files[0]; 	
+		var image = new Image();
+		image.src = objUrl;
+			      
+		image.onload = function(){
+		 	var img64 = compress(image, 500, 400, 0.7);
+		  
+		  $.ajax({
+				type:"post",
+				url:base64ImgUploadUrl,
+				data: {
+					imgfile: img64,
+					imgType: '1',
+					accidentId: accidentId,
+				},
+		    dataType: "json",
+				success: function(data){
+					if(data.status == 2000){
+	        	$('#picdrive1').attr("src",data.list[0]);
+						that.parent().css('background','none');
+						$('.name1').val(data.obj.name);
+						$('.idcard1').val(data.obj.id_card_number)
+						that.parent().siblings('.loading-cover').hide();
+					}else{
+						$('.upload-error').show();
+						setTimeout(function(){
+							$('.upload-error').hide();
+						},500)
+				  	that.parent().siblings('.loading-cover').hide();
+					}
+				}
+			});
+		}
+	}
+	
+	function uploadImg2(that){
+		var objUrl = getObjectURL(that[0].files[0]);
+    var file = that[0].files[0]; 	
+		var image = new Image();
+		image.src = objUrl;
+			      
+		image.onload = function(){
+		 	var img64 = compress(image, 500, 400, 0.7);
+		  
+		  $.ajax({
+				type:"post",
+				url:base64ImgUploadUrl,
+				data: {
+					imgfile: img64,
+					accidentId: accidentId,
 					imgType: '2',
 				},
 		    dataType: "json",
 				success: function(data){
-					console.log(data);
 					if(data.status == 2000){
-						console.log(_This.attr('data'))
 						that.parent().css('background','none');
 	        	$('#picrun').attr("src",data.list[0]);
-						_This.siblings('input').val(data.obj.plate_no);
-						_This.parent().next('.form-group').children('.cartype2').html(data.obj.vehicle_type)
+						$('.cpcode').val(data.obj.plate_no);
+						$('.cartype').html(data.obj.vehicle_type)
+						that.parent().siblings('.loading-cover').hide();
+					}else{
+						$('.upload-error').show();
+						setTimeout(function(){
+							$('.upload-error').hide();
+						},500)
 				  	that.parent().siblings('.loading-cover').hide();
+					}
+				}
+			});
+		}
+	}
+	
+	function uploadImg22(that){
+		var objUrl = getObjectURL(that[0].files[0]);
+    var file = that[0].files[0]; 	
+		var image = new Image();
+		image.src = objUrl;
+			      
+		image.onload = function(){
+		 	var img64 = compress(image, 500, 400, 0.7);
+		  
+		  $.ajax({
+				type:"post",
+				url:base64ImgUploadUrl,
+				data: {
+					imgfile: img64,
+					accidentId: accidentId,
+					imgType: '2',
+				},
+		    dataType: "json",
+				success: function(data){
+					if(data.status == 2000){
+						that.parent().css('background','none');
+	        	$('#picrun1').attr("src",data.list[0]);
+						$('.cpcode1').val(data.obj.plate_no);
+						$('.cartype1').html(data.obj.vehicle_type)
+						that.parent().siblings('.loading-cover').hide();
 					}else{
 						$('.upload-error').show();
 						setTimeout(function(){

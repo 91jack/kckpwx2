@@ -138,6 +138,12 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
+		
+		if(localStorage.getItem('type')==1){
+			$('.basic-msg-btn a').eq(0).children('span').html('交通事故认定书')
+		}
+	
+	
 	// 获取事故人信息
 		if (localStorage.getItem('serachId')) {
 			var accidentId = localStorage.getItem('serachId');
