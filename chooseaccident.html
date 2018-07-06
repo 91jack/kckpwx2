@@ -145,7 +145,7 @@
 					}
 				localStorage.setItem('bigUrl',$('strong.active').attr('bigUrl'));
 				localStorage.setItem('accidentcode',$('strong.active').attr('code'));
-				localStorage.setItem('detailinfo',$('strong.active').siblings('span').html())
+				localStorage.setItem('detailinfo',$('strong.active').siblings('div').html())
 				console.log(2222)
 				return false;
 			})
@@ -197,7 +197,9 @@
 						success:function(data){
 							console.log(data);
 							if (data.status==2000) {
-								if (localStorage.getItem('type')==2) {
+								var type = localStorage.getItem('type');
+								console.log(type)
+								if ( type ==2) {
 									window.location.href='msg_certification.html'
 								}else{
 									window.location.href='fix-duty.html'
@@ -208,7 +210,6 @@
 				})
 			}
 		}
-		
 		return false;
 	})
 		

@@ -1084,6 +1084,7 @@
 .mymsg-content .form-type .form-type-group{
 	background: #fff;
 	margin-bottom: 0.833333rem;
+	position: relative;
 }
 .mymsg-content .form-type .form-type-group em{
 	float: left;
@@ -1114,7 +1115,16 @@
 	margin-top: 0.958333rem;
 	margin-bottom: 0.958333rem;
 }
-
+.mymsg-content .form-type .form-type-group span{
+	width: 0.708333rem;
+	height: 1.25rem;
+	background: url("../images/common/next.png");
+	background-size: 100% 100%;
+	position: absolute;
+	right: 1.25rem;
+	top: 50%;
+	margin-top: -0.625rem;
+}
 
 .mymsg-content .form .form-group{
 	margin: 0;

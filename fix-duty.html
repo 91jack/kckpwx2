@@ -27,8 +27,11 @@
 		<div class="mymsg-content">
 			<form class="form-type">
 				<div class="form-type-group clearfix">
-					<em>事故情形</em>
-					<p class="accidentInfo">在同车道行驶中，不按规定与前车保持必要的安全距离的（追尾）</p>
+					<a href="chooseaccident.html">
+						<em>事故情形</em>
+						<p class="accidentInfo">在同车道行驶中，不按规定与前车保持必要的安全距离的（追尾）</p>
+						<span></span>
+					</a>
 				</div>
 			</form>
 			
@@ -300,9 +303,22 @@
 	});
 	
 	//获取事故情形
-	var dataInfo = localStorage.getItem('detailinfo');
-	$('.accidentInfo').html(dataInfo);
-	
+//	var dataInfo = localStorage.getItem('detailinfo');
+//	$('.accidentInfo').html(dataInfo);
+	$.ajax({
+		type:"post",
+		url:getAccidentInfoUrl,
+		data:{
+			token:token,
+			accidentId:accidentId
+		}
+		success:function(data){
+			console.log(data);
+			if (data.status==2000) {
+				$('.accidentInfo').html(data.pagination.viewname)
+			}
+		}
+	});
 	
 </script>
 

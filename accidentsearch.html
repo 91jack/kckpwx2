@@ -47,6 +47,9 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
+	
+var handel = localStorage.getItem('type');
+
 $(function(){
 		var num=1;
 	// tab页的跳转
@@ -85,7 +88,7 @@ $(function(){
 						var Len = data.list.length;
 						for (var i=0;i<Len;i++) {
 							linkhrefs = linkhref(data.list[i].status,data.list[i].handle);
-							hrefinfos = hrefinfo(data.list[i].status);
+							hrefinfos = hrefinfo(data.list[i].status,data.list[i].handle);
 							console.log(linkhrefs)
 							if (data.list[i].statusStr=='未定责') {
 								str+='<div class="tab-content-item clearfix" data-accidentId="'+data.list[i].id+'" data-href="'+ linkhrefs +'">'
@@ -134,6 +137,8 @@ $(function(){
 			});
 		}
 		
+
+		
 		function linkhref(status,handel){
 			var href = '';
 			switch(status){
@@ -150,14 +155,14 @@ $(function(){
 				 	href = 'upload.html'
 				  break;
 				case 4:
-				  href = 'entrymsg.html'
+				  href = 'mymsg.html'
 				  break;
 				case 5:
 				 	href = 'uploadpicture.html'
 				  break;
-				case 6:
-				  href = 'certificate_status.html'
-				  break;
+//				case 6:
+//				  href = 'certificate_status.html'
+//				  break;
 				case 7:
 				 	href = 'chooseaccident.html'
 				  break;
@@ -165,40 +170,40 @@ $(function(){
 				 	href = 'uploadpicture.html'
 				  break;
 				case 8:
-					if(handel == 1){
-						href = 'chooseaccident.html'
+					if(handel != 1){
+						href = 'fix-duty.html'
 					}else{
 						href = 'msg_certification.html'
 					}
-				 
+					
 				  break;
 				case 9:
 				 	href = 'msg_certification.html'
 				  break;
 				case 10:
-				  href = 'msg_certification.html'
+				  href = 'police_audit.html'
 				  break;
-				case 11:
-				 	href = 'police_audit.html'
-				  break;
-				case -11:
-				 	href = 'msg_certification.html'
-				  break;
-				case 12:
-				 	href = 'inputmsg.html'
-				  break;
-				case 13:
-				 	href = 'inputmsg.html'
-				  break;
-				case 14:
-				 	href = 'inputmsg2.html'
-				  break;
+//				case 11:
+//				 	href = 'police_audit.html'
+//				  break;
+//				case -11:
+//				 	href = 'msg_certification.html'
+//				  break;
+//				case 12:
+//				 	href = 'inputmsg.html'
+//				  break;
+//				case 13:
+//				 	href = 'inputmsg.html'
+//				  break;
+//				case 14:
+//				 	href = 'inputmsg2.html'
+//				  break;
 				default:
 			}
 			return href;
 		}
 		
-		function hrefinfo(status){
+		function hrefinfo(status,handel){
 			var msg = '';
 			switch(status){
 				case 1:
@@ -219,9 +224,9 @@ $(function(){
 				case 5:
 				 	msg = '提交证件信息'
 				  break;
-				case 6:
-				  msg = '证件信息审核中'
-				  break;
+//				case 6:
+//				  msg = '证件信息审核中'
+//				  break;
 				case 7:
 				 	msg = '选择事故情形'
 				  break;
@@ -229,29 +234,33 @@ $(function(){
 				 	msg = '证件审核失败'
 				  break;
 				case 8:
-				  msg = '请选择事故情形'
+				  if(handel!=1){
+				  	msg = '输入协议书信息'
+				  }else{
+				  	msg = '请进行短信验证'
+				  }
 				  break;
 				case 9:
 				 	msg = '请进行短信验证'
 				  break;
 				case 10:
-				  msg = '请进行短信验证'
+				  msg = '交警在线审核中'
 				  break;
-				case 11:
-				 	msg = '交警在线审核中'
-				  break;
-				case -11:
-				 	msg = '交警审核失败'
-				  break;
-				case 12:
-				 	msg = '添加对方信息'
-				  break;
-				case 13:
-				 	msg = '双方信息添加完毕'
-				  break;
-				case 14:
-				 	msg = '添加本方信息'
-				  break;
+//				case 11:
+//				 	msg = ''
+//				  break;
+//				case -11:
+//				 	msg = '交警审核失败'
+//				  break;
+//				case 12:
+//				 	msg = '添加对方信息'
+//				  break;
+//				case 13:
+//				 	msg = '双方信息添加完毕'
+//				  break;
+//				case 14:
+//				 	msg = '添加本方信息'
+//				  break;
 				default:
 			}
 			return msg;
