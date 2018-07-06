@@ -29,10 +29,10 @@
 		</div>
 		<span></span>
 	</div>
-	<p class="pla">何洁全责，张三无责</p>
+	<p class="pla duty">何洁全责，张三无责</p>
 	
 	<div class="btn">
-		<a href="javascript::">下一步</a>
+		<a href="accimsg_list.html">下一步</a>
 		
 	</div>
 	
@@ -67,9 +67,6 @@
 				if (data.status==2000) {
 					str+=data.list[1].name+data.list[1].dutyname+','+data.list[0].name+data.list[0].dutyname;
 					$('.pla').html(str)
-					setTimeout(function(){
-						window.location.href = 'accimsg_list.html'
-					}, 2000)
 				}
 			}
 		});

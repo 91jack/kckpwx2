@@ -31,19 +31,19 @@
 	
 	<!--图片内容区-->
 	<div class="choose-type-content">
-		<div class="choose-self">
+		<div class="choose-self" data='1'>
 			<div class="self-content fr">
 				<p>自行协商</p>
 				<a href="javascript:;">
-					<span data='1'>当事人双方定责</span>
+					<span>当事人双方定责</span>
 				</a>
 			</div>
 		</div>
-		<div class="choose-online">
+		<div class="choose-online" data='2'>
 			<div class="online-content fl">
 				<p>在线定责</p>
 				<a href="javascript:;">
-					<span data='2'>快处中心事故认责认定</span>
+					<span>快处中心事故认责认定</span>
 				</a>
 			</div>
 		</div>
@@ -80,10 +80,9 @@
 <script type="text/javascript">
 	// 
 	$('.choose-type-content>div').click(function(){
-		
+		localStorage.setItem('type',$(this).attr('data'));
 		$('.ensurance').show();
 		var that = $(this)
-		
 		$('.ensurance .exit-cont a').eq(0).click(function(){
 			$('.ensurance').hide();
 			$('.callpolice').show();
@@ -93,15 +92,13 @@
 		});
 		
 		$('.ensurance .exit-cont a').eq(1).click(function(){
-			var handleType = that.children('div').children('a').children('span').attr('data');
-			localStorage.setItem('handleType',handleType)
 			$.ajax({
 				type:'POST',
 				url:choseHandleTypeUrl,
 				data:{
 					token:token,
 					accidentId:accidentId,
-					handleType:handleType
+					handleType:localStorage.getItem('type')
 				},
 				success:function(data){
 					console.log(data)

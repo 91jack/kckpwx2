@@ -172,9 +172,14 @@
 <script type="text/javascript">
 	
 	
-		$('.exit-modal-info a').click(function(){
-			$('.exit-modal-info').hide();
-		})
+	if (localStorage.getItem('show')) {
+		$('.exit-modal-info').hide()
+	}
+		
+	$('.exit-modal-info a').click(function(){
+		$('.exit-modal-info').hide();
+		localStorage.setItem('show',1)
+	})
 	// 获取事故信息
 	$(function(){
 		$.ajax({
@@ -485,7 +490,7 @@ var imgArr = [];
 				url:accidentImgUrl,
 				data: {
 					token:token,
-					accidentId:accidentId,
+//					accidentId:accidentId,
 					address:address,
 					address_xy: localStorage.getItem('address_xy'),
 					isExpressway:fastRoad,
@@ -501,6 +506,7 @@ var imgArr = [];
 				success: function(data){
 					console.log(data);
 					if(data.status == 2000){
+						localStorage.setItem('accidentId',data.obj)
 						window.location.href='accidentstatus.html';
 					}else if(data.status == 2002){
 						window.location.href='accidentstatus.html';

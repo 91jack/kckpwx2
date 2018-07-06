@@ -93,7 +93,7 @@ var accidentImgUrl = host + '/kyp/applogin/accidentController/accidentImg';
 var choseHandleTypeUrl = host + '/kyp/applogin/accidentController/choseHandleType';
 
 // 添加当事人信息
-var addAccidentUserUrl = host + '/kyp/applogin/accidentController/addAccidentUser';
+var createAccidentAllUserUrl = host + '/kyp/applogin/accidentController/createAccidentAllUser';
 
 
 // 添加当事人信息结束

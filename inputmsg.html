@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>输入证件信息</title>
+  <title>确认证件信息</title>
   <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
  	<link rel="stylesheet" href="static/css/app.css" />
 </head>
@@ -12,63 +12,28 @@
 	<!--顶部标题栏-->
 	<div class="header-top">
 		<div class="fl">
-			<a href="javascript:;" id="goback">
+			<a href="javascript:;" class="goback">
 				<em class="icon-goback"></em>
 				<span class="goback-text">返回</span>
 			</a>
 		</div>
-		<h2 class="header-top-title">输入证件信息</h2>
+		<h2 class="header-top-title">确认证件信息</h2>
 	</div>
 	
 	
 	<!--内容区-->
 	<div class="input-msg-content">
-		<form class="form">
-			<!--<div class="form-group">
-				<a href="editmymsg.html">
-					<span>本方信息</span>
-					<em class="fr"></em>
-				</a>
-			</div>-->
-			
-			<!--<div class="form-group">
-				<span>姓名</span>
-				<p class="fr">秦牧</p>
-			</div>
-			
-			<div class="form-group">
-				<span>号牌号码</span>
-				<p class="fr">渝A2B440</p>
-			</div>
-			<div class="form-group">
-				<span>手机号码</span>
-				<p class="fr">18680745771</p>
-			</div>-->
-		</form>
+		<form class="form"></form>
 		
-		<form class="form">
-			<!--<div class="form-group">
-				<a href="editothermsg.html">
-					<span>对方信息</span>
-					<em class="fr"></em>
-				</a>
-			
-			</div>-->
-			
-		</form>
+		<form class="form"></form>
 	</div>
 	
 	<div class="inputmsg-btn">
-		<a href="othermsg.html">
-			<img src="static/images/main/plus.png"/>
-			添加对方当事人
-		</a>
-	</div>
-	<div class="btn" id="finished">
 		<a href="javascript:;">
-			完成
+			确认
 		</a>
 	</div>
+
 	
 	<div class="exit-modal">
 		<div class="exit-cont">
@@ -84,130 +49,212 @@
 <!--当前页面交互-->
 <script type="text/javascript">
 	//获取当事人信息
+	var mine = localStorage.getItem('mine');
+	var yours = localStorage.getItem('yours');
+	var mineData = JSON.parse(mine);
+	var yoursData = JSON.parse(yours);
+	console.log(mine);
+	console.log(yours);
+	console.log(mineData);
+	console.log(yoursData);
+	var str1='';
+	var str2='';
+	str1+=`<div class="form-group">
+						<a href="editmymsg.html">
+							<span>本方信息</span>
+						</a>
+					</div>`
+					+'<div class="form-group">'
+						+'<span>姓名</span>'
+						+'<p class="fr">'+mineData.name+'</p>'
+					+'</div>'
+					+'<div class="form-group">'
+						+'<span>号牌号码</span>'
+						+'<p class="fr">'+mineData.carNo+'</p>'
+					+'</div>'
+					+'<div class="form-group">'
+						+'<span>手机号码</span>'
+						+'<p class="fr">'+mineData.phone+'</p>'
+					+'</div>'
+					+'<div class="form-group">'
+						+'<span>号牌种类</span>'
+						+'<p class="fr">'+localStorage.getItem('cartype1')+'</p>'
+					+'</div>'
+	str2+= `<div class="form-group">
+							<a href="editothermsg.html">
+							<span>对方信息</span>
+						</a>
+					</div>`
+					+'<div class="form-group">'
+						+'<span>姓名</span>'
+						+'<p class="fr">'+yoursData.name+'</p>'
+					+'</div>'
+					+'<div class="form-group">'
+						+'<span>号牌号码</span>'
+						+'<p class="fr">'+yoursData.carNo+'</p>'
+					+'</div>'
+					+'<div class="form-group">'
+						+'<span>手机号码</span>'
+						+'<p class="fr">'+yoursData.phone+'</p>'
+					+'</div>'
+					+'<div class="form-group">'
+						+'<span>号牌种类</span>'
+						+'<p class="fr">'+localStorage.getItem('cartype2')+'</p>'
+					+'</div>'
+	$('.input-msg-content .form').eq(0).html(str1);
+	$('.input-msg-content .form').eq(1).html(str2);
 	
-	$(function(){
-//		var token = localStorage.getItem('token');
-//		var accidentId = localStorage.getItem('accidentId');
-		$.ajax({
-			type:"post",
-			data: {
-				token: token,
-				accidentId: accidentId
-			},
-			url:getAccidentUserInfoUrl,
-			success:function(data){
-				console.log(data)
-				if (data.status==2000) {
-					var Len = data.list.length;
-					if(Len==1){
-						var str1 = '';
-						str1 =`<div class="form-group">
-											<a href="editmymsg.html">
-												<span>本方信息</span>
-												<em class="fr"></em>
-											</a>
-										</div>`
-										+'<div class="form-group">'
-											+'<span>姓名</span>'
-											+'<p class="fr">'+data.list[0].name+'</p>'
-										+'</div>'
-										+'<div class="form-group">'
-											+'<span>号牌号码</span>'
-											+'<p class="fr">'+data.list[0].carno+'</p>'
-										+'</div>'
-										+'<div class="form-group">'
-											+'<span>手机号码</span>'
-											+'<p class="fr">'+data.list[0].phone+'</p>'
-										+'</div>'	;
-						
-						$('.input-msg-content .form').eq(0).html(str1)
-						$('.inputmsg-btn').removeClass('active');
-						$('.btn').removeClass('active');
-						localStorage.setItem('accidentpersonId1',data.list[0].id);
-					}else if(Len==2){
-						var str1 = '';
-						var str2 = '';
-						for(var i=0; i< Len; i++){
-							if(data.list[i].type == 1){
-								
-								str1 =`<div class="form-group">
-													<a href="editmymsg.html">
-														<span>本方信息</span>
-														<em class="fr"></em>
-													</a>
-												</div>`
-												+'<div class="form-group">'
-													+'<span>姓名</span>'
-													+'<p class="fr">'+data.list[i].name+'</p>'
-												+'</div>'
-												+'<div class="form-group">'
-													+'<span>号牌号码</span>'
-													+'<p class="fr">'+data.list[i].carno+'</p>'
-												+'</div>'
-												+'<div class="form-group">'
-													+'<span>手机号码</span>'
-													+'<p class="fr">'+data.list[i].phone+'</p>'
-												+'</div>'	;
-												
-									localStorage.setItem('accidentpersonId1',data.list[i].id);				
-							}else {
-								
-								str2 = `<div class="form-group">
-													<a href="editothermsg.html">
-														<span>对方信息</span>
-														<em class="fr"></em>
-													</a>
-												</div>`
-												+'<div class="form-group">'
-													+'<span>姓名</span>'
-													+'<p class="fr">'+data.list[i].name+'</p>'
-												+'</div>'
-												+'<div class="form-group">'
-													+'<span>号牌号码</span>'
-													+'<p class="fr">'+data.list[i].carno+'</p>'
-												+'</div>'
-												+'<div class="form-group">'
-													+'<span>手机号码</span>'
-													+'<p class="fr">'+data.list[i].phone+'</p>'
-												+'</div>';
-												
-								localStorage.setItem('accidentpersonId2',data.list[i].id);
-							}
-											
-						}
-										
-						$('.input-msg-content .form').eq(0).html(str1);
-						$('.input-msg-content .form').eq(1).html(str2);
-						
-						$('.inputmsg-btn').addClass('active');
-						$('.btn').addClass('active');
-						
-					
-						
-						
-						$('#finished').click(function(){
-							$.ajax({
-								type:"post",
-								url:addAccidentUserFinishUrl,
-								data:{
-									token:localStorage.getItem('token'),
-									accidentId:localStorage.getItem('accidentId')
-								},
-								success:function(data){
-									console.log(data);
-									if (data.status==2000) {
-										window.location.href='uploadpicture.html';
-									}
-								}
-							})
-						})
+	
+
+		$('.inputmsg-btn').click(function(){
+			$.ajax({
+				type:"post",
+				url:createAccidentAllUserUrl,
+				data:{
+					token:token,
+					accidentId:accidentId,
+					mine:mine,
+					yours:yours,
+				},
+				success:function(res){
+					console.log(res)
+					if (res.status==2000) {
+						window.location.href="uploadpicture.html"
 					}
-				}else{
-						window.location.href = 'entrymsg.html'
 				}
-			}
-		});
-	})
+			});
+		})
+
+
+
+
+//	$(function(){
+////		var token = localStorage.getItem('token');
+////		var accidentId = localStorage.getItem('accidentId');
+//		$.ajax({
+//			type:"post",
+//			data: {
+//				token: token,
+//				accidentId: accidentId
+//			},
+//			url:getAccidentUserInfoUrl,
+//			success:function(data){
+//				console.log(data)
+//				if (data.status==2000) {
+//					var Len = data.list.length;
+//					if(Len==1){
+//						var str1 = '';
+//						str1 =`<div class="form-group">
+//											<a href="editmymsg.html">
+//												<span>本方信息</span>
+//												<em class="fr"></em>
+//											</a>
+//										</div>`
+//										+'<div class="form-group">'
+//											+'<span>姓名</span>'
+//											+'<p class="fr">'+data.list[0].name+'</p>'
+//										+'</div>'
+//										+'<div class="form-group">'
+//											+'<span>号牌号码</span>'
+//											+'<p class="fr">'+data.list[0].carno+'</p>'
+//										+'</div>'
+//										+'<div class="form-group">'
+//											+'<span>手机号码</span>'
+//											+'<p class="fr">'+data.list[0].phone+'</p>'
+//										+'</div>'
+//										+'<div class="form-group">'
+//											+'<span>号牌号码</span>'
+//											+'<p class="fr">'+data.list[0].carno+'</p>'
+//										+'</div>';
+//						
+//						$('.input-msg-content .form').eq(0).html(str1)
+//						$('.inputmsg-btn').removeClass('active');
+//						$('.btn').removeClass('active');
+//						localStorage.setItem('accidentpersonId1',data.list[0].id);
+//					}else if(Len==2){
+//						var str1 = '';
+//						var str2 = '';
+//						for(var i=0; i< Len; i++){
+//							if(data.list[i].type == 1){
+//								
+//								str1 =`<div class="form-group">
+//													<a href="editmymsg.html">
+//														<span>本方信息</span>
+//														<em class="fr"></em>
+//													</a>
+//												</div>`
+//												+'<div class="form-group">'
+//													+'<span>姓名</span>'
+//													+'<p class="fr">'+data.list[i].name+'</p>'
+//												+'</div>'
+//												+'<div class="form-group">'
+//													+'<span>号牌号码</span>'
+//													+'<p class="fr">'+data.list[i].carno+'</p>'
+//												+'</div>'
+//												+'<div class="form-group">'
+//													+'<span>手机号码</span>'
+//													+'<p class="fr">'+data.list[i].phone+'</p>'
+//												+'</div>'	;
+//												
+//									localStorage.setItem('accidentpersonId1',data.list[i].id);				
+//							}else {
+//								
+//								str2 = `<div class="form-group">
+//													<a href="editothermsg.html">
+//														<span>对方信息</span>
+//														<em class="fr"></em>
+//													</a>
+//												</div>`
+//												+'<div class="form-group">'
+//													+'<span>姓名</span>'
+//													+'<p class="fr">'+data.list[i].name+'</p>'
+//												+'</div>'
+//												+'<div class="form-group">'
+//													+'<span>号牌号码</span>'
+//													+'<p class="fr">'+data.list[i].carno+'</p>'
+//												+'</div>'
+//												+'<div class="form-group">'
+//													+'<span>手机号码</span>'
+//													+'<p class="fr">'+data.list[i].phone+'</p>'
+//												+'</div>';
+//												
+//								localStorage.setItem('accidentpersonId2',data.list[i].id);
+//							}
+//											
+//						}
+//										
+//						$('.input-msg-content .form').eq(0).html(str1);
+//						$('.input-msg-content .form').eq(1).html(str2);
+//						
+//						$('.inputmsg-btn').addClass('active');
+//						$('.btn').addClass('active');
+//						
+//					
+//						
+//						
+//						$('#finished').click(function(){
+//							$.ajax({
+//								type:"post",
+//								url:addAccidentUserFinishUrl,
+//								data:{
+//									token:localStorage.getItem('token'),
+//									accidentId:localStorage.getItem('accidentId')
+//								},
+//								success:function(data){
+//									console.log(data);
+//									if (data.status==2000) {
+//										window.location.href='uploadpicture.html';
+//									}
+//								}
+//							})
+//						})
+//					}
+//				}else{
+//						window.location.href = 'entrymsg.html'
+//				}
+//			}
+//		});
+//	})
 	//添加对方当事人信息
 
 </script>

@@ -175,6 +175,17 @@ text-decoration: none;
 	border-radius:1.875rem;
 	margin: auto;
 }
+.btn.active{
+	width: 16.666666rem;
+	height: 3.75rem;
+	background: #ccc;
+	text-align: center;
+	line-height: 3.75rem;
+	color: #fff;
+	font-size: 1.25rem;
+	border-radius:1.875rem;
+	margin: auto;
+}
 .btn a{
 	display: block;
 	color: #fff;

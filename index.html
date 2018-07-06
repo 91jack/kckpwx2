@@ -96,7 +96,11 @@ $(function(){
 	localStorage.removeItem('signatureMine2');
 	localStorage.removeItem('code1');
 	localStorage.removeItem('code2');
-
+	localStorage.removeItem('accidentId');
+	localStorage.removeItem('show');
+	localStorage.removeItem('detailinfo');
+	localStorage.removeItem('mine');
+	localStorage.removeItem('yours');
 	$('.deal-accident').click(function(){
 		$.ajax({
 			type:"post",

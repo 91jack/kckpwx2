@@ -24,49 +24,49 @@
 	<!--内容区图片区-->
 	<div class="chooseaccident-content">
 		<ul>
-			<li class="box">
+			<li class="box-cont">
 				<div class="box bg-f4">
 					<span class="fl">倒车</span>
 					<em class="fr"></em>
 				</div>
 				<ul class="detail-info"></ul>
 			</li>
-			<li class="box">
+			<li class="box-cont">
 				<div class="box bg-f4">
 					<span class="fl">让行</span>
 					<em class="fr"></em>
 				</div>
 				<ul class="detail-info"></ul>
 			</li>
-			<li class="box">
+			<li class="box-cont">
 				<div class="box bg-f4">
 					<span class="fl">追尾</span>
 					<em class="fr"></em>
 				</div>
 				<ul class="detail-info"></ul>
 			</li>
-			<li class="box">
+			<li class="box-cont">
 				<div class="box bg-f4">
 					<span class="fl">违反标志标线</span>
 					<em class="fr"></em>
 				</div>
 				<ul class="detail-info"></ul>
 			</li>
-			<li class="box">
+			<li class="box-cont">
 				<div class="box bg-f4">
 					<span class="fl">违反信号灯</span>
 					<em class="fr"></em>
 				</div>
 				<ul class="detail-info"></ul>
 			</li>
-			<li class="box">
+			<li class="box-cont">
 				<div class="box bg-f4">
 					<span class="fl">超车</span>
 					<em class="fr"></em>
 				</div>
 				<ul class="detail-info"></ul>
 			</li>
-			<li class="box">
+			<li class="box-cont">
 				<div class="box bg-f4">
 					<span class="fl">逆行等其他情形</span>
 					<em class="fr"></em>
@@ -94,7 +94,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="btn" >
+	
+	<div class="btn active" >
 		<a href="javascript:;">
 			下一步
 		</a>
@@ -115,106 +116,106 @@
 <!--当前页面交互-->
 <script type="text/javascript">
 // 获取事故情形
-//	var allAccidentType = []
 	$.ajax({
 		type:"post",
 		url:getAccidentTypeUrl,
 		success:function(data){
-			
-			console.log(data)
-			
+			console.log(data);
 			var Len = data.list.length;
-			
 			for(var i=0;i<Len;i++){
-				
 				var str='';
-				
 				for (var j=0;j<data.list[i].seconde.length;j++) {
 					str +='<li class="clearfix">'
 									+'<img src="'+data.list[i].seconde[j].url+'"/>'
-									+'<span>'+data.list[i].seconde[j].name+'</span>'
-									+'<strong class="fr"></strong>'
+									+'<div>'+data.list[i].seconde[j].name+'</div>'
+									+'<strong class="fr" bigurl="'+data.list[i].seconde[j].bigUrl+'" code="'+data.list[i].seconde[j].code+'"></strong>'
 								+'</li>'
 				}
-				console.log(str)
-//				$('.box').eq(i).children('.detail-info').html('');
-//				$('.box').eq(i).children('.detail-info').html(str);
+				$('.box-cont').eq(i).children('.detail-info').html('');
+				$('.box-cont').eq(i).children('.detail-info').html(str);
 			}
+			
+			
+			$('.clearfix').on('mousedown',function(){
+					if(!$(this).children('strong').hasClass('active')){
+						$('strong').removeClass('active');
+						$(this).children('strong').addClass('active');
+					}else{
+						$(this).children('strong').removeClass('active');
+					}
+				localStorage.setItem('bigUrl',$('strong.active').attr('bigUrl'));
+				localStorage.setItem('accidentcode',$('strong.active').attr('code'));
+				localStorage.setItem('detailinfo',$('strong.active').siblings('span').html())
+				console.log(2222)
+				return false;
+			})
 		}
 	});
 	
 	
 	var on = true;
-	
-	if (on) {
-		$('.box').click(function(){
-			$(this).children('.detail-info').show();
-			on = !on;
-		})
-	}else{
-		$('.box').click(function(){
-			$(this).children('.detail-info').hide();
-			on = !on;
-		})
-	}
+	$('.box').click(function(){
+		var num = 0;
+		if (on) {
+			$(this).siblings('.detail-info').show();
+			$(this).siblings('.box').children('em').addClass('active');
+			on=!on;
+			num++
+		}else{
+			$(this).siblings('.detail-info').hide();
+			$(this).siblings('.box').children('em').removeClass('active');
+			on=!on;
+		}
+			
+		if (num!=0) {
+			$('.btn').removeClass('active');
+			var yes = $('.btn').hasClass('active')
+			if (!yes) {
+				$('.btn').click(function(){
+					$('.modal-content img').attr('src',localStorage.getItem('bigUrl'))
+					$('.chooseaccident-modal').show();
+				})
+				
+				$('.chooseaccident-modal .modal-btn a').click(function(){
+						// 本地存儲當前事故情形
+					$('.chooseaccident-modal').click(function(){
+						$(this).hide();
+						return false;
+					})
+					var duty = $(this).attr('data-select');
+					console.log(duty)
+					localStorage.getItem('accidentTypeInfo');
+					$.ajax({
+						type:'post',
+						url:choseAccidentTypeUrl,
+						data:{
+							token:token,
+							accidentId:accidentId,
+							duty:duty,
+							accidentType:localStorage.getItem('accidentcode')
+						},
+						success:function(data){
+							console.log(data);
+							if (data.status==2000) {
+								if (localStorage.getItem('type')==2) {
+									window.location.href='msg_certification.html'
+								}else{
+									window.location.href='fix-duty.html'
+								}
+							}
+						}
+					})
+				})
+			}
+		}
+		
+		return false;
+	})
+		
+	//下一步
 
-	
-//	
-//	
-//	// 选择事故情形
-//	$('.chooseaccident-content ul').on('click','li',function(){
-//		$(this).siblings().children('em').removeClass('active');
-//		$(this).children('em').addClass('active');
-//		
-//		$('.chooseaccident-modal').css('display','block');
-//		$('.chooseaccident-modal .modal-content img').attr('src',$(this).children('em.active').attr('bigurl'))
-//		$('.chooseaccident-modal').click(function(){
-//			$(this).css('display','none');
-//		})
-//		var duty = '';
-//		$('.chooseaccident-modal .modal-content .modal-btn a').bind('click',function(){
-//			// 责任方
-//			console.log($(this).attr('data-select'))
-//			duty = $(this).attr('data-select');
-//		})
-//		
-//		// 事故情形code
-//		var accidentType = $(this).attr('data-code');
-//		
-//		// 本地存儲當前事故情形
-//		var accidentTypeInfo = $(this).children('span').html();
-////		console.log(accidentTypeInfo);
-//		localStorage.setItem('accidentType',accidentType);
-//		localStorage.setItem('accidentTypeInfo',accidentTypeInfo);
-//		
-//		console.log(duty)
-//		// 下一步
-//		$('.btn').on('click', function(){
-//			$.ajax({
-//				type:"post",
-//				url: choseAccidentTypeUrl,
-//				data: {
-//					token: token,
-//					accidentId: accidentId,
-//					accidentType : accidentType,
-//					duty: duty
-//				},
-//				success:function(res){
-//					console.log(res)
-//					if(res.status == 2000){
-//						var handleType = localStorage.getItem('handleType')
-//						console.log(handleType)
-//						if(handleType == 1){
-//							window.location.href = 'fix-duty.html'
-//						}else{
-//							window.location.href = 'msg_certification.html'
-//						}
-//						
-//					}
-//				}
-//			});
-//		});
-//	})
+		
+
 
 </script>
 
