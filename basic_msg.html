@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>事故信息及当事人列表</title>
+  <title>事故及自行协商结果信息</title>
   <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
  	<link rel="stylesheet" href="static/css/app.css" />
 </head>
@@ -17,7 +17,7 @@
 				<span class="goback-text">返回</span>
 			</a>
 		</div>
-		<h2 class="header-top-title">事故信息及当事人列表</h2>
+		<h2 class="header-top-title">事故及自行协商结果信息</h2>
 	</div>
 	
 	<!--tab切换-->
@@ -99,6 +99,7 @@
 	
 	if(localStorage.getItem('type')==2){
 		$('.basic-msg-btn a').eq(0).children('span').html('交通事故认定书')
+		$('.header-top-title').html('事故及认定结果信息')
 	}
 	
 

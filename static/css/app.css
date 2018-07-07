@@ -999,7 +999,7 @@
 }
 .upload-page .exit-modal-info .exit-cont{
 	width: 22.5rem;
-	height: 14.583333rem;
+	/*height: 14.583333rem;*/
 	background: #fff;
 	margin: auto;
 	margin-top: 17.833333rem;
@@ -1024,6 +1024,7 @@
 	line-height: 3.333333rem;
 	color: #5F9AFE;
 	font-size: 1.25rem;
+	height: 3.333333rem;
 }
 /*事故地点定位map.html*/
 /* .map-page .map-content{
@@ -1415,6 +1416,9 @@
 }
 .chooseaccident-content>ul>li> .detail-info{
 	display: none;
+}
+.chooseaccident-content>ul>li> .detail-info.active{
+	display: block;
 }
 .chooseaccident-content>ul>li> .detail-info>li{
 	height: 8.333333rem;
@@ -2094,7 +2098,12 @@ canvas {
 }
 .readme-page .btn.active{
 	/*margin-top: 2.208333rem;*/
+	width: 16.666666rem;
 	background: #38ADFF;
+	position: fixed;
+	bottom: 2.291666rem;
+	left: 50%;
+	margin-left: -8.333333rem;
 }
 .readme-page .btn.active a span{
 	display: none;

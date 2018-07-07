@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>选择事故</title>
+  <title>选择事故情形</title>
   <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
  	<link rel="stylesheet" href="static/css/app.css" />
 </head>
@@ -17,7 +17,7 @@
 				<span class="goback-text">返回</span>
 			</a>
 		</div>
-		<h2 class="header-top-title">选择事故</h2>
+		<h2 class="header-top-title">选择事故情形</h2>
 	</div>
 	
 	
@@ -107,22 +107,6 @@
 				$('.detail-info').html(str1);
 			}
 			
-			
-			
-			var on = true;
-			$('.box').on('click',function(){
-					if(on){
-						$(this).siblings('.detail-info').show();
-						$(this).siblings('.box').children('em').addClass('active');
-						$('.box').on('click',function(){
-							$(this).siblings('.detail-info').hide();
-						  $(this).siblings('.box').children('em').removeClass('active');
-						})
-						on=!on
-					}
-				return false;
-			})
-			
 			$('.clearfix').on('mousedown',function(){
 					if(!$(this).children('strong').hasClass('active')){
 						$('strong').removeClass('active');
@@ -194,6 +178,19 @@
 		$(this).hide().stop()
 	})
 	
+		$('.chooseaccident-content').on('click','.box',function(){
+			var on = !$(this).siblings('.detail-info').hasClass('active');
+				if(on){
+					$(this).siblings('.detail-info').addClass('active');
+					$(this).children('em').addClass('active');
+					on=!$(this).siblings('.detail-info').hasClass('active')
+				}else if(!on){	
+					$(this).siblings('.detail-info').removeClass('active');
+				  $(this).children('em').removeClass('active');
+				  on=!$(this).siblings('.detail-info').hasClass('active')
+				}
+				return false;
+			})
 		
 	//下一步
 
