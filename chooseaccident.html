@@ -31,48 +31,6 @@
 				</div>
 				<ul class="detail-info"></ul>
 			</li>
-			<li class="box-cont">
-				<div class="box bg-f4">
-					<span class="fl">让行</span>
-					<em class="fr"></em>
-				</div>
-				<ul class="detail-info"></ul>
-			</li>
-			<li class="box-cont">
-				<div class="box bg-f4">
-					<span class="fl">追尾</span>
-					<em class="fr"></em>
-				</div>
-				<ul class="detail-info"></ul>
-			</li>
-			<li class="box-cont">
-				<div class="box bg-f4">
-					<span class="fl">违反标志标线</span>
-					<em class="fr"></em>
-				</div>
-				<ul class="detail-info"></ul>
-			</li>
-			<li class="box-cont">
-				<div class="box bg-f4">
-					<span class="fl">违反信号灯</span>
-					<em class="fr"></em>
-				</div>
-				<ul class="detail-info"></ul>
-			</li>
-			<li class="box-cont">
-				<div class="box bg-f4">
-					<span class="fl">超车</span>
-					<em class="fr"></em>
-				</div>
-				<ul class="detail-info"></ul>
-			</li>
-			<li class="box-cont">
-				<div class="box bg-f4">
-					<span class="fl">逆行等其他情形</span>
-					<em class="fr"></em>
-				</div>
-				<ul class="detail-info"></ul>
-			</li>
 		</ul>
 	</div>
 	
@@ -122,20 +80,48 @@
 		success:function(data){
 			console.log(data);
 			var Len = data.list.length;
+			var str='';
 			for(var i=0;i<Len;i++){
-				var str='';
-				for (var j=0;j<data.list[i].seconde.length;j++) {
-					str +='<li class="clearfix">'
-									+'<img src="'+data.list[i].seconde[j].url+'"/>'
-									+'<div>'+data.list[i].seconde[j].name+'</div>'
-									+'<strong class="fr" bigurl="'+data.list[i].seconde[j].bigUrl+'" code="'+data.list[i].seconde[j].code+'"></strong>'
+				str+='<li class="box-cont">'
+									+'<div class="box bg-f4">'
+										+'<span class="fl">'+data.list[i].name+'</span>'
+										+'<em class="fr"></em>'
+									+'</div>'
+									+'<ul class="detail-info"></ul>'
 								+'</li>'
+			}
+			$('.chooseaccident-content>ul').html('');
+			$('.chooseaccident-content>ul').html(str);
+			
+			for (var i=0;i<Len;i++) {
+				var str1=''
+				for (var j=0;j<data.list[i].seconde.length;j++) {
+					str1 +='<li class="clearfix">'
+										+'<img src="'+data.list[i].seconde[j].url+'"/>'
+										+'<div>'+data.list[i].seconde[j].name+'</div>'
+										+'<strong class="fr" bigurl="'+data.list[i].seconde[j].bigUrl+'" code="'+data.list[i].seconde[j].code+'"></strong>'
+									+'</li>'
+								
 				}
-				$('.box-cont').eq(i).children('.detail-info').html('');
-				$('.box-cont').eq(i).children('.detail-info').html(str);
+				$('.detail-info').html('');
+				$('.detail-info').html(str1);
 			}
 			
 			
+			
+			var on = true;
+			$('.box').on('click',function(){
+					if(on){
+						$(this).siblings('.detail-info').show();
+						$(this).siblings('.box').children('em').addClass('active');
+						$('.box').on('click',function(){
+							$(this).siblings('.detail-info').hide();
+						  $(this).siblings('.box').children('em').removeClass('active');
+						})
+						on=!on
+					}
+				return false;
+			})
 			
 			$('.clearfix').on('mousedown',function(){
 					if(!$(this).children('strong').hasClass('active')){
@@ -148,6 +134,8 @@
 				localStorage.setItem('accidentcode',$('strong.active').attr('code'));
 				localStorage.setItem('detailinfo',$('strong.active').siblings('div').html())
 				console.log(2222)
+				
+				
 				
 				//按钮下一步的激活状态的以及点击事件
 				var active = $('strong').hasClass('active');
@@ -193,6 +181,8 @@
 							})
 						})
 					}
+				}else{
+					$('.btn').addClass('active');
 				}
 				return false;
 			})
@@ -200,19 +190,10 @@
 	});
 	
 	
-	var on = true;
-	$('.box').click(function(){
-		if (on) {
-			$(this).siblings('.detail-info').show();
-			$(this).siblings('.box').children('em').addClass('active');
-			on=!on;
-		}else{
-			$(this).siblings('.detail-info').hide();
-			$(this).siblings('.box').children('em').removeClass('active');
-			on=!on;
-		}
-		return false;
+	$('.chooseaccident-modal').click(function(){
+		$(this).hide().stop()
 	})
+	
 		
 	//下一步
 

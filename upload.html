@@ -216,46 +216,22 @@
 							$('#select-weather span').html(uploadData.weather);
 						};
 						if (uploadData.main_pic1!='') {
-							$('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src',uploadData.main_pic1).css({
-									'width':'100%',
-									'height':'8.333333rem',
-									'margin-top':'0'
-								});
+							$('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src',uploadData.main_pic1).addClass('active');
 						};
 						if(uploadData.main_pic2!=''){
-							$('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src',uploadData.main_pic2).css({
-								'width':'100%',
-								'height':'8.333333rem',
-								'margin-top':'0'
-							});
+							$('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src',uploadData.main_pic2).addClass('active');
 						};
 						if (uploadData.main_pic3!='') {
-							$('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src',uploadData.main_pic3).css({
-								'width':'100%',
-								'height':'8.333333rem',
-								'margin-top':'0'
-							});
+							$('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src',uploadData.main_pic3).addClass('active');
 						};
 						if (uploadData.other_pic1!='') {
-							$('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src',uploadData.other_pic1).css({
-								'width':'100%',
-								'height':'8.333333rem',
-								'margin-top':'0'
-							});
+							$('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src',uploadData.other_pic1).addClass('active');
 						};
 						if (uploadData.other_pic2!='') {
-							$('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src',uploadData.other_pic2).css({
-								'width':'100%',
-								'height':'8.333333rem',
-								'margin-top':'0'
-							});
+							$('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src',uploadData.other_pic2).addClass('active');
 						};
 						if (uploadData.other_pic3!='') {
-							$('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src',uploadData.other_pic3).css({
-								'width':'100%',
-								'height':'8.333333rem',
-								'margin-top':'0'
-							});
+							$('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src',uploadData.other_pic3).addClass('active');
 						};
 						// 判断图片审核状态
 						if (uploadData.main_pic1) {
@@ -346,45 +322,6 @@ $('.time').on('click', function(){
 	timePicker.show();
 })
 
-// 地点天气
-var weather = [
-	{
-		value: "1",
-		text: "晴"
-	},
-	{
-		value: "2",
-		text: "阴"
-	},
-	{
-		value: "3",
-		text: "雨"
-	},
-	{
-		value: "4",
-		text: "雪"
-	},
-	{
-		value: "5",
-		text: "雾"
-	},
-	{
-		value: "6",
-		text: "大风"
-	},
-	{
-		value: "7",
-		text: "沙尘"
-	},
-	{
-		value: "8",
-		text: "冰雹"
-	},
-	{
-		value: "9",
-		text: "其它"
-	}
-];
 var weatherPicker = new Picker({
 			data: [weather],
 			selectedIndex: [0],
@@ -425,11 +362,7 @@ var imgArr = [];
 				success: function(data){
 					if(data.status == 2000){
 					console.log(data.list[0])
-					that.parent('div').siblings('div').children('img').attr("src",data.list[0]).css({
-						'width':'100%',
-						'height':'8.333333rem',
-						'margin-top':'0'
-					});
+					that.parent('div').siblings('div').children('img').attr("src",data.list[0]).addClass('active');
 					imgArr.push(data.list[0])
 					console.log(imgArr)
 					if(imgArr.length >= 3){
@@ -439,8 +372,6 @@ var imgArr = [];
 				}
 			});
 		}
-		
-		
 		that.closest('div').css('background','none');
 		that.parent().siblings('.box').children('loading-cover').hide();
 	}
@@ -491,7 +422,6 @@ var imgArr = [];
 				url:accidentImgUrl,
 				data: {
 					token:token,
-//					accidentId:accidentId,
 					address:address,
 					address_xy: localStorage.getItem('address_xy'),
 					isExpressway:fastRoad,

@@ -100,4 +100,42 @@ function compress(img, width, height, ratio) {
    return img64;
 }
 
-
+// 地点天气
+var weather = [
+	{
+		value: "1",
+		text: "晴"
+	},
+	{
+		value: "2",
+		text: "阴"
+	},
+	{
+		value: "3",
+		text: "雨"
+	},
+	{
+		value: "4",
+		text: "雪"
+	},
+	{
+		value: "5",
+		text: "雾"
+	},
+	{
+		value: "6",
+		text: "大风"
+	},
+	{
+		value: "7",
+		text: "沙尘"
+	},
+	{
+		value: "8",
+		text: "冰雹"
+	},
+	{
+		value: "9",
+		text: "其它"
+	}
+];
