@@ -136,6 +136,7 @@
 			}
 			
 			
+			
 			$('.clearfix').on('mousedown',function(){
 					if(!$(this).children('strong').hasClass('active')){
 						$('strong').removeClass('active');
@@ -147,6 +148,52 @@
 				localStorage.setItem('accidentcode',$('strong.active').attr('code'));
 				localStorage.setItem('detailinfo',$('strong.active').siblings('div').html())
 				console.log(2222)
+				
+				//按钮下一步的激活状态的以及点击事件
+				var active = $('strong').hasClass('active');
+				if (active) {
+					$('.btn').removeClass('active');
+					var yes = $('.btn').hasClass('active')
+					if (!yes) {
+						$('.btn').click(function(){
+							$('.modal-content img').attr('src',localStorage.getItem('bigUrl'))
+							$('.chooseaccident-modal').show();
+						})
+						
+						$('.chooseaccident-modal .modal-btn a').click(function(){
+								// 本地存儲當前事故情形
+							$('.chooseaccident-modal').click(function(){
+								$(this).hide();
+								return false;
+							})
+							var duty = $(this).attr('data-select');
+							console.log(duty)
+							localStorage.getItem('accidentTypeInfo');
+							$.ajax({
+								type:'post',
+								url:choseAccidentTypeUrl,
+								data:{
+									token:token,
+									accidentId:accidentId,
+									duty:duty,
+									accidentType:localStorage.getItem('accidentcode')
+								},
+								success:function(data){
+									console.log(data);
+									if (data.status==2000) {
+										var type = localStorage.getItem('type');
+										console.log(type)
+										if ( type ==2) {
+											window.location.href='msg_certification.html'
+										}else{
+											window.location.href='fix-duty.html'
+										}
+									}
+								}
+							})
+						})
+					}
+				}
 				return false;
 			})
 		}
@@ -155,60 +202,14 @@
 	
 	var on = true;
 	$('.box').click(function(){
-		var num = 0;
 		if (on) {
 			$(this).siblings('.detail-info').show();
 			$(this).siblings('.box').children('em').addClass('active');
 			on=!on;
-			num++
 		}else{
 			$(this).siblings('.detail-info').hide();
 			$(this).siblings('.box').children('em').removeClass('active');
 			on=!on;
-		}
-			
-		if (num!=0) {
-			$('.btn').removeClass('active');
-			var yes = $('.btn').hasClass('active')
-			if (!yes) {
-				$('.btn').click(function(){
-					$('.modal-content img').attr('src',localStorage.getItem('bigUrl'))
-					$('.chooseaccident-modal').show();
-				})
-				
-				$('.chooseaccident-modal .modal-btn a').click(function(){
-						// 本地存儲當前事故情形
-					$('.chooseaccident-modal').click(function(){
-						$(this).hide();
-						return false;
-					})
-					var duty = $(this).attr('data-select');
-					console.log(duty)
-					localStorage.getItem('accidentTypeInfo');
-					$.ajax({
-						type:'post',
-						url:choseAccidentTypeUrl,
-						data:{
-							token:token,
-							accidentId:accidentId,
-							duty:duty,
-							accidentType:localStorage.getItem('accidentcode')
-						},
-						success:function(data){
-							console.log(data);
-							if (data.status==2000) {
-								var type = localStorage.getItem('type');
-								console.log(type)
-								if ( type ==2) {
-									window.location.href='msg_certification.html'
-								}else{
-									window.location.href='fix-duty.html'
-								}
-							}
-						}
-					})
-				})
-			}
 		}
 		return false;
 	})

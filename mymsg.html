@@ -235,6 +235,7 @@
 		$('.cartype2').html(localStorage.getItem('cartype2'));
 		$('#picdrive1').attr('src',yoursData.firstpic);
 		$('#picrun1').attr('src',yoursData.secondpic);
+		active();
 	}
 
 
@@ -292,152 +293,43 @@
 	
 	
 	//上传当事人信息
-//	if($('.cpcode1')..change()){
-			$('.phone1').change(function(){
-				$('.btn').removeClass('active');
-				var on = $('.btn').hasClass('active');
-				if (!on) {
-					$('.btn').click(function(){
-						var mine = {
-							name:$('.name').val(),
-							cardNo:$('.idcard').val(),
-							phone:$('.phone').val(),
-							carNo:$('.cpcode').val(),
-							carType:$('.cartype1').attr('data-cartypeId'),
-							firstpic:$('#picdrive').attr('src'),
-							secondpic:$('#picrun').attr('src')
-						}
-						var yours = {
-							name:$('.name1').val(),
-							cardNo:$('.idcard1').val(),
-							phone:$('.phone1').val(),
-							carNo:$('.cpcode1').val(),
-							carType:$('.cartype2').attr('data-cartypeId'),
-							firstpic:$('#picdrive1').attr('src'),
-							secondpic:$('#picrun1').attr('src')
-						}
-						localStorage.setItem('mine',JSON.stringify(mine));
-						localStorage.setItem('yours',JSON.stringify(yours));
-						localStorage.setItem('cartype1',$('.cartype1').html());
-						localStorage.setItem('cartype2',$('.cartype2').html());
-						window.location.href="inputmsg.html"
-					})
-				}
-			})
-//		}
+	
+	function active(){
+		$('.btn').removeClass('active');
+			var on = $('.btn').hasClass('active');
+			if (!on) {
+				$('.btn').click(function(){
+					var mine = {
+						name:$('.name').val(),
+						cardNo:$('.idcard').val(),
+						phone:$('.phone').val(),
+						carNo:$('.cpcode').val(),
+						carType:$('.cartype1').attr('data-cartypeId'),
+						firstpic:$('#picdrive').attr('src'),
+						secondpic:$('#picrun').attr('src')
+					}
+					var yours = {
+						name:$('.name1').val(),
+						cardNo:$('.idcard1').val(),
+						phone:$('.phone1').val(),
+						carNo:$('.cpcode1').val(),
+						carType:$('.cartype2').attr('data-cartypeId'),
+						firstpic:$('#picdrive1').attr('src'),
+						secondpic:$('#picrun1').attr('src')
+					}
+					localStorage.setItem('mine',JSON.stringify(mine));
+					localStorage.setItem('yours',JSON.stringify(yours));
+					localStorage.setItem('cartype1',$('.cartype1').html());
+					localStorage.setItem('cartype2',$('.cartype2').html());
+					window.location.href="inputmsg.html"
+				})
+			}
+		}
+		$('.phone1').change(function(){
+			active();
+		})
 	
 	
-//	$(function(){
-//			if($('.name1').val()!=''&&$('.cpcode1').val()!=''&&$('.idcard1').val()!=''&&$('.phone1').val()!=''&&$('.name2').val()!=''&&$('.cpcode2').val()!=''&&$('.idcard2').val()!=''&&$('.phone2').val()!=''){
-//			$('.btn').removeClass('active');
-//			var on = $('.btn').hasClass('active');
-//			if (!on) {
-//				$('.btn').click(function(){
-//					var mine = "{'name':'"+$('.name').val()+"','cardNo':'"+$('.idcard').val()+"','phone':'"+$('.phone').val()+"','carNo':'"+$('.cpcode').val()+"','carType':'"+$('.cartype1').attr('data-cartypeId')+"','firstpic':'"+$('#picdrive').attr('src')+"','secondpic':'"+$('#picrun').attr('src')+"'}";
-//					var yours = "{'name':'"+$('.name1').val()+"','cardNo':'"+$('.idcard1').val()+"','phone':'"+$('.phone1').val()+"','carNo':'"+$('.cpcode2').val()+"','carType':'"+$('.cartype2').attr('data-cartypeId')+"','firstpic':'"+$('#picdrive1').attr('src')+"','secondpic':'"+$('#picrun1').attr('src')+"'}";
-//					localStorage.setItem('mine',mine);
-//					localStorage.setItem('yours',yours);
-//					window.location.href="inputmsg.html"
-//				})
-//			}
-//		}
-//	})
-	
-	
-//	$('.btn').click(function(){
-//		$.ajax({
-//			type:"post",
-//			url:createAccidentAllUserUrl,
-//			data:{
-//				token:token,
-//				accidentId:accidentId,
-//				mine:"{'name':'"+$('.name').val()+"','cardNo':'"+$('.idcard').val()+"','phone':'+$('.phone').val()+','carNo':'"+$('.cpcode').val()+"','carType':'"+$('.cartype1').attr('data-cartypeId')+"','firstpic':'"+$('#picdrive').attr('src')+"','secondpic':'"+$('#picrun').attr('src')+"'}",
-//				yours:"{'name':'"+$('.name1').val()+"','cardNo':'"+$('.idcard1').val()+"','phone':'+$('.phone1').val()+','carNo':'"+$('.cpcode2').val()+"','carType':'"+$('.cartype2').attr('data-cartypeId')+"','firstpic':'"+$('#picdrive1').attr('src')+"','secondpic':'"+$('#picrun1').attr('src')+"'}",
-//				{
-//					'name':$('.name1').val(),
-//					'cardNo':$('.idcard1').val(),
-//					'phone':$('.phone1').val(),
-//					'carNo':$('.cpcode2').val(),
-//					'carType':$('.cartype2').attr('data-cartypeId'),
-//					'firstpic':$('#picdrive1').attr('src'),
-//					'secondpic':$('#picrun1').attr('src')
-//				}
-//			},
-//			success:function(res){
-//				console.log(res)
-//			}
-//		});
-//	})
-	
-	
-	
-//	$('.mymsg-btn .box a').eq(1).click(function(){
-//		$('.msg-modal.total').show();
-//
-//		var name = $('#name').val();
-//		//验证身份证号码位数
-//		var cardNo = $('#sfzcode').val();
-//		var regsfzcode = /^[\d]{15}|[\d]{18}$/
-//		if(!regsfzcode.test(cardNo)){
-//			cardNo='您的身份号码有误!'
-//		}
-//		//验证手机号码位数
-//		var phone = $('#phone').val();
-//		var regphone = /^1\d{10}$/;
-//		if(!regphone.test(phone)){
-//			phone='您的手机号码有误!'
-//		}
-//		var carNo = $('#cpcode').val();
-//		var carType = $('#cartype').html();
-//		var carTypeId = $('#cartype').attr('data-cartypeId');
-//		var insurance =$('#Insurance').html();
-//		var insuranceId =$('#Insurance').attr('data-insuranceId');
-//		var firstpic = $('#picrun').attr('src');
-//		var secondpic = $('#picdrive').attr('src');
-//		var str = '<li>姓名：'+name+'</li>'
-//							+'<li>身份证号码：'+cardNo+'</li>'
-//							+'<li>手机号码：'+phone+'</li>'
-//							+'<li>号牌号码：'+carNo+'</li>'
-//							+'<li>号牌种类：'+carType+'</li>'
-//							+'<li>保险公司：'+insurance+'</li>'
-//							+'<li>请认证核实你的信息</li>'
-//		$('.msg-modal.total').children('.modal-content').children('ul').html('');
-//		$('.msg-modal.total').children('.modal-content').children('ul').append(str);
-//		$('.msg-modal.total').click(function(){
-//			$(this).css('display','none')
-//		});
-//
-//
-//
-//		$('.msg-modal.total .modal-btn').children('a').eq(1).click(function(){
-//			if(phone!='您的手机号码有误!'&&cardNo!='您的身份号码有误!'){
-//				$.ajax({
-//				type:"post",
-//				url:addAccidentUserUrl, //
-//				data:{
-//					token:localStorage.getItem('token'),
-//					accidentId:localStorage.getItem('accidentId'),
-//					name:name,
-//					cardNo:cardNo,
-//					phone:phone,
-//					carNo:carNo,
-//					carType: carType,
-//					insuranceId:insuranceId,
-//					firstpic:firstpic,
-//					secondpic:secondpic,
-//					type: '1'
-//				},
-//				success:function(data){
-//					console.log(data)
-//					if (data.status==2000) {
-//							$('.msg-modal.total').css('display','block');
-//							window.location.href='inputmsg.html'
-//						}
-//					}
-//				});
-//			}
-//		})
-//	})
 
 
 		
