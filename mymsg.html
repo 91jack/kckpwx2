@@ -248,7 +248,7 @@
 			type:"get",
 			url: getCarTypeUrl,
 			success: function(res){
-				console.log(res)
+				//console.log(res)
 				var carType = [];
 				for(var i=0;i<res.list.length;i++){
 					carType.push({'value': res.list[i].code,'text':res.list[i].name})

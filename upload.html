@@ -300,11 +300,10 @@
 		// 选择是否为高速/高架
 		$('.upload-content .msg li .choose-box').click(function(){
 			if (!$(this).hasClass('active')) {
-				$(this).addClass('active');
-				$(this).siblings().removeClass('active');
+				$(this).addClass('active').siblings().removeClass('active');
 			} else if($(this).hasClass('active')){
-				$(this).siblings('active').addClass('active');
-				$(this).removeClass('jctive');
+				$(this).removeClass('jctive').siblings('active').addClass('active');
+
 			}
 		})
 		
@@ -467,6 +466,7 @@ var imgArr = [];
 			var otherOne = '';
 			var otherTwo = '';
 			var otherThree = '';
+			
 			if($('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
 				otherOne=''
 			}else{
@@ -482,6 +482,7 @@ var imgArr = [];
 			}else{
 				otherThree=$('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src')
 			}
+			
 			console.log(otherOne);
 			console.log(otherTwo);
 			console.log(otherThree);
@@ -504,7 +505,6 @@ var imgArr = [];
 					otherPic3:otherThree
 				},
 				success: function(data){
-					console.log(data);
 					if(data.status == 2000){
 						localStorage.setItem('accidentId',data.obj)
 						window.location.href='accidentstatus.html';
