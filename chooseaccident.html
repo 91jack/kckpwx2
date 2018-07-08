@@ -24,13 +24,13 @@
 	<!--内容区图片区-->
 	<div class="chooseaccident-content">
 		<ul>
-			<li class="box-cont">
+			<!--<li class="box-cont">
 				<div class="box bg-f4">
 					<span class="fl">倒车</span>
 					<em class="fr"></em>
 				</div>
 				<ul class="detail-info"></ul>
-			</li>
+			</li>-->
 		</ul>
 	</div>
 	
@@ -87,25 +87,26 @@
 										+'<span class="fl">'+data.list[i].name+'</span>'
 										+'<em class="fr"></em>'
 									+'</div>'
-									+'<ul class="detail-info"></ul>'
-								+'</li>'
-			}
-			$('.chooseaccident-content>ul').html('');
-			$('.chooseaccident-content>ul').html(str);
-			
-			for (var i=0;i<Len;i++) {
-				var str1=''
+									+'<ul class="detail-info">'
+									
 				for (var j=0;j<data.list[i].seconde.length;j++) {
-					str1 +='<li class="clearfix">'
+					str +='<li class="clearfix">'
 										+'<img src="'+data.list[i].seconde[j].url+'"/>'
 										+'<div>'+data.list[i].seconde[j].name+'</div>'
 										+'<strong class="fr" bigurl="'+data.list[i].seconde[j].bigUrl+'" code="'+data.list[i].seconde[j].code+'"></strong>'
 									+'</li>'
-								
 				}
-				$('.detail-info').html('');
-				$('.detail-info').html(str1);
+				
+				
+				
+				str +='</ul></li>';
+							
+								
+				console.log(data.list[i].seconde)
+				
 			}
+			$('.chooseaccident-content>ul').html('');
+			$('.chooseaccident-content>ul').html(str);
 			
 			$('.clearfix').on('mousedown',function(){
 					if(!$(this).children('strong').hasClass('active')){
@@ -117,10 +118,7 @@
 				localStorage.setItem('bigUrl',$('strong.active').attr('bigUrl'));
 				localStorage.setItem('accidentcode',$('strong.active').attr('code'));
 				localStorage.setItem('detailinfo',$('strong.active').siblings('div').html())
-				console.log(2222)
-				
-				
-				
+	
 				//按钮下一步的激活状态的以及点击事件
 				var active = $('strong').hasClass('active');
 				if (active) {
