@@ -951,6 +951,11 @@
 	height: 6.833333rem;
 	margin-top: 0.75rem;
 }
+.upload-page .upload-content .uploadpicture.sec li:first-child .box img.bigpic.active{
+	width:100%;
+	height:8.333333rem;
+	margin-top:0
+}
 .upload-page .upload-content .uploadpicture .upload-msg{
 	position: absolute;
 	width: 2.5rem;
@@ -987,6 +992,8 @@
 .upload-page .btn.active{
 	background: #38ADFF;
 }
+
+/*事故地点提示信息模态框*/
 .upload-page .exit-modal-info{
 	height: 100%;
 	width: 100%;
@@ -995,20 +1002,17 @@
 	left: 0;
 	background: rgba(0,0,0,0.2);
 	z-index: 20;
-	/*display: none;*/
 }
 .upload-page .exit-modal-info .exit-cont{
 	width: 22.5rem;
-	/*height: 14.583333rem;*/
 	background: #fff;
 	margin: auto;
 	margin-top: 17.833333rem;
 	border-radius: 1.666666rem;
 }
 .upload-page .exit-modal-info .exit-cont .picinfo{
-	height: 11.208333rem;
 	width: 100%;
-	box-sizing: border-box;
+	/*box-sizing: border-box;*/
 	padding-top: 1.75rem;
 	border-bottom:1px solid #f4f4f4 ;
 }
@@ -1017,10 +1021,13 @@
 	font-size: 1.166666rem;
 	margin: auto;
 }
-.upload-page .exit-modal-info .exit-cont a{
+.upload-page .exit-modal-info .exit-cont .picinfo p:last-child{
+	margin-bottom: 1.458333rem;
+}
+.upload-page .exit-modal-info .exit-cont .active{
 	width: 100%;
 	text-align: center;
-	display: block;
+	display: inline-block;
 	line-height: 3.333333rem;
 	color: #5F9AFE;
 	font-size: 1.25rem;
@@ -1238,7 +1245,7 @@
 }
 .mymsg-page .btn{
 	width: 16.666666rem;
-	position: fixed;
+	position: relative;
 	left: 50%;
 	margin-left: -8.333333rem;
 	bottom: 2.291666rem;
@@ -1461,40 +1468,6 @@
 	margin-top: 3.5rem;
 	margin-right: 1.375rem;
 }
-/*.chooseaccident-content ul li{
-	box-sizing: border-box;
-	width: 100%;
-	padding: 0.833333rem 1.875rem 0.833333rem 1.125rem;
-	height: 8.333333rem;
-	line-height: 8.333333rem;
-	border-bottom: 1px solid #f4f4f4;
-}
-.chooseaccident-content ul li img{
-	width: 7.5rem;
-	height: 6.666666rem;
-}
-.chooseaccident-content ul li span{
-	width: 16.791666rem;
-	color: #333333;
-	font-size: 1rem;
-	line-height: 1.208333rem;
-	margin-left: 1rem;
-	margin-top: 2.125rem;
-}
-.chooseaccident-content ul li em{
-	width: 1.333333rem;
-	height: 1.333333rem;
-	margin-top: 2.666666rem;
-	background: url('../images/common/right.png');
-	background-size: 100% 100%;
-}
-.chooseaccident-content ul li em.active{
-	width: 1.333333rem;
-	height: 1.333333rem;
-	background: url('../images/common/bigo.png');
-	background-size: 100% 100%;
-	margin-top: 2.666666rem;
-}*/
 .chooseaccident-modal{
 	width: 100%;
 	height: 100%;
@@ -1565,6 +1538,7 @@
 	background: #E5E5E5;
 }
 .chooseaccident-page .btn{
+	/*background: #ccc;*/
 	position: fixed;
 	bottom: 2.291666rem;
 	left: 50%;
@@ -2093,8 +2067,12 @@ canvas {
 	margin-bottom: 1.75rem;
 }
 .readme-page .btn{
-	margin-top: 2.208333rem;
 	background: #D0D0D0;
+	width: 16.666666rem;
+	position: fixed;
+	bottom: 2.291666rem;
+	left: 50%;
+	margin-left: -8.333333rem;
 }
 .readme-page .btn.active{
 	/*margin-top: 2.208333rem;*/

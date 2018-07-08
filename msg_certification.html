@@ -12,10 +12,7 @@
 	<!--顶部标题栏-->
 	<div class="header-top">
 		<div class="fl">
-			<a href="javascript:;" class="goback">
-				<em class="icon-goback"></em>
-				<span class="goback-text">返回</span>
-			</a>
+		
 		</div>
 		<h2 class="header-top-title">短信验证</h2>
 	</div>
@@ -140,20 +137,29 @@
    
 		
 <script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
-	
 <script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 
 <!--当前页面交互-->
 <script type="text/javascript">
 	
-	var type = localStorage.getItem('type');
-	if (type==1) {
-		$('.header-top div a').click(function(){
-			$(this).removeClass('goback').attr('id','goback');
-		})
-	}
-	
+	$(function(){
+		var type = localStorage.getItem('type');
+		if (type==1) {
+			var str = '<a href="javascript:;" id="goback">'
+									+'<em class="icon-goback"></em>'
+									+'<span class="goback-text">返回</span>'
+								+'</a>'
+			$('.header-top div').html(str);
+		}else{
+			var str = '<a href="javascript:;" class="goback">'
+									+'<em class="icon-goback"></em>'
+									+'<span class="goback-text">返回</span>'
+								+'</a>'
+			$('.header-top div').html(str);
+		}
+		
+	})
 	
 	$('#goprev').on('click', function(){
 	var handleType = localStorage.getItem('handleType');

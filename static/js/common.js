@@ -12,11 +12,11 @@
 })();
 
 // 返回上一页
-$('.goback').on('click', function(){
+$('.header-top').on('click','.goback', function(){
 	window.history.back();
 })
 
-$('#goback').on('click', function(){
+$('.header-top').on('click','#goback', function(){
 //	var handleType = localStorage.getItem('handleType');
 //	if(handleType == 2){
 //		window.location.href='chooseaccident.html';

@@ -75,7 +75,7 @@
 		</div>
 	</div>
 	
-	<div class="exit-modal">
+	<div class="exit-modal index">
 		<div class="exit-cont">
 			<div class="time">
 				<p></p>
@@ -102,34 +102,38 @@ $(function(){
 	localStorage.removeItem('mine');
 	localStorage.removeItem('yours');
 	$('.deal-accident').click(function(){
-		$.ajax({
-			type:"post",
-			url:accidentsDealInfoUrl,
-			data:{
-				pageSize:30,
-				pageNo:1,
-				state:2,
-				token:token
-			},
-			success:function(res){
-				if (res.status==2000) {
-					if(res.list.length >0){
-						window.location.href='undeal.html'
+		if (h<=7||h>=23) {
+			$('.exit-modal').show();
+		} else{
+			$.ajax({
+				type:"post",
+				url:accidentsDealInfoUrl,
+				data:{
+					pageSize:30,
+					pageNo:1,
+					state:2,
+					token:token
+				},
+				success:function(res){
+					if (res.status==2000) {
+						if(res.list.length >0){
+							window.location.href='undeal.html'
+						}else{
+							window.location.href='readme.html'
+						}
 					}else{
 						window.location.href='readme.html'
 					}
-				}else{
-					window.location.href='readme.html'
 				}
-			}
-		});
+			});
+		}
 	})
 	
 	// 打开页面判断时间
 	// 9:00-20:00
 	var startTime = '9:00:00';
 	var endTime = '19:00:00';
-	if (h<=7||h>=19) {
+	if (h<=7||h>=23) {
 		$('.exit-modal').show();
 		var str = '在线快处快赔业务受理时间为'+startTime+'至'+endTime+',当前时间为'+nowTime+',不能受理！'
 		$('.exit-modal .exit-cont .time p').html(str)

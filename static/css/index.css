@@ -168,3 +168,6 @@ html{
 	font-size: 1.166666rem;
 	color: #1A1A1A;
 }
+.exit-modal.index{
+	display: none;
+}

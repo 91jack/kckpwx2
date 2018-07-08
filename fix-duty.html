@@ -118,7 +118,7 @@
 	</div>
 	
 	<!--选择事故模态框-->
-	<div class="btn">
+	<div class="btn active">
 		<a href="JavaScript:;">
 			完成
 		</a>
@@ -131,7 +131,6 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
-	
 	// 保险公司
 		$.ajax({
 			type:"get",
@@ -168,6 +167,7 @@
 					var selectInsurance = Insurance[selectedIndex].text;
 					$('.Insurance').eq(1).text(selectInsurance)
 					$('.Insurance').eq(1).attr('data-insuranceId',selectedVal);
+					$('.btn').removeClass('active');
 					})
 				})
 			});
@@ -215,7 +215,6 @@
 						$('.cardestory').eq(1).text(selectCarDestory)
 					})
 				})
-
 			}
 		})
 	})
@@ -254,14 +253,10 @@
 						
 						
 					}else{
-					
-						
 						$('.mymsg-content .form').eq(1).children('.form-group').eq(1).children('em').html(data.list[i].name);
 						$('.mymsg-content .form').eq(1).children('.form-group').eq(2).children('em').html(data.list[i].carno);
 						$('.mymsg-content .form').eq(1).children('.form-group').eq(3).children('em').html(data.list[i].phone);
 						$('.mymsg-content .form').eq(1).children('.form-group').eq(5).children('em').html(data.list[i].dutyname);
-						
-						
 						if(data.list[i].dutycode == 1){
 							$('.mymsg-content .form').eq(1).children('.form-group').eq(5).children('em').css('background','#F43C3C');
 						}else{
@@ -270,10 +265,10 @@
 					}
 				}
 				
-			
+
 				
-				
-				$('.chooseaccident-page .btn').click(function(){
+
+				$('.btn').click(function(){
 					var user = [
 						{'id': data.list[1].id,'damagecode': '01','dutycode': data.list[1].dutycode,'insurerId':$('#ensu1').attr('data-insuranceId')},
 						{'id': data.list[0].id,'damagecode': '02','dutycode': data.list[0].dutycode,'insurerId':$('#ensu2').attr('data-insuranceId')}
@@ -301,7 +296,7 @@
 		}
 	});
 	
-	//获取事故情形
+//获取事故情形
 //	var dataInfo = localStorage.getItem('detailinfo');
 //	$('.accidentInfo').html(dataInfo);
 	$.ajax({
