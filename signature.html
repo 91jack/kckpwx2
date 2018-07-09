@@ -13,8 +13,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  position: absolute;
-  z-index: 0;
 }
 .header-top {
 	position: relative;
@@ -41,7 +39,7 @@ canvas {
 <body class="signature">
 	
 		
-	 <div id="canvasBox" :style="getHorizontalStyle">
+	 <div id="canvasBox" :style="getHorizontalStyle" >
 	 	<!--顶部标题栏-->
 		<div class="header-top">
 			<div class="fl">
@@ -131,6 +129,8 @@ var vm = new Vue({
         width: `${width}px`,
         height: `${height}px`,
         transformOrigin: 'center center',
+        position: 'absolute',
+        z-index: '0'
       };
     },
   },
