@@ -167,7 +167,6 @@
 					var selectInsurance = Insurance[selectedIndex].text;
 					$('.Insurance').eq(1).text(selectInsurance)
 					$('.Insurance').eq(1).attr('data-insuranceId',selectedVal);
-					$('.btn').removeClass('active');
 					})
 				})
 			});
@@ -213,6 +212,7 @@
 						AccidentDamagePicker2.on('picker.select', function (selectedVal, selectedIndex) {
 						var selectCarDestory = AccidentDamage[selectedIndex].text;
 						$('.cardestory').eq(1).text(selectCarDestory)
+						$('.btn').removeClass('active');
 					})
 				})
 			}
@@ -269,28 +269,32 @@
 				
 
 				$('.btn').click(function(){
-					var user = [
-						{'id': data.list[1].id,'damagecode': '01','dutycode': data.list[1].dutycode,'insurerId':$('#ensu1').attr('data-insuranceId')},
-						{'id': data.list[0].id,'damagecode': '02','dutycode': data.list[0].dutycode,'insurerId':$('#ensu2').attr('data-insuranceId')}
-					]
-					user = JSON.stringify(user)
-					console.log(user)
-					$.ajax({
-						type:"post",
-						url: choseAccidentDutyUrl,
-						data: {
-							token: token,
-							accidentId:accidentId,
-							user: user
-						},
-						dataType: "json",
-						success: function(res){
-							console.log(res)
-							if(res.status == 2000){
-								window.location.href = 'msg_certification.html'
+					var on = !$('.btn').hasClass('active');
+					if (on) {
+						console.log(1111)
+						var user = [
+							{'id': data.list[1].id,'damagecode': '01','dutycode': data.list[1].dutycode,'insurerId':$('#ensu1').attr('data-insuranceId')},
+							{'id': data.list[0].id,'damagecode': '02','dutycode': data.list[0].dutycode,'insurerId':$('#ensu2').attr('data-insuranceId')}
+						]
+						user = JSON.stringify(user)
+						console.log(user)
+						$.ajax({
+							type:"post",
+							url: choseAccidentDutyUrl,
+							data: {
+								token: token,
+								accidentId:accidentId,
+								user: user
+							},
+							dataType: "json",
+							success: function(res){
+								console.log(res)
+								if(res.status == 2000){
+									window.location.href = 'msg_certification.html'
+								}
 							}
-						}
-					});
+						});
+					}
 				})
 			}
 		}

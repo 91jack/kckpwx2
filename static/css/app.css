@@ -422,6 +422,7 @@
 	height: 10rem;
 	background: #fff;
 	margin-top: 0.833333rem;
+	position: relative;
 }
 .accident-search-page .tab-content .tab-content-item ul{
 	padding: 1.166666rem 0 1.166666rem 1.291666rem;
@@ -437,6 +438,11 @@
 }
 .accident-search-page .tab-content .tab-content-item ul li .accident-info{
 	margin-left: 0.5rem;
+}
+.accident-search-page .tab-content .tab-content-item .accident-status{
+	position: absolute;
+	top: 1.166666rem;
+	right: 0.875rem;
 }
 .accident-search-page .tab-content .tab-content-item .accident-status img{
 	width: 6.25rem;
@@ -466,8 +472,8 @@
 }
 #undeal .accident-status a{
 	display: inline-block;
-	margin-top: 1.166666rem;
-	margin-right: 0.875rem;
+	/*margin-top: 1.166666rem;
+	margin-right: 0.875rem;*/
 	font-size: 1rem;
 	color: #48B4FF;
 }
@@ -2073,6 +2079,7 @@ canvas {
 	bottom: 2.291666rem;
 	left: 50%;
 	margin-left: -8.333333rem;
+	z-index: 20;
 }
 .readme-page .btn.active{
 	/*margin-top: 2.208333rem;*/
@@ -2082,6 +2089,7 @@ canvas {
 	bottom: 2.291666rem;
 	left: 50%;
 	margin-left: -8.333333rem;
+	z-index: 20;
 }
 .readme-page .btn.active a span{
 	display: none;
