@@ -14,10 +14,9 @@
   flex-direction: column;
   height: 100%;
 }
-/*.header-top {
-	position: relative;
-	z-index: 9999!important;
-}*/
+.header-top {
+	width: 100%;
+}
 
 canvas {
   flex: 1;
@@ -31,8 +30,8 @@ canvas {
 		
 	 <div id="canvasBox" :style="getHorizontalStyle" >
 	 	<!--顶部标题栏-->
-		<div class="header-top">
-			<div class="fl" style="position: relative;z-index: 999;">
+		<div class="header-top" style="position: absolute;z-index: 999;">
+			<div class="fl" style="position: relative;z-index: 9999;">
 				<a href="javascript:;" class="goback" @mousedown="goback">
 					<em class="icon-goback"></em>
 					<span class="goback-text">返回</span>
