@@ -28,12 +28,14 @@ function Draw(canvas, degree, config = {}) {
   if (devicePixelRatio) {
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
-    canvas.height = height * devicePixelRatio;
+    canvas.height = height * devicePixelRatio - 43;
     canvas.width = width * devicePixelRatio;
+    
     context.scale(devicePixelRatio, devicePixelRatio);
   } else {
     canvas.width = width;
     canvas.height = height;
+    canvas.style="position:relative;z-index:1;"
   }
 
   context.lineWidth =3;
