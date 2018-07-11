@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>事故地点定位</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="map-page">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" class="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">事故地点定位</h2>
+	</div>
+
+	<div class="map-content">
+		<div id="map"></div>
+			<img class="icon" src="static/images/return.png"/>
+			<ul class="info">
+	    	<li class="adreess">
+	    		<strong class="color-33 font-30">
+	    			事故地址
+	    		</strong>
+	    		<p class="color-66 font-30" id="addr">重庆市渝北区金开大道</p>
+	    		<a href="" class="fr">
+	    			<span></span>
+	    		</a>
+	    	</li>
+	    </ul>
+	    <div class="map-btn" id="submap">
+	    	<p class="color-white">完成</p>
+	    </div>
+		</div>
+
+	  <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=wqB7npvF7DsDGlFG2oYhih93K5iEqsou"></script>
+		<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/map.js"  type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/bmap.js"  type="text/javascript" charset="utf-8"></script>
+	</body>
+
+
+</html>
