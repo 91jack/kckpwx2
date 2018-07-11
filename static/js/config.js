@@ -86,6 +86,9 @@ var removeBindingCarUrl = host + '/kyp/applogin/currencyController/removeBinding
 // 创建事故
 var createAccidentUrl = host + '/kyp/applogin/accidentController/createAccident';
 
+//删除事故
+var deleteAccidentUrl = host + '/kyp/applogin/accidentController/deleteAccident'
+
 // 上传事故照片
 var accidentImgUrl = host + '/kyp/applogin/accidentController/accidentImg';
 

@@ -94,6 +94,19 @@
 	$('.callpolice a').eq(1).click(function(){
 		window.location.href='index.html'
 		$('.callpolice').hide();
+		$.ajax({
+			type:"post",
+			url:deleteAccidentUrl,
+			data:{
+				token:token,
+				accidentId:accidentId
+			},
+			success:function(res){
+				if (res.status==2000) {
+					console.log(1111)
+				}
+			}
+		});
 	})
 	
 	$('.choose-type-content>div').click(function(){

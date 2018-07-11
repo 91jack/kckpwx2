@@ -152,6 +152,12 @@
 <!--当前页面交互-->
 <script type="text/javascript">
 	
+	if (localStorage.getItem('nowTime')) {
+		$('.detail-time').html(localStorage.getItem('nowTime'))
+	}
+	if (localStorage.getItem('nowWeather')) {
+		$('.select-weather em').html(localStorage.getItem('nowWeather')).css('color','#333')
+	}
 	$('.fulltime').html(accidentTime)
 	$('.detail-time').html(nowTime)
 	// 事故时间
@@ -177,6 +183,7 @@
 			var selectMin = min[selectedIndex[1]].text;
 			var time = selectHour + ':' +selectMin;
 			$('.time .detail-time').text(time)
+			localStorage.setItem('nowTime',time)
 		})
 		
 		$('.time').on('click', function(){
@@ -193,6 +200,7 @@
 		weatherPicker.on('picker.select', function (selectedVal, selectedIndex) {
 			console.log(selectedVal)
 				$('.select-weather em').text(weather[selectedIndex].text).css('color','#333')
+				localStorage.setItem('nowWeather',weather[selectedIndex].text);
 		})
 		
 		$('.select-weather').on('click', function(){
