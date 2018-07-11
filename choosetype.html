@@ -18,6 +18,11 @@
 				<span class="goback-text">返回</span>
 			</a>
 		</div>
+		<div class="fr call-police">
+			<a href="javascript:;">
+				<span>报警</span>
+			</a>
+		</div>
 		<h2 class="header-top-title">责任认定</h2>
 	</div>
 	
@@ -34,17 +39,15 @@
 	<div class="choose-type-content">
 		<div class="choose-self" data='1'>
 			<div class="self-content fr">
-				<p>自行协商</p>
 				<a href="javascript:;">
-					<span>当事人双方定责</span>
+					<span>自行协商</span>
 				</a>
 			</div>
 		</div>
 		<div class="choose-online" data='2'>
 			<div class="online-content fl">
-				<p>在线定责</p>
 				<a href="javascript:;">
-					<span>快处中心事故认责认定</span>
+					<span>在线定责</span>
 				</a>
 			</div>
 		</div>
@@ -80,6 +83,18 @@
 <!--当前页面交互-->
 <script type="text/javascript">
 	// 
+	
+	$('.call-police').click(function(){
+		$('.callpolice').show();
+	});
+	$('.callpolice a').eq(0).click(function(){
+		$('.callpolice').hide();
+	})
+	$('.callpolice a').eq(1).click(function(){
+		window.location.href='index.html'
+		$('.callpolice').hide();
+	})
+	
 	$('.choose-type-content>div').click(function(){
 		localStorage.setItem('type',$(this).attr('data'));
 		$('.ensurance').show();
@@ -87,9 +102,6 @@
 		$('.ensurance .exit-cont a').eq(0).click(function(){
 			$('.ensurance').hide();
 			$('.callpolice').show();
-			$('.callpolice .exit-cont a').click(function(){
-				$('.callpolice').hide();
-			})
 		});
 		
 		$('.ensurance .exit-cont a').eq(1).click(function(){

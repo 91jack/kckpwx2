@@ -106,35 +106,37 @@
 	if (localStorage.getItem('serachId')) {
 		accidentId=localStorage.getItem('serachId');
 	};
-	$.ajax({
-		type:"post",
-		url:AccidentsInfoDetailUrl,
-		async:true,
-		data:{
-			id:accidentId,
-			token:token
-		},
-		success:function(data){
-			console.log(data);
-			var dataList = data.obj;
-			if (data.status==2000) {
-				$('.form .form-group').eq(0).children('em').html(dataList.id);
-				$('.form .form-group').eq(1).children('em').html(dataList.datetime);
-				$('.form .form-group').eq(2).children('em').html(dataList.address);
-				$('.accident-img img').eq(0).attr('src',dataList.main_pic1);
-				$('.accident-img img').eq(1).attr('src',dataList.main_pic2);
-				$('.accident-img img').eq(2).attr('src',dataList.main_pic3);
+	$(function(){
+		$.ajax({
+			type:"post",
+			url:AccidentsInfoDetailUrl,
+			async:true,
+			data:{
+				id:accidentId,
+				token:token
+			},
+			success:function(data){
+				console.log(data);
+				var dataList = data.obj;
+				if (data.status==2000) {
+					$('.form .form-group').eq(0).children('em').html(dataList.id);
+					$('.form .form-group').eq(1).children('em').html(dataList.datetime);
+					$('.form .form-group').eq(2).children('em').html(dataList.address);
+					$('.accident-img img').eq(0).attr('src',dataList.main_pic1);
+					$('.accident-img img').eq(1).attr('src',dataList.main_pic2);
+					$('.accident-img img').eq(2).attr('src',dataList.main_pic3);
+				}
 			}
-		}
-	});
-	$('.basic-msg-btn a').eq(1).click(function(){
-		$('.modal').show();
-				$('.modal-btn a').eq(1).click(function(){
-					window.location.href = 'index.html';
-				})
-				$('.modal-btn a').click(function(){
-					$('.modal').hide();
-				})
+		});
+		$('.basic-msg-btn a').eq(1).click(function(){
+			$('.modal').show();
+					$('.modal-btn a').eq(1).click(function(){
+						window.location.href = 'index.html';
+					})
+					$('.modal-btn a').click(function(){
+						$('.modal').hide();
+					})
+		})
 	})
 </script>
 

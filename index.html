@@ -4,21 +4,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>快处快赔</title>
+  <title>事故列表</title>
   <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
  	<link rel="stylesheet" href="static/css/app.css" />
-	<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+	
 </head>
-<body class="index-page">
+<body class="bg-f4 accident-search-page">
 	<!--顶部标题栏-->
 	<div class="header-top">
 		<div class="fl">
-			<!--<a href="javascript:;" class="goback">
+			<a href="index.html" class="goback">
 				<em class="icon-goback"></em>
-				<span class="goback-text">返回</span>
-			</a>-->
+				<!--<span class="goback-text">返回</span>-->
+			</a>
 		</div>
-		<h2 class="header-top-title">快处快赔</h2>
+		<h2 class="header-top-title">事故列表</h2>
 		<div class="fr">
 			<a href="user.html">
 				<em class="icon-user"></em>
@@ -26,53 +26,19 @@
 		</div>
 	</div>
 	
-	<!--天气时间信息-->
-	<div class="content-weather clearfix">  
-		<div class="date fl">
-			<span>10</span>
-			<em>℃</em>
-			<p class="indextime"></p>
-		</div>
-		<div class="weather fr">
-			<img src="static/images/index/weather.png"/>
-			<span>多云</span>
-			<p>空气质量差</p>
-		</div>
-	</div>
 	
-	<!--客服查询使用说明-->
-	<div class="content-info">
-		<ul>
-			<li>
-				<a href="tel:123456789">
-					<img src="static/images/index/kfserver.png"/>
-				</a>
-			</li>
-			<li>
-				<a href="accidentsearch.html">
-					<img src="static/images/index/copy.png"/>
-				</a>
-			</li>
-			<li>
-				<a href="javascript:;" id="clear">
-					<img src="static/images/index/useintro.png"/>
-				</a>
-			</li>
-		</ul>
-	</div>
+	<!--tab切换内容-->
+	<!--已完成事故-->
 	
-	<!--快速处理事件-->
-	<div class="content-deal">
-		<div class="deal-accident">
-			<a href="javascript:;">
-			 	<img src="static/images/index/accident.png"/>
-			 	<p>快速事故处理</p>
-			</a>
-		</div>
-		<div class="deal-intro">
-			<img src="static/images/index/jtaccident.png"/>
-			<span>如何快速判断事故责任</span>
-		</div>
+	<!--未完成事故-->
+	<div class="tab-content active" id="undeal"></div>
+	
+	<!--录入事件-->
+	<div class="tab-content-btn">
+		<a href="maphighway.html">
+			 <span>录入事故</span>
+		</a>
+		
 	</div>
 	
 	<div class="exit-modal index">
@@ -89,62 +55,221 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
-$(function(){
-	$('.indextime').html(indexTime)
+$('.exit-modal').show();
+var startTime = '9:00:00';
+var endTime = '19:00:00';
+if (h<=7||h>=23) {
+	$('.exit-modal').show();
+	var str = '在线快处快赔业务受理时间为'+startTime+'至'+endTime+',当前时间为'+nowTime+',不能受理！'
+	$('.exit-modal .exit-cont .time p').html(str)
+}else{
+	$('.exit-modal').hide();
+}
+$('.exit-modal a.active').click(function(){
+	$('.exit-modal').hide()
+})
 
-	localStorage.removeItem('signatureMine1');
-	localStorage.removeItem('signatureMine2');
-	localStorage.removeItem('code1');
-	localStorage.removeItem('code2');
-	localStorage.removeItem('accidentId');
-	localStorage.removeItem('show');
-	localStorage.removeItem('detailinfo');
-	localStorage.removeItem('mine');
-	localStorage.removeItem('yours');
-	$('.deal-accident').click(function(){
-		if (h<=7||h>=23) {
-			$('.exit-modal').show();
-		} else{
-			$.ajax({
-				type:"post",
-				url:accidentsDealInfoUrl,
-				data:{
-					pageSize:30,
-					pageNo:1,
-					state:2,
-					token:token
-				},
-				success:function(res){
+
+localStorage.removeItem('signatureMine1');
+localStorage.removeItem('signatureMine2');
+localStorage.removeItem('code1');
+localStorage.removeItem('code2');
+localStorage.removeItem('accidentId');
+localStorage.removeItem('show');
+localStorage.removeItem('detailinfo');
+localStorage.removeItem('mine');
+localStorage.removeItem('yours');
+
+$(function(){
+		$.ajax({
+			type:"post",
+			url:accidentsDealInfoUrl,
+			data:{
+				pageSize:30,
+				pageNo:1,
+				token:token
+			},
+			success:function(res){
+				console.log(res)
 					if (res.status==2000) {
-						if(res.list.length >0){
-							window.location.href='undeal.html'
-						}else{
-							window.location.href='readme.html'
+						var str='';
+						var linkhrefs ='';
+						var Len = res.list.length;
+						for (var i=0;i<Len;i++) {
+							linkhrefs = linkhref(res.list[i].status,res.list[i].handle);
+							hrefinfos = hrefinfo(res.list[i].status,res.list[i].handle);
+							str+='<div class="tab-content-item clearfix" data-accidentId="'+res.list[i].id+'" data-href="'+ linkhrefs +'">'
+											+'<ul>'
+												+'<li><span>受案编号：</span><span class="accident-info">'+res.list[i].id+'</span></li>'
+												+'<li><span>发生时间：</span><span class="accident-info">'+res.list[i].datetime+'</span></li>'
+												+'<li><span>事故地点：</span><span class="accident-info">'+res.list[i].address+'</span></li>'
+												+'<li><span>处理形态：</span><span data="'+res.list[i].id+'" class="accident-info duty">'+hrefinfos+'</span></li>'
+												+'<em></em>'
+											+'</ul>'
+										+'</div>'
 						}
-					}else{
-						window.location.href='readme.html'
+						$('#undeal').html('');
+						$('#undeal').html(str);
+						for (var i=0;i<Len;i++) {
+							if (res.list[i].status!=11) {
+								$('.tab-content-item').eq(i).children('ul').children('li').children('.duty').addClass('unduty')
+							} else{
+								$('.tab-content-item').eq(i).children('ul').children('li').children('.duty').addClass('over')
+							}
+						}
+						$('.tab-content-item').on('click', function(){
+							localStorage.setItem('accidentId',$(this).attr('data-accidentId'));
+							window.location.href = $(this).attr('data-href')
+						})
 					}
 				}
 			});
+//		}
+		
+function linkhref(status,handel){
+			var href = '';
+			switch(status){
+				case 1:
+				 	href = 'upload.html'
+				  break;
+				case 2:
+				  href = 'accidentstatus.html'
+				  break;
+				case 3:
+				 	href = 'choosetype.html'
+				  break;
+				case -3:
+				 	href = 'upload.html'
+				  break;
+				case 4:
+				  href = 'mymsg.html'
+				  break;
+				case 5:
+				 	href = 'uploadpicture.html'
+				  break;
+//				case 6:
+//				  href = 'certificate_status.html'
+//				  break;
+				case 7:
+				 	href = 'chooseaccident.html'
+				  break;
+				case -7:
+				 	href = 'uploadpicture.html'
+				  break;
+				case 8:
+					if(handel == 1){
+						href = 'fix-duty.html'
+					}else{
+						href = 'msg_certification.html'
+					}
+					
+				  break;
+				case 9:
+				 	href = 'msg_certification.html'
+				  break;
+				case 10:
+				  href = 'police_audit.html'
+				  break;
+				case 11:
+				 	href = 'basic_msg.html'
+				  break;
+				case -11:
+//				 	href = 'msg_certification.html'
+//				  break;
+//				case 12:
+//				 	href = 'inputmsg.html'
+//				  break;
+//				case 13:
+//				 	href = 'inputmsg.html'
+//				  break;
+//				case 14:
+//				 	href = 'inputmsg2.html'
+//				  break;
+				default:
+			}
+			return href;
 		}
-	})
-	
-	// 打开页面判断时间
-	// 9:00-20:00
-	var startTime = '9:00:00';
-	var endTime = '19:00:00';
-	if (h<=7||h>=23) {
-		$('.exit-modal').show();
-		var str = '在线快处快赔业务受理时间为'+startTime+'至'+endTime+',当前时间为'+nowTime+',不能受理！'
-		$('.exit-modal .exit-cont .time p').html(str)
-	}else{
-		$('.exit-modal').hide();
-	}
-})
-$('.exit-modal a.active').click(function(){
-	$('.exit-modal').hide()
+		
+		function hrefinfo(status,handel){
+			var msg = '';
+			switch(status){
+				case 1:
+				 	msg = '上传照片'
+				  break;
+				case 2:
+				  msg = '事故图片审核中'
+				  break;
+				case 3:
+				 	msg = '选择处理方式'
+				  break;
+				case -3:
+				 	msg = '事故图片审核失败'
+				  break;
+				case 4:
+				  msg = '添加当事人'
+				  break;
+				case 5:
+				 	msg = '提交证件信息'
+				  break;
+//				case 6:
+//				  msg = '证件信息审核中'
+//				  break;
+				case 7:
+				 	msg = '选择事故情形'
+				  break;
+				case -7:
+				 	msg = '证件审核失败'
+				  break;
+				case 8:
+				  if(handel==1){
+				  	msg = '输入协议书信息'
+				  }else{
+				  	msg = '请进行短信验证'
+				  }
+				  break;
+				case 9:
+				 	msg = '请进行短信验证'
+				  break;
+				case 10:
+				  msg = '交警在线审核中'
+				  break;
+				case 11:
+				 	msg = '已定责'
+				  break;
+//				case -11:
+//				 	msg = '交警审核失败'
+//				  break;
+//				case 12:
+//				 	msg = '添加对方信息'
+//				  break;
+//				case 13:
+//				 	msg = '双方信息添加完毕'
+//				  break;
+//				case 14:
+//				 	msg = '添加本方信息'
+//				  break;
+				default:
+			}
+			return msg;
+		}
 })
 </script>
 
 </body>
 </html>
+
+<!--状态（事故完成状态
+1 创建事故成功 --开始上传事故照片 
+2、上传事故照片成功 --开始审核照片 
+3、事故照片审核成功 --选择处理方式 -
+3、事故照片审核失败 不通过照片序号
+4、选择处理方式成功 --开始添加当事人 
+5、添加当事人成功  --添加成功 开始提交证件照 
+6、提交证件照片审核成功   --开始审核中 
+7、证件照片审核成功 -
+7、证件照片审核失败 
+8、选择事故情形成功 
+9、事故定责成功（自行协商，在线定责跳过该步骤）
+10、验证操作成功 提交审核中
+11、后台审核成功-
+11、后台审核失败-->

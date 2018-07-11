@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>上传现场照片</title>
+  <title>现场拍照取证</title>
   <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
  	<link rel="stylesheet" href="static/css/app.css" />
  	<link rel="stylesheet" type="text/css" href="static/css/animate.css"/>
 </head>
-<body class="upload-page">
+<body class="upload-page bg-f4">
 	<!--顶部标题栏-->
 	<div class="header-top">
 		<div class="fl">
@@ -18,54 +18,12 @@
 				<span class="goback-text">返回</span>
 			</a>
 		</div>
-		<h2 class="header-top-title">上传现场照片</h2>
+		<h2 class="header-top-title">现场拍照取证</h2>
 	</div>
 	
-	<!--顶部警察提示-->
-	<div class="police">
-		<img class="fl" src="static/images/common/police2.png"/>
-		<div class="police-content">
-			<span>温馨提示</span>
-			<p>请您在保证自身安全的情况下操作，请选择事故类型！</p>
-		</div>
-	</div>
 	
-	<div class="upload-content">
-		<!--获取地址天气等信息-->
-		<ul class="msg">
-			<li>
-				<a href="map.html">
-					<span>事故地址</span>
-					<span class="addr"></span>
-					<em class="fr"></em>
-				</a>
-			</li>
-			<li class="isexpressway">
-				<span>高速/高架</span>
-				
-				<span class="choose-box"></span>
-				<span data='0'>是</span>
-				<span class="choose-box active"></span>
-				<span data='1'>否</span>
-				
-			</li>
-			<li>
-				<span>事故时间</span>
-				
-				<span class="date">2018-01-26</span>
-				<span class="time">11:08</span>
-				
-			</li>
-			<li>
-				<span>地点天气</span>
-				
-				<div id="select-weather" class="fr select-weather">
-					<span>雨</span>
-					<em class="fr"></em>
-				</div>
-				
-			</li>
-		</ul>
+	
+	<div class="upload-content bg-f">
 		<!--上传事故照片-->
 		<ul class="uploadpicture clearfix">
 			<li>
@@ -137,6 +95,7 @@
 			</li>
 		</ul>
 	</div>
+	<p>温馨提示:请点击图例相机进行现场拍照,或从手机相册中提取已拍摄的现场照片.</p>
 	<div class="btn active">
 		<a href="javascript:;">
 			提交照片
@@ -176,168 +135,10 @@
 	if (localStorage.getItem('show')) {
 		$('.exit-modal-info').hide()
 	}
-		
 	$('.exit-modal-info a').click(function(){
 		$('.exit-modal-info').hide();
 		localStorage.setItem('show',1)
 	})
-	// 获取事故信息
-	$(function(){
-		$.ajax({
-			type:"post",
-			url:getAccidentInfoUrl,
-			data: {
-				token: token,
-				accidentId : accidentId
-			},
-			success: function(data){
-				console.log(data)
-				if(data.status == 2000){
-						// 将结果渲染至页面
-						$('.btn').addClass('active');
-						
-						var uploadData = data.pagination;
-						if (uploadData.address!='') {
-							$('.addr').html(uploadData.address);
-						};
-						if (uploadData.isexpressway==0) {
-							$('.isexpressway span[data="1"]').addClass('active')
-							$('.isexpressway span[data="0"]').removeClass('active')
-						}else{
-							$('.isexpressway span[data="0"]').addClass('active')
-							$('.isexpressway span[data="1"]').removeClass('active')
-						};
-						if (uploadData.datetime!=null) {
-							var time1 = uploadData.datetime.split(' ')[0];
-							var time2 = uploadData.datetime.split(' ')[1].substring(0,5)
-							$('.date').html(time1);
-							$('.time').html(time2);
-						};
-						if (uploadData.weather!='') {
-							$('#select-weather span').html(uploadData.weather);
-						};
-						if (uploadData.main_pic1!='') {
-							$('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src',uploadData.main_pic1).addClass('active');
-						};
-						if(uploadData.main_pic2!=''){
-							$('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src',uploadData.main_pic2).addClass('active');
-						};
-						if (uploadData.main_pic3!='') {
-							$('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src',uploadData.main_pic3).addClass('active');
-						};
-						if (uploadData.other_pic1!='') {
-							$('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src',uploadData.other_pic1).addClass('active');
-						};
-						if (uploadData.other_pic2!='') {
-							$('.upload-content .uploadpicture li').eq(4).children('.box').children('img').attr('src',uploadData.other_pic2).addClass('active');
-						};
-						if (uploadData.other_pic3!='') {
-							$('.upload-content .uploadpicture li').eq(5).children('.box').children('img').attr('src',uploadData.other_pic3).addClass('active');
-						};
-						// 判断图片审核状态
-						if (uploadData.main_pic1) {
-							if(uploadData.mainStatus1==1){
-								$('.upload-content .uploadpicture li').eq(0).children('.box').children('em').css('background-image','url(static/images/main/pass.png)');
-							}else{
-								$('.upload-content .uploadpicture li').eq(0).children('.box').children('em').css('background-image','url(static/images/main/repic.png)');
-							};
-						}else{
-							$('.upload-content .uploadpicture li').eq(0).children('.box').children('em').css('background-image','url(static/images/main/must.png)')
-						};
-						
-						if (uploadData.main_pic2) {
-							if(uploadData.mainStatus2==1){
-								$('.upload-content .uploadpicture li').eq(1).children('.box').children('em').css('background-image','url(static/images/main/pass.png)');
-							}else{
-								$('.upload-content .uploadpicture li').eq(1).children('.box').children('em').css('background-image','url(static/images/main/repic.png)');
-							};
-						}else{
-							$('.upload-content .uploadpicture li').eq(1).children('.box').children('em').css('background-image','url(static/images/main/must.png)')
-						};
-						
-						if (uploadData.main_pic3) {
-							if(uploadData.mainStatus3==0){
-								$('.upload-content .uploadpicture li').eq(2).children('.box').children('em').css('background-image','url(static/images/main/repic.png)');
-							}else{
-								$('.upload-content .uploadpicture li').eq(2).children('.box').children('em').css('background-image','url(static/images/main/pass.png)');
-							};
-						}else{
-							$('.upload-content .uploadpicture li').eq(2).children('.box').children('em').css('background-image','url(static/images/main/must.png)')
-						}
-				}
-			}
-		});
-		
-		
-		
-		// 地址
-		var addr = localStorage.getItem('addr');
-		//获取事故地址
-		$('.addr').text(addr)
-		// 选择是否为高速/高架
-		$('.upload-content .msg li .choose-box').click(function(){
-			if (!$(this).hasClass('active')) {
-				$(this).addClass('active').siblings().removeClass('active');
-			} else if($(this).hasClass('active')){
-				$(this).removeClass('jctive').siblings('active').addClass('active');
-
-			}
-		})
-		
-		// 事故默认时间
-		$('.date').text(accidentTime);
-		$('.time').text(nowTime)
-		
-	})
-
-	
-
-
-	
-// 事故时间
-var hours = []
-for(var i=0;i<24;i++){
-	var text = i<10 ? '0'+i : String(i)
-	hours.push({value:i,text:text})
-}
-var min = []
-for(var i=0;i<60;i++){
-	var text = i<10 ? '0'+i : String(i)
-	min.push({value:i,text:text})
-}
-var timePicker = new Picker({
-		data: [hours,min],
-		selectedIndex: [h,minutes],// 定位到当前时间
-		title:''
-});
-timePicker.on('picker.select', function (selectedVal, selectedIndex) {
-	console.log(selectedVal)
-	console.log(selectedIndex)
-	var selectHour = hours[selectedIndex[0]].text;
-	var selectMin = min[selectedIndex[1]].text;
-	var time = selectHour + ':' +selectMin;
-	$('.time').text(time)
-})
-
-$('.time').on('click', function(){
-	timePicker.show();
-})
-
-var weatherPicker = new Picker({
-			data: [weather],
-			selectedIndex: [0],
-			title:''
-	});
-weatherPicker.on('picker.select', function (selectedVal, selectedIndex) {
-	console.log(selectedVal)
-		$('.select-weather span').text(weather[selectedIndex].text)
-})
-
-$('.select-weather').on('click', function(){
-	weatherPicker.show();
-})
-    
-    
 var imgArr = [];
 //	上传图片
 	function uploadImg(that){
@@ -369,7 +170,7 @@ var imgArr = [];
 //					if(imgArr.length >= 3){
 //						$('.btn').addClass('active')
 //					}
-				}
+					}
 				}
 			});
 		}
@@ -388,19 +189,15 @@ var imgArr = [];
 	$('.btn').click(function(){
 		var on = $('.btn').hasClass('active');
 		if(on){
-			var address = localStorage.getItem('addr');
-			var fastRoad = $('.upload-content .msg li').eq(1).children('.choose-box.active').next('span').attr('data');
-			var accidentDate = $('.upload-content .msg li').eq(2).children('span').eq(1).html()+"  "+$('.upload-content .msg li').eq(2).children('span').eq(2).html()
-			var weather = $('#select-weather span').html();
-//			var picOne = $('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src');
-//			var picTwo = $('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src');
-//			var picThree = $('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src');
+			var picOne = $('.upload-content .uploadpicture li').eq(0).children('.box').children('img').attr('src');
+			var picTwo = $('.upload-content .uploadpicture li').eq(1).children('.box').children('img').attr('src');
+			var picThree = $('.upload-content .uploadpicture li').eq(2).children('.box').children('img').attr('src');
 			var otherOne = '';
 			var otherTwo = '';
 			var otherThree = '';
-			var picOne = '';
-			var picTwo = '';
-			var picThree = '';
+//			var picOne = '';
+//			var picTwo = '';
+//			var picThree = '';
 //			if($('.upload-content .uploadpicture li').eq(3).children('.box').children('img').attr('src')=='static/images/main/whitebg.png'){
 //				otherOne=''
 //			}else{
@@ -425,11 +222,7 @@ var imgArr = [];
 				url:accidentImgUrl,
 				data: {
 					token:token,
-					address:address,
-					address_xy: localStorage.getItem('address_xy'),
-					isExpressway:fastRoad,
-					datetime:accidentDate,
-					weather:weather,
+					accidentId:accidentId,
 					mainPic1:picOne,
 					mainPic2:picTwo,
 					mainPic3:picThree,
@@ -438,10 +231,8 @@ var imgArr = [];
 					otherPic3:otherThree
 				},
 				success: function(data){
+					console.log(data)
 					if(data.status == 2000){
-						localStorage.setItem('accidentId',data.obj)
-						window.location.href='accidentstatus.html';
-					}else if(data.status == 2002){
 						window.location.href='accidentstatus.html';
 					}
 				}

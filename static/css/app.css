@@ -433,6 +433,16 @@
 	margin-bottom: 1.208333rem;
 	height: 1rem;
 }
+.accident-search-page .tab-content .tab-content-item ul>em{
+	width: 0.708333rem;
+	height: 1.25rem;
+	background: url('../images/common/next.png');
+	background-size: 100% 100%; 
+	position: absolute;
+	top: 50%;
+	margin-top: -0.625rem;
+	right: 1.25rem;
+}
 .accident-search-page .tab-content .tab-content-item ul li:last-child{
 	margin-bottom: 0;
 }
@@ -678,6 +688,7 @@
 }
 .choose-type-page .choose-type-content .self-content{
 	margin-right: 1.833333rem;
+	margin-top: 4.958333rem;
 }
 .choose-type-page .choose-type-content .self-content p{
 	color: #48B4FF;
@@ -689,15 +700,16 @@
 .choose-type-page .choose-type-content .self-content span{
 	display: block;
 	width: 11.666666rem;
-	height: 1.666666rem;
+	height: 2.083333rem;
 	background: #48B4FF;
 	color: #fff;
 	text-align: center;
 	border-radius:0.833333rem ;
-	line-height: 1.666666rem;
+	line-height: 2.083333rem;
 }
 .choose-type-page .choose-type-content .online-content{
 	margin-left: 2.708333rem;
+	margin-top: 4.958333rem;
 }
 .choose-type-page .choose-type-content .online-content p{
 	color: #F37765;
@@ -709,12 +721,12 @@
 .choose-type-page .choose-type-content .online-content span{
 	display: block;
 	width: 11.666666rem;
-	height: 1.666666rem;
+	height: 2.083333rem;
 	background: #F37765;
 	color: #fff;
 	text-align: center;
 	border-radius:0.833333rem ;
-	line-height: 1.666666rem;
+	line-height: 2.083333rem;
 }
 .choose-type-page .sure-ensurance-modal .exit-cont{
 	box-sizing: border-box;
@@ -836,6 +848,19 @@
 }
 
 /*上传事故照片upload.html*/
+.upload-page>p{
+	width: 28.375rem;
+	font-size: 1.083333rem;
+	color: #333;
+	line-height: 1.333333rem;
+	text-align: left;
+	margin: auto;
+	margin-top: 1.041666rem;
+}
+.upload-page .upload-content{
+	height: 35rem;
+	margin-top: 0.583333rem;
+}
 .upload-page .upload-content .msg li{
 	height: 4.166666rem;
 	width: 100%;
@@ -902,7 +927,8 @@
 	margin-left: 3.75rem;
 }
 .upload-page .upload-content .uploadpicture{
-	margin-bottom: 2.083333rem;
+	/*margin-bottom: 2.083333rem;*/
+	height: 10.791666rem;
 }
 .upload-page .upload-content .uploadpicture:last-child{
 	margin-bottom: 10rem;
@@ -922,7 +948,7 @@
 .upload-page .upload-content .uploadpicture li>p{
 	font-size: 1.25rem;
 	color: #999;
-	margin-top: 0.625rem;
+	margin-top: 0.375rem;
 	margin-bottom: 0.708333rem;
 }
 .upload-page .upload-content .uploadpicture li>.box{
@@ -989,11 +1015,7 @@
 }
 .upload-page .btn{
 	background: #CCCCCC;
-	position: fixed;
-	bottom: 2.291666rem;
-	left: 50%;
-	margin-left: -8.333333rem;
-	z-index: 5;
+	margin-top: 1rem;
 }
 .upload-page .btn.active{
 	background: #38ADFF;
@@ -1044,6 +1066,39 @@
 	height: 42.208333rem;
 	width: 100%;
 } */
+.map-page .highway{
+	height: 4.333333rem;
+	line-height: 4.333333rem;
+}
+.map-page .highway em{
+	background: url('../images/common/right.png');
+	width: 1.666666rem;
+	height: 1.666666rem;
+	background-size: 100% 100%;
+	display: inline-block;
+}
+.map-page .highway em.active{
+	background: url('../images/common/bigo.png');
+	width: 1.666666rem;
+	height: 1.666666rem;
+	background-size: 100% 100%;
+	display: inline-block;
+}
+.map-page .highway em:first-child{
+	margin-left: 1rem;
+	vertical-align: middle;
+	margin-right: 0.75rem;
+}
+.map-page .highway em:nth-of-type(2){
+	margin-left: 3.625rem;
+	vertical-align: middle;
+}
+.map-page .highway span{
+	color: #333;
+	font-size: 1.25rem;
+	line-height: 4.333333rem;
+	vertical-align: middle;
+}
 .map-page #map{
 	position: relative;
 	height: 34.916666rem;
@@ -1051,6 +1106,9 @@
 }
 .map-page .map-content{
 	position: relative;
+}
+.map-page .map-content .info{
+	box-shadow:0.25rem 0.416666rem 0.208333rem rgba(0,0,0,0.04);
 }
 .map-page .map-content .accident-address{
 	height: 4.166666rem;
@@ -1079,6 +1137,9 @@
 	height: 3.75rem;
 	border-radius: 0.166666rem;
 	margin-top: 1.666666rem;
+}
+.map-page #submap1{
+	margin-top: 1.833333rem;
 }
 
 /*本方信息mymsg.html*/
@@ -1255,6 +1316,42 @@
 	left: 50%;
 	margin-left: -8.333333rem;
 	bottom: 2.291666rem;
+}
+.mymsg-page .alert{
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.2);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 10;
+}
+.mymsg-page .alert .alert-cont{
+	width: 22.5rem;
+	border-radius: 1.666666rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -11.25rem;
+	margin-top: -5.208333rem;
+}
+.mymsg-page .alert .alert-cont .msg{
+	width: 16.083333rem;
+	font-size: 1.333333rem;
+	color: #1A1A1A;
+	margin: auto;
+	margin-top: 2.083333rem;
+	margin-bottom: 1.625rem;
+}
+.mymsg-page .alert .alert-cont p{
+	height: 3.333333rem;
+	width: 100%;
+	line-height: 3.333333rem;
+	text-align: center;
+	font-size: 1.25rem;
+	color: #5F9AFE;
+	border-top: 1px solid #f4f4f4;
 }
 
 
@@ -1555,6 +1652,49 @@
 
 
 /*事故定责fix-duty.html*/
+.fix-duty-content .information li:first-child,
+.fix-duty-content .information li:nth-child(3){
+	height: 4.166666rem;
+	border-bottom: 1px solid #f4f4f4;
+	position: relative;
+}
+.fix-duty-content .information li:nth-child(2){
+	border-bottom: 1px solid #f4f4f4;
+	position: relative;
+}
+.fix-duty-content .information li span{
+	display: inline-block;
+	width: 5rem;
+	height: 4.166666rem;
+	margin-left: 1.666666rem;
+	font-size: 1.25rem;
+	color: #333;
+	line-height: 4.166666rem;
+	margin-right: 1.541666rem;
+}
+.fix-duty-content .information li p{
+	width: 17.75rem;
+	display: inline-block;
+	color: #333;
+	font-size: 1.25rem;
+}
+.fix-duty-content .information li.select-weather em{
+	color: #999;
+}
+.fix-duty-content .information li em{
+	font-size: 1.25rem;
+	color: #333;
+}
+.fix-duty-content .information li strong{
+	background: url('../images/common/next.png');
+	width: 0.708333rem;
+	height: 1.25rem;
+	background-size: 100% 100%;
+	position: absolute;
+	top: 50%;
+	margin-top: -0.625rem;
+	right: 1.25rem;
+}
 .fix-duty-content .mymsg-content .form{
 	margin-bottom: 0.833333rem;
 	padding-left: 1.666666rem;
@@ -1563,6 +1703,12 @@
 	margin-right: 1rem;
 	height: 4.166666rem;
 	line-height: 4.166666rem;
+}
+.fix-duty-content .mymsg-content .form-type:first-child .form-type-group em{
+	margin-left: 1.666666rem;
+}
+.fix-duty-content .mymsg-content .form-type:first-child .form-type-group em:before{
+	height: 0;
 }
 .fix-duty-content .mymsg-content .form .form-group strong{
 	width: 0.708333rem;
@@ -1857,7 +2003,8 @@
 	background: url('../images/common/next.png');
 	background-size: 100% 100%;
 }
-#submap{
+#submap,
+#submap1{
 	width: 29.25rem;
 	height: 3.75rem;
 	background: #38ADFF;
@@ -1865,7 +2012,8 @@
 	margin: auto;
 	margin-top: 1.833333rem;
 }
-#submap p{
+#submap p,
+#submap1 p{
 	text-align: center;
 	font-size: 1.25rem;
 	color: #fff;

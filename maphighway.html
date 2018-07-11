@@ -1,0 +1,145 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>事故地点定位</title>
+  <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+ 	<link rel="stylesheet" href="static/css/app.css" />
+</head>
+<body class="map-page bg-f4">
+	<!--顶部标题栏-->
+	<div class="header-top">
+		<div class="fl">
+			<a href="javascript:;" class="goback">
+				<em class="icon-goback"></em>
+				<span class="goback-text">返回</span>
+			</a>
+		</div>
+		<h2 class="header-top-title">事故地点定位</h2>
+	</div>
+
+	<div class="map-content bg-f">
+		<div id="map"></div>
+		<img class="icon" src="static/images/return.png"/>
+		<ul class="info">
+    	<li class="adreess">
+    		<strong class="color-33 font-30">
+    			事故地址
+    		</strong>
+    		<p class="color-66 font-30" id="addr">重庆市渝北区金开大道</p>
+    	</li>
+    </ul>
+	</div>
+	<div class="highway">
+		<em data='1'></em>
+		<span>高架/高速路段</span>
+	</div>
+	<div class="map-btn" id="submap">
+		<p class="color-white">完成</p>
+	</div>
+	
+
+	  <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=wqB7npvF7DsDGlFG2oYhih93K5iEqsou"></script>
+		<script src="static/js/jquery-3.1.1.min.js"  type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/bmap.js"  type="text/javascript" charset="utf-8"></script>
+		<script>
+			//禁止地图拖动
+			var p;
+			var add;
+			var addr = document.getElementById("addr");
+			// 地图初始化
+			var map = new BMap.Map("map"); // 创建Map实例
+			var point = new BMap.Point(106.552278, 29.571751);
+			map.centerAndZoom(point, 18); // 初始化地图,设置中心点坐标和地图级别
+			map.disableDragging(); 
+			
+			// 当前定位
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r) {
+				if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+					var geoc = new BMap.Geocoder();
+						geoc.getLocation(r.point, function(rs) {
+							console.log(r.point)
+							var addComp = rs.addressComponents;
+							var address = addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+							console.log(address);
+							
+							localStorage.setItem('addr',address);
+							localStorage.setItem('address_xy',JSON.stringify(r.point))
+						})
+					position(r);
+				} else {
+					alert('failed' + this.getStatus());
+				}
+			});
+			
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r) {
+				if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+					var geoc = new BMap.Geocoder();
+					geoc.getLocation(r.point, function(rs) {
+						console.log(r.point)
+						var addComp = rs.addressComponents;
+						var address = addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+						console.log(address);
+					})
+				} else {
+					alert('failed' + this.getStatus());
+				}
+			});
+			
+			function position(e) {
+				var mk = new BMap.Marker(e.point);
+				map.addOverlay(mk);
+				map.panTo(e.point);
+				// 逆地址解析
+				var geoc = new BMap.Geocoder();
+				geoc.getLocation(e.point, function(rs) {
+					var addComp = rs.addressComponents;
+					var address = addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+					addr.innerHTML = address;
+				})
+				
+			}
+
+			
+			
+//			页面交互
+			console.log(token)
+			$('.highway em').click(function(){
+				if ($(this).hasClass('active')) {
+					$(this).removeClass('active');
+				}else{
+					$('.highway em').removeClass('active');
+					$(this).addClass('active');
+				}
+			})
+			$('#submap').click(function(){
+				$.ajax({
+					type:"post",
+					url:createAccidentUrl,
+					data:{
+						token:token,
+						type:'2',
+						isExpressway:$('.highway em.active').attr('data'),
+						address:$('#addr').html(),
+						address_xy:localStorage.getItem('address_xy')
+					},
+					success:function(res){
+						console.log(res);
+						if (res.status==2000) {
+							localStorage.setItem('accidentId',res.obj)
+							window.location.href='readme.html'
+						}
+					}
+				});
+			})
+		</script>
+	</body>
+
+
+</html>

@@ -25,9 +25,29 @@
 	<div class="fix-duty-content">
 		<div class="mymsg-content">
 			<form class="form-type">
+				<ul class="information bg-f">
+					<li class="time">
+						<span>事故时间</span>
+						<em class="fulltime">2018-01-26  </em>
+						<em class="detail-time">  11:08</em>
+						<strong class="fr"></strong>
+					</li>
+					<li>
+						<a href="map.html">
+							<span>事故地点</span>
+							<p class="adreess">重庆市渝北区金开大道</p>
+							<strong class="fr"></strong>
+						</a>
+					</li>
+					<li class="select-weather">
+						<span>天气</span>
+						<em>请选择</em>
+						<strong class="fr"></strong>
+					</li>
+				</ul>
 				<div class="form-type-group clearfix">
 					<a href="chooseaccident.html">
-						<em>事故情形</em>
+						<em>事故形态</em>
 						<p class="accidentInfo">在同车道行驶中，不按规定与前车保持必要的安全距离的（追尾）</p>
 						<span></span>
 					</a>
@@ -131,7 +151,54 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
-	// 保险公司
+	
+	$('.fulltime').html(accidentTime)
+	$('.detail-time').html(nowTime)
+	// 事故时间
+		var hours = []
+		for(var i=0;i<24;i++){
+			var text = i<10 ? '0'+i : String(i)
+			hours.push({value:i,text:text})
+		}
+		var min = []
+		for(var i=0;i<60;i++){
+			var text = i<10 ? '0'+i : String(i)
+			min.push({value:i,text:text})
+		}
+		var timePicker = new Picker({
+				data: [hours,min],
+				selectedIndex: [h,minutes],// 定位到当前时间
+				title:''
+		});
+		timePicker.on('picker.select', function (selectedVal, selectedIndex) {
+			console.log(selectedVal)
+			console.log(selectedIndex)
+			var selectHour = hours[selectedIndex[0]].text;
+			var selectMin = min[selectedIndex[1]].text;
+			var time = selectHour + ':' +selectMin;
+			$('.time .detail-time').text(time)
+		})
+		
+		$('.time').on('click', function(){
+			timePicker.show();
+		})
+		
+		
+		//天气
+		var weatherPicker = new Picker({
+			data: [weather],
+			selectedIndex: [0],
+			title:''
+		});
+		weatherPicker.on('picker.select', function (selectedVal, selectedIndex) {
+			console.log(selectedVal)
+				$('.select-weather em').text(weather[selectedIndex].text).css('color','#333')
+		})
+		
+		$('.select-weather').on('click', function(){
+			weatherPicker.show();
+		})
+		// 保险公司
 		$.ajax({
 			type:"get",
 			url: getInsuranceUrl,
@@ -219,6 +286,9 @@
 		})
 	})
 	
+	
+	$('.adreess').html(localStorage.getItem('addr'))
+
 	// 
 	$.ajax({
 		type:"post",
@@ -267,7 +337,6 @@
 				
 
 				
-
 				$('.btn').click(function(){
 					var on = !$('.btn').hasClass('active');
 					if (on) {
@@ -276,6 +345,7 @@
 							{'id': data.list[1].id,'damagecode': '01','dutycode': data.list[1].dutycode,'insurerId':$('#ensu1').attr('data-insuranceId')},
 							{'id': data.list[0].id,'damagecode': '02','dutycode': data.list[0].dutycode,'insurerId':$('#ensu2').attr('data-insuranceId')}
 						]
+						var datetime = $('.fulltime').html()+$('.detail-time').html();
 						user = JSON.stringify(user)
 						console.log(user)
 						$.ajax({
@@ -284,7 +354,12 @@
 							data: {
 								token: token,
 								accidentId:accidentId,
-								user: user
+								user: user,
+								isExpressway:'',
+								weather:$('.select-weather em').html(),
+								address:$('.adreess').html(),
+								address_xy:localStorage.getItem('address_xy'),
+								datetime:datetime
 							},
 							dataType: "json",
 							success: function(res){

@@ -44,21 +44,19 @@
 <script src="static/js/common.js"  type="text/javascript" charset="utf-8"></script>
 <!--当前页面交互-->
 <script type="text/javascript">
-	// 
-	var token = localStorage.getItem('token');
-	var accidentId = localStorage.getItem('accidentId');
-	
 	setInterval(function(){
 		$.ajax({
 	    type: "POST",
-	    url:  getAccidentStatusUrl,
+	    url: getAccidentStatusUrl,
 	  	data:{
 				token: token,
 				accidentId: accidentId
 			},
 	    success: function(data){
-	   		
+	    	console.log(data);
+	    	
 				if(data.status == 2000){
+					console.log(data);
 					if(data.obj == 0 ){
 						// 审核失败
 						window.location.href = 'accidentaudit.html';
@@ -70,7 +68,7 @@
 				}
 	  	}
 		})	
-	},1000)
+	},500)
 	
 
 </script>

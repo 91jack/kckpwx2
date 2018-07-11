@@ -11,12 +11,23 @@ var arr =[];
 var geolocation = new BMap.Geolocation();
 geolocation.getCurrentPosition(function(r) {
 	if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+		var geoc = new BMap.Geocoder();
+			geoc.getLocation(r.point, function(rs) {
+				console.log(r.point)
+				var addComp = rs.addressComponents;
+				var address = addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+				console.log(address);
+				
+				localStorage.setItem('addr',address);
+				localStorage.setItem('address_xy',JSON.stringify(r.point))
+			})
 		position(r);
 		deletePoint();
 	} else {
 		alert('failed' + this.getStatus());
 	}
 });
+
 
 function showInfo(e) {
 	position(e);
@@ -87,10 +98,5 @@ function deletePoint(){
 
 
 //	获取地址
-$('#submap').click(function() {
-	addr= $('#addr').html();
-	localStorage.setItem('addr',addr);
-	window.location.href='upload.html';
-})
 
 // 小米手机下 地图点击

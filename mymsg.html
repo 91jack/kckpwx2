@@ -115,7 +115,18 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<!--信息不对的弹框-->
+	
+	<div class="alert">
+		<div class="alert-cont bg-f">
+			<div class="msg">
+				请输入正确身份证明号码,手机号码
+			</div>
+			<p class="sue">确认</p>
+		</div>
+	</div>
+	
 	<!--绑定驾驶证模态框-->
 	<div class="msg-modal drive" id="bind-drive1">
 		<div class="modal-content">
@@ -235,6 +246,7 @@
 		$('.cartype2').html(localStorage.getItem('cartype2'));
 		$('#picdrive1').attr('src',yoursData.firstpic);
 		$('#picrun1').attr('src',yoursData.secondpic);
+		$('.alert').hide();
 		active();
 	}
 
@@ -299,29 +311,45 @@
 			var on = $('.btn').hasClass('active');
 			if (!on) {
 				$('.btn').click(function(){
-					var mine = {
-						name:$('.name').val(),
-						cardNo:$('.idcard').val(),
-						phone:$('.phone').val(),
-						carNo:$('.cpcode').val(),
-						carType:$('.cartype1').attr('data-cartypeId'),
-						firstpic:$('#picdrive').attr('src'),
-						secondpic:$('#picrun').attr('src')
+					var regPhone = /^1\d{10}$/;
+					var regIdcard = /^\d{15,18}$/;
+					var regCarnum = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/
+					var cp1 = regCarnum.test($('.cpcode').val())
+					var cp2 = regCarnum.test($('.cpcode1').val())
+					var ph1 = regPhone.test($('.phone').val())
+					var ph2 = regPhone.test($('.phone1').val())
+					var idC1 = regIdcard.test($('.idcard').val())
+					var idC2 = regIdcard.test($('.idcard1').val())
+					if (cp1&&cp2&&ph1&&ph2&&idC1&&idC2) {
+						var mine = {
+							name:$('.name').val(),
+							cardNo:$('.idcard').val(),
+							phone:$('.phone').val(),
+							carNo:$('.cpcode').val(),
+							carType:$('.cartype1').attr('data-cartypeId'),
+							firstpic:$('#picdrive').attr('src'),
+							secondpic:$('#picrun').attr('src')
+						}
+						var yours = {
+							name:$('.name1').val(),
+							cardNo:$('.idcard1').val(),
+							phone:$('.phone1').val(),
+							carNo:$('.cpcode1').val(),
+							carType:$('.cartype2').attr('data-cartypeId'),
+							firstpic:$('#picdrive1').attr('src'),
+							secondpic:$('#picrun1').attr('src')
+						}
+						localStorage.setItem('mine',JSON.stringify(mine));
+						localStorage.setItem('yours',JSON.stringify(yours));
+						localStorage.setItem('cartype1',$('.cartype1').html());
+						localStorage.setItem('cartype2',$('.cartype2').html());
+						window.location.href="inputmsg.html"
+					}else{
+						$('.alert').show();
+						$('.sue').click(function(){
+							$('.alert').hide()
+						})
 					}
-					var yours = {
-						name:$('.name1').val(),
-						cardNo:$('.idcard1').val(),
-						phone:$('.phone1').val(),
-						carNo:$('.cpcode1').val(),
-						carType:$('.cartype2').attr('data-cartypeId'),
-						firstpic:$('#picdrive1').attr('src'),
-						secondpic:$('#picrun1').attr('src')
-					}
-					localStorage.setItem('mine',JSON.stringify(mine));
-					localStorage.setItem('yours',JSON.stringify(yours));
-					localStorage.setItem('cartype1',$('.cartype1').html());
-					localStorage.setItem('cartype2',$('.cartype2').html());
-					window.location.href="inputmsg.html"
 				})
 			}
 		}
