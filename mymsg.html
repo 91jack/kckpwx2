@@ -36,16 +36,19 @@
 
 			<div class="form-group">
 				<span>身份证号码</span>
+				<strong></strong>
 				<input type="text" placeholder="请输入身份证号码" class="idcard" maxlength="18"/>
 			</div>
 
 			<div class="form-group">
 				<span>手机号码</span>
+				<strong></strong>
 				<input type="text" placeholder="请输入手机号码" class="phone" maxlength="11"/>
 			</div>
 
 			<div class="form-group">
 				<span>车牌号码</span>
+				<strong></strong>
 				<input type="text" placeholder="车牌号(渝A**666)" class="fl cpcode" maxlength="8"/>
 				<a href="javascript:;" class="yzm-btn mycar" data="11"></a>
 			</div>
@@ -70,16 +73,19 @@
 
 			<div class="form-group">
 				<span>身份证号码</span>
+				<strong></strong>
 				<input type="text" placeholder="请输入身份证号码" class="idcard1" maxlength="18"/>
 			</div>
 
 			<div class="form-group">
 				<span>手机号码</span>
+				<strong></strong>
 				<input type="text" placeholder="请输入手机号码" class="phone1" maxlength="11"/>
 			</div>
 
 			<div class="form-group">
 				<span>车牌号码</span>
+				<strong></strong>
 				<input type="text" placeholder="车牌号(渝A**666)" class="fl cpcode1" maxlength="8"/>
 				<a href="javascript:;" class="yzm-btn mycar" data="22"></a>
 			</div>
@@ -314,12 +320,19 @@
 					var regPhone = /^1\d{10}$/;
 					var regIdcard = /^\d{15,18}$/;
 					var regCarnum = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/
-					var cp1 = regCarnum.test($('.cpcode').val())
-					var cp2 = regCarnum.test($('.cpcode1').val())
-					var ph1 = regPhone.test($('.phone').val())
-					var ph2 = regPhone.test($('.phone1').val())
-					var idC1 = regIdcard.test($('.idcard').val())
-					var idC2 = regIdcard.test($('.idcard1').val())
+					
+					var cp1 = regCarnum.test($('.cpcode').val());
+					var cp2 = regCarnum.test($('.cpcode1').val());
+					var ph1 = regPhone.test($('.phone').val());
+					var ph2 = regPhone.test($('.phone1').val());
+					var idC1 = regIdcard.test($('.idcard').val());
+					var idC2 = regIdcard.test($('.idcard1').val());
+					
+//					var regArr = [regCarnum,regCarnum,regPhone,regPhone,regIdcard,regIdcard];
+					var regArr = [cp1,cp2,ph1,ph2,idC1,idC2];
+					var testArr = [$('.cpcode'),$('.cpcode1'),$('.phone'),$('.phone1'),$('.idcard'),$('.idcard1')]
+					
+					
 					if (cp1&&cp2&&ph1&&ph2&&idC1&&idC2) {
 						var mine = {
 							name:$('.name').val(),
@@ -346,6 +359,14 @@
 						window.location.href="inputmsg.html"
 					}else{
 						$('.alert').show();
+						for (var i=0;i<6;i++) {
+							if (!regArr[i]) {
+								testArr[i].css('color','red');
+							}else{
+								testArr[i].css('color','#333');
+							}
+							console.log(regArr[i])
+						}
 						$('.sue').click(function(){
 							$('.alert').hide()
 						})
