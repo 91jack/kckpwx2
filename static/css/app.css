@@ -1102,7 +1102,7 @@
 }
 .map-page #map{
 	position: relative;
-	height: 34.916666rem;
+	height: 32.416666rem;
 	width: 100%;
 }
 .map-page .map-content{
@@ -2175,7 +2175,7 @@ canvas {
 	width: 2.875rem;
 	height: 2.875rem;
 	position: absolute;
-	top: 31.125rem;
+	top: 28rem;
 	right: 0.833333rem;
 	/*background: url('../images/return.png');
 	background-size: 100% 100%;*/
