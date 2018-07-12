@@ -26,7 +26,7 @@
 			
 			<div class="form-group">
 				<span>手机号码</span>
-				<input type="text" placeholder="请输入手机号码" id="phone"/>
+				<input type="text" placeholder="请输入手机号码" id="phone" maxlength="11"/>
 			</div>
 			
 			<div class="form-group">
@@ -79,12 +79,14 @@
 			    type: "POST",
 			    url: yzcodeUrl,
 			  	data:{
+			  		token:token,
 						phone:$('#phone').val(),
-						type:'4'
+						type:'5'
 					},
 			    success: function(data){
 			    	//alert(data)
 			   		//服务器返回响应，根据响应结果，分析是否登录成功；
+			   		console.log(data);
 						if(data.status == 2000){
 							$('#yzmcode').val(data.obj)
 						}
@@ -112,26 +114,26 @@
 })
 
 
-// 登录
+// 绑定手机号
 $('#login-btn').on('click', function(){
 		// 
+		console.log($('#yzmcode').val())
+		
 		$.ajax({
-		    type: "POST",
-		    url: loginUrl,
-		  	data:{
-					loginType:'2',
-					phoneType:'2',
-					userName:$('#phone').val(),
-					yzcode: $('#yzmcode').val()
-				},
-		    success: function(data){
-		   		//服务器返回响应，根据响应结果，分析是否登录成功；
+	    type: "POST",
+	    url: bindingPhone,
+	  	data:{
+	  		token:token,
+//	  		token:3431306531356466653133333437626639363062383336306336343533303364,
+				phone:$('#phone').val(),
+				yzcode: $('#yzmcode').val()
+			},
+	    success: function(data){
+	    	console.log(data)
+	   		//服务器返回响应，根据响应结果，分析是否登录成功；
 				if(data.status == 2000){
 					// 登录后 将token存在本地
-					localStorage.setItem('token',data.obj);
-					window.location.href = 'index.html';
-				}else{
-					//console.log(data)
+					window.location.href = 'user.html';
 				}
 		  }
 		})	

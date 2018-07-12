@@ -158,8 +158,8 @@
 	
 	<div class="msg-modal drive" id="bind-drive2">
 		<div class="modal-content">
-			<p>拍摄本方的驾驶证</p>
-			<span>拍摄自己的驾驶证,自动识别信息!</span>
+			<p>拍摄对方方的驾驶证</p>
+			<span>拍摄对方的驾驶证,自动识别信息!</span>
 			<div class="msg-img">
 				<img id="picdrive1" data='1' src="static/images/common/card_driver.png"/>
 				<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
@@ -203,8 +203,8 @@
 	
 	<div class="msg-modal drive" id="bind-car2">
 		<div class="modal-content">
-			<p>拍摄本方的行驶证</p>
-			<span>拍摄自己的行驶证,自动识别信息!</span>
+			<p>拍摄对方的行驶证</p>
+			<span>拍摄对方的行驶证,自动识别信息!</span>
 			<div class="msg-img">
 				<img id="picrun1" data='2' src="static/images/common/card_xingshizheng.png"/>
 				<div class="loading-cover"><div class="cover-cont"></div><p>图片上传中</p></div>
@@ -318,7 +318,7 @@
 			if (!on) {
 				$('.btn').click(function(){
 					var regPhone = /^1\d{10}$/;
-					var regIdcard = /^\d{15,18}$/;
+					var regIdcard = /^\d{18}$/;
 					var regCarnum = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/
 					
 					var cp1 = regCarnum.test($('.cpcode').val());

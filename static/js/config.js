@@ -15,7 +15,8 @@ var getUserInfoUrl = host + '/kyp/applogin/currencyController/getUserInfo';
 // 修改密码
 var editPwdUrl = host + '/kyp/applogin/currencyController/editPwd';
 
-
+//绑定手机号
+var bindingPhone = host + '/kyp/applogin/userController/bindingPhone'
 
 
 // 获取验证码

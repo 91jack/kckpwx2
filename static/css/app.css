@@ -1841,7 +1841,6 @@
 .msg-certification-content .form .form-group em{
 	margin-right: 1rem;
 	font-size: 1.25rem;
-	/*line-height: 1.25rem;*/
 	vertical-align: middle;
 }
 .msg-certification-content .form .form-group:first-child em{
@@ -2161,7 +2160,9 @@ canvas {
 .accident-list-page .msg-certification-content .form .form-group span{
 	margin-left: 0;
 }
-
+.accident-list-page .msg-certification-content .form:last-child{
+	margin-bottom: 8.5rem;
+}
 .login-page .yzm-btn{
 	width: 6.666666rem;
 	height: 2.5rem;

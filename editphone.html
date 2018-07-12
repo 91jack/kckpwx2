@@ -60,7 +60,7 @@ $.ajax({
 	type:"post",
 	url:getUserInfoUrl,
 	data:{
-		token:localStorage.getItem('token')
+		token:token
 	},
 	success:function(data){
 		console.log(data);
