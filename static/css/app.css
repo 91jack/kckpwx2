@@ -1658,6 +1658,7 @@
 	position: relative;
 }
 .fix-duty-content .information li:nth-child(2){
+	height: 4.166666rem;
 	border-bottom: 1px solid #f4f4f4;
 	position: relative;
 }
@@ -1672,9 +1673,15 @@
 }
 .fix-duty-content .information li p{
 	width: 17.75rem;
+	height: 4.166666rem;
+	line-height: 4.166666rem;
+	vertical-align: top;
 	display: inline-block;
 	color: #333;
 	font-size: 1.25rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .fix-duty-content .information li.select-weather em{
 	color: #999;
@@ -2001,7 +2008,6 @@
 	background: #38ADFF;
 	border-radius: 0.166666rem;
 	margin: auto;
-	margin-top: 1.25rem;
 	margin-bottom: 2.5rem;
 }
 #submap p,
@@ -2173,7 +2179,7 @@ canvas {
 	height: 2.875rem;
 	position: absolute;
 	top: 31.125rem;
-	left: 0.833333rem;
+	right: 0.833333rem;
 	/*background: url('../images/return.png');
 	background-size: 100% 100%;*/
 	z-index: 10000;
