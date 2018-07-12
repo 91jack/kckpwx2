@@ -1663,13 +1663,12 @@
 }
 .fix-duty-content .information li span{
 	display: inline-block;
-	width: 5rem;
+	width: 6.958333rem;
 	height: 4.166666rem;
 	margin-left: 1.666666rem;
 	font-size: 1.25rem;
 	color: #333;
 	line-height: 4.166666rem;
-	margin-right: 1.958333rem;
 }
 .fix-duty-content .information li p{
 	width: 17.75rem;
