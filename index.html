@@ -12,12 +12,6 @@
 <body class="bg-f4 accident-search-page">
 	<!--顶部标题栏-->
 	<div class="header-top">
-		<!--<div class="fl">
-			<a href="index.html" class="goback">
-				<em class="icon-goback"></em>
-				<span class="goback-text">返回</span>
-			</a>
-		</div>-->
 		<h2 class="header-top-title">事故列表</h2>
 		<div class="fr">
 			<a href="user.html">
@@ -81,6 +75,7 @@ localStorage.removeItem('mine');
 localStorage.removeItem('yours');
 localStorage.removeItem('nowTime');
 localStorage.removeItem('nowWeather');
+localStorage.removeItem('address_xy');
 $(function(){
 		$.ajax({
 			type:"post",

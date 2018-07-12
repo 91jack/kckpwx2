@@ -417,6 +417,7 @@
 }
 .accident-search-page .tab-content.active{
 	display: block;
+	margin-bottom: 8.75rem;
 }
 .accident-search-page .tab-content .tab-content-item{
 	height: 10rem;
@@ -1668,7 +1669,7 @@
 	font-size: 1.25rem;
 	color: #333;
 	line-height: 4.166666rem;
-	margin-right: 1.541666rem;
+	margin-right: 1.958333rem;
 }
 .fix-duty-content .information li p{
 	width: 17.75rem;
@@ -1772,7 +1773,7 @@
 	margin-top: -0.625rem;
 }
 .fix-duty-content .mymsg-content .form:last-child{
-	margin-bottom: 6.25rem;
+	margin-bottom: 8.75rem;
 }
 
 
@@ -1781,13 +1782,7 @@
 .msg-certificati-page .police-msg{
 	border-bottom: 0.041666rem solid #F56954;
 }
-/*.msg-certificati-page .police-msg img{
-	float: left;
-	width: 4.208333rem;
-	height: 5.25rem;
-	margin-left: 1.75rem;
-	margin-top: 2.791666rem;
-}*/
+
 .msg-certificati-page .police-msg .police-content{
 	float: left;
 	width: 22.083333rem;
@@ -2007,7 +2002,8 @@
 	background: #38ADFF;
 	border-radius: 0.166666rem;
 	margin: auto;
-	margin-top: 1.833333rem;
+	margin-top: 1.25rem;
+	margin-bottom: 2.5rem;
 }
 #submap p,
 #submap1 p{
@@ -2203,6 +2199,9 @@ canvas {
 }
 
 /*业务须知 readme.html*/
+.readme-page .readme-content{
+	margin-bottom: 8.75rem;
+}
 .readme-page .inner-content{
 	width: 28.208333rem;
 	font-size: 1.166666rem;
