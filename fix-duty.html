@@ -353,7 +353,7 @@
 							{'id': data.list[1].id,'damagecode': '01','dutycode': data.list[1].dutycode,'insurerId':$('#ensu1').attr('data-insuranceId')},
 							{'id': data.list[0].id,'damagecode': '02','dutycode': data.list[0].dutycode,'insurerId':$('#ensu2').attr('data-insuranceId')}
 						]
-						var datetime = $('.fulltime').html()+' '+localStorage.getItem('nowTime');
+						var datetime = $('.fulltime').html()+' '+$('.detail-time').html();
 						console.log(datetime)
 						user = JSON.stringify(user)
 						console.log(user)

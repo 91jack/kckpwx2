@@ -202,9 +202,13 @@ $(function(){
     	var data = res.pagination;
     	
 			if(res.status == 2000){
-				$('.police-content ul li').eq(0).html('事故时间：' + data.datetime);
 				$('.police-content ul li').eq(1).children('p').html(data.address);
 				$('.police-content ul li').eq(2).children('p').html(data.viewname);
+				$('.police-content ul li').eq(0).html('事故时间：' + data.datetime);
+//				if (data.handle==2) {
+//				}else{
+//					$('.police-content ul li').eq(0).html('事故时间：' + data.create_time);
+//				}
 			}
     }
 	})

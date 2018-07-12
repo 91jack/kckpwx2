@@ -158,7 +158,7 @@
 	
 	<div class="msg-modal drive" id="bind-drive2">
 		<div class="modal-content">
-			<p>拍摄对方方的驾驶证</p>
+			<p>拍摄对方的驾驶证</p>
 			<span>拍摄对方的驾驶证,自动识别信息!</span>
 			<div class="msg-img">
 				<img id="picdrive1" data='1' src="static/images/common/card_driver.png"/>
@@ -362,10 +362,12 @@
 						for (var i=0;i<6;i++) {
 							if (!regArr[i]) {
 								testArr[i].css('color','red');
+								testArr[i].on('focus',function(){
+									$(this).css('color','#333')
+								})
 							}else{
 								testArr[i].css('color','#333');
-							}
-							console.log(regArr[i])
+							};
 						}
 						$('.sue').click(function(){
 							$('.alert').hide()
