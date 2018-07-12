@@ -1108,9 +1108,6 @@
 .map-page .map-content{
 	position: relative;
 }
-.map-page .map-content .info{
-	box-shadow:0.25rem 0.416666rem 0.208333rem rgba(0,0,0,0.04);
-}
 .map-page .map-content .accident-address{
 	height: 4.166666rem;
 	line-height: 4.166666rem;
